@@ -1,0 +1,6 @@
+framework module Metype {
+  umbrella header "Metype-umbrella.h"
+
+  export *
+  module * { export * }
+}

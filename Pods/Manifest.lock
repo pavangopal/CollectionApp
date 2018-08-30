@@ -1,0 +1,179 @@
+PODS:
+  - Crashlytics (3.10.2):
+    - Fabric (~> 1.7.7)
+  - DTCoreText (1.6.21):
+    - DTCoreText/Core (= 1.6.21)
+    - DTFoundation/Core (~> 1.7.5)
+    - DTFoundation/DTAnimatedGIF (~> 1.7.5)
+    - DTFoundation/DTHTMLParser (~> 1.7.5)
+    - DTFoundation/UIKit (~> 1.7.5)
+  - DTCoreText/Core (1.6.21):
+    - DTFoundation/Core (~> 1.7.5)
+    - DTFoundation/DTAnimatedGIF (~> 1.7.5)
+    - DTFoundation/DTHTMLParser (~> 1.7.5)
+    - DTFoundation/UIKit (~> 1.7.5)
+  - DTFoundation/Core (1.7.13)
+  - DTFoundation/DTAnimatedGIF (1.7.13)
+  - DTFoundation/DTHTMLParser (1.7.13):
+    - DTFoundation/Core
+  - DTFoundation/UIKit (1.7.13):
+    - DTFoundation/Core
+  - Fabric (1.7.7)
+  - Firebase/Core (3.17.0):
+    - FirebaseAnalytics (= 3.9.0)
+    - FirebaseCore (= 3.6.0)
+  - Firebase/RemoteConfig (3.17.0):
+    - Firebase/Core
+    - FirebaseRemoteConfig (= 1.3.4)
+  - FirebaseAnalytics (3.9.0):
+    - FirebaseCore (~> 3.6)
+    - FirebaseInstanceID (~> 1.0)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+  - FirebaseCore (3.6.0):
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+  - FirebaseInstanceID (1.0.10):
+    - FirebaseCore (~> 3.6)
+  - FirebaseRemoteConfig (1.3.4):
+    - FirebaseAnalytics (~> 3.7)
+    - FirebaseInstanceID (~> 1.0)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - Protobuf (~> 3.1)
+  - Google/Analytics (3.1.0):
+    - Google/Core
+    - GoogleAnalytics (~> 3.12)
+  - Google/Core (3.1.0):
+    - FirebaseAnalytics (~> 3.2)
+  - GoogleAnalytics (3.17.0)
+  - GoogleToolboxForMac/Defines (2.1.4)
+  - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
+    - GoogleToolboxForMac/Defines (= 2.1.4)
+  - JWPlayer-SDK (2.9.0)
+  - Kingfisher (4.8.0)
+  - KingfisherWebP (0.4.1):
+    - Kingfisher (~> 4.0)
+    - libwebp (>= 0.5.0)
+  - libwebp (0.6.1):
+    - libwebp/core (= 0.6.1)
+    - libwebp/dec (= 0.6.1)
+    - libwebp/demux (= 0.6.1)
+    - libwebp/dsp (= 0.6.1)
+    - libwebp/enc (= 0.6.1)
+    - libwebp/mux (= 0.6.1)
+    - libwebp/utils (= 0.6.1)
+    - libwebp/webp (= 0.6.1)
+  - libwebp/core (0.6.1):
+    - libwebp/webp
+  - libwebp/dec (0.6.1):
+    - libwebp/core
+  - libwebp/demux (0.6.1):
+    - libwebp/core
+  - libwebp/dsp (0.6.1):
+    - libwebp/core
+  - libwebp/enc (0.6.1):
+    - libwebp/core
+  - libwebp/mux (0.6.1):
+    - libwebp/core
+  - libwebp/utils (0.6.1):
+    - libwebp/core
+  - libwebp/webp (0.6.1)
+  - Metype (0.1.0)
+  - OneSignal (2.8.5)
+  - Protobuf (3.6.0)
+  - Quintype (1.0.10):
+    - Unbox (= 2.4.0)
+  - TwitterCore (3.1.0)
+  - TwitterKit (3.3.0):
+    - TwitterCore (>= 3.1.0)
+  - Unbox (2.4.0)
+  - WatchdogInspector (1.3.0)
+  - XLPagerTabStrip (8.0.1)
+
+DEPENDENCIES:
+  - Crashlytics
+  - DTCoreText
+  - Fabric
+  - Firebase/Core
+  - Firebase/RemoteConfig
+  - Google/Analytics
+  - JWPlayer-SDK
+  - Kingfisher (~> 4.0)
+  - KingfisherWebP
+  - Metype (from `https://github.com/quintype/metype-ios.git`, tag `1.0.1`)
+  - OneSignal
+  - Quintype (from `https://github.com/quintype/quintype-ios-sdk`, tag `3.0.4`)
+  - TwitterKit
+  - WatchdogInspector
+  - XLPagerTabStrip (~> 8.0)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Crashlytics
+    - DTCoreText
+    - DTFoundation
+    - Fabric
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseInstanceID
+    - FirebaseRemoteConfig
+    - Google
+    - GoogleAnalytics
+    - GoogleToolboxForMac
+    - JWPlayer-SDK
+    - Kingfisher
+    - KingfisherWebP
+    - libwebp
+    - OneSignal
+    - Protobuf
+    - TwitterCore
+    - TwitterKit
+    - Unbox
+    - WatchdogInspector
+    - XLPagerTabStrip
+
+EXTERNAL SOURCES:
+  Metype:
+    :git: https://github.com/quintype/metype-ios.git
+    :tag: 1.0.1
+  Quintype:
+    :git: https://github.com/quintype/quintype-ios-sdk
+    :tag: 3.0.4
+
+CHECKOUT OPTIONS:
+  Metype:
+    :git: https://github.com/quintype/metype-ios.git
+    :tag: 1.0.1
+  Quintype:
+    :git: https://github.com/quintype/quintype-ios-sdk
+    :tag: 3.0.4
+
+SPEC CHECKSUMS:
+  Crashlytics: 0360624eea1c978a743feddb2fb1ef8b37fb7a0d
+  DTCoreText: e5d688cffc9f6a61eddd1a4f94e2046851230de3
+  DTFoundation: f03be9fd786f11e505bb8fc44e2a3732bf0917df
+  Fabric: bda89e242bce1b7b8ab264248cf3407774ce0095
+  Firebase: 4b66b5b59c43edac745b87f0c87e42cdd0279c13
+  FirebaseAnalytics: e5fe8486efc01bec33f6bf82e2fa9fce4b124052
+  FirebaseCore: 9691ee2ade70c098d7cf92440f4303f16d83ca75
+  FirebaseInstanceID: b9eedd6846fb5e1f0f7279e1deaa7a7e4cf8392e
+  FirebaseRemoteConfig: af3003f4e8daa2bd1d5cf90d3cccc1fe224f8ed9
+  Google: 98da4b1a60ed0beb80a290387a28333406a1eb90
+  GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
+  GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
+  JWPlayer-SDK: 012bfec60f937e68e070fe6c09fe652e9c4c0a91
+  Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
+  KingfisherWebP: 3cf59fe4c258efc2084fda65eaae950487048259
+  libwebp: 0f01098c6c17175391af621b2f14150f3ca16e16
+  Metype: 4e367f56570b376bada325923326e587a14ea9b0
+  OneSignal: 42dae269c7eca517aee34963820e1eb922390031
+  Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
+  Quintype: c19f2062e5d0696ebc8b78d87c787363232e975a
+  TwitterCore: 644d59e75abccb26cf0a9050d2c4dea0e5412241
+  TwitterKit: a2e60ddcedbf54091eac6f27685ca7a87681e1d7
+  Unbox: c8b2ab69d3337597b4a3f47a0538807dc12db670
+  WatchdogInspector: 439a73b047028a6048a59e56b70fcf11045a6e13
+  XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
+
+PODFILE CHECKSUM: c51424f1192186e7f0460c67dcac17428af995e6
+
+COCOAPODS: 1.5.3

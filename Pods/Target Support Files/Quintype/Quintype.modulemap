@@ -1,0 +1,6 @@
+framework module Quintype {
+  umbrella header "Quintype-umbrella.h"
+
+  export *
+  module * { export * }
+}

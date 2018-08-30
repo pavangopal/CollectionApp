@@ -120,7 +120,7 @@ extension UINavigationItem{
 extension TTTAttributedLabel{
     
     func setProperties(){
-        self.backgroundColor = .white
+//        self.backgroundColor = .white
         self.numberOfLines = 0
         self.lineBreakMode = .byWordWrapping
         self.lineHeightMultiple = 0

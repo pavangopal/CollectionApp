@@ -22,7 +22,7 @@ class CarousalContainerCell: BaseCollectionCell {
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = UIColor(hexString: "#F5F5F5")
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(cellClass: FullscreenCarouselCell.self)

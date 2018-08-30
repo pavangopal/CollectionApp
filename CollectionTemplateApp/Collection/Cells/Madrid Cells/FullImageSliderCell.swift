@@ -24,10 +24,15 @@ class FullImageSliderCell: BaseCollectionCell {
         super.setupViews()
         
         contentView.clipsToBounds = true
-        contentView.backgroundColor = .red
+        contentView.backgroundColor = .white
         
         stackView = MDStackView(metaData: nil)
+        stackView.headlineLabel.textColor = .white
+        stackView.authorNameLabel.textColor = .white
+        stackView.sectionNameLabel.isHidden = true
+        stackView.sectionUnderLineView.isHidden = true
         
+        stackView.publishTimeLabel.textColor = .white
         self.contentView.addSubview(imageView)
         self.contentView.addSubview(stackView)
         
@@ -48,7 +53,7 @@ class FullImageSliderCell: BaseCollectionCell {
         
         if let heroImageS3Key = story.hero_image_s3_key{
             
-            let imageSize = CGSize(width: UIScreen.main.bounds.width-30, height: 400)
+            let imageSize = CGSize(width: UIScreen.main.bounds.width-30, height: 450)
             imageView.loadImage(imageMetaData: story.hero_image_metadata, imageS3Key: heroImageS3Key, targetSize: imageSize, placeholder: nil)
         }
         

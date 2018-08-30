@@ -1,5 +1,5 @@
 //
-//  ImageStoryListCell.swift
+//  ImageStoryListswift
 //  CollectionTemplateApp
 //
 //  Created by Pavan Gopal on 8/23/18.
@@ -11,6 +11,11 @@ import Quintype
 
 class ImageStoryListCell: BaseCollectionCell {
     
+    var containerView:UIView = {
+       let view = UIView()
+        return view
+    }()
+    
     var imageView:UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
@@ -21,18 +26,28 @@ class ImageStoryListCell: BaseCollectionCell {
     
     
     override func setupViews() {
+        super.setupViews()
+        
         contentView.clipsToBounds = true
         
         stackView = MDStackView(metaData: nil)
+//        stackView.sectionNameLabel.isHidden = true
+//        stackView.sectionUnderLineView.isHidden = true
+
+        contentView.addSubview(containerView)
+        containerView.addSubview(stackView)
+        containerView.addSubview(imageView)
         
-        contentView.addSubview(stackView)
-        contentView.addSubview(imageView)
-        imageView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 100, heightConstant: 100)
-        let bottomConstraint = NSLayoutConstraint(item: contentView, attribute: NSLayoutAttribute.bottom, relatedBy: .greaterThanOrEqual, toItem: imageView, attribute: .bottom, multiplier: 1, constant: 0)
+        containerView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 2, leftConstant: 2, bottomConstant: 2, rightConstant: 2, widthConstant: 0, heightConstant: 0)
+        
+        imageView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 150, heightConstant: 100)
+        let bottomConstraint = NSLayoutConstraint(item: containerView, attribute: NSLayoutAttribute.bottom, relatedBy: .greaterThanOrEqual, toItem: imageView, attribute: .bottom, multiplier: 1, constant: 0)
         self.contentView.addConstraint(bottomConstraint)
         
-        stackView.anchor(contentView.topAnchor, left: imageView.rightAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0 )
+        stackView.anchor(containerView.topAnchor, left: imageView.rightAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 0 )
         
+        let stackViewbottomConstraint = NSLayoutConstraint.init(item: containerView, attribute: .bottom, relatedBy: NSLayoutRelation.greaterThanOrEqual, toItem: stackView, attribute: .bottom, multiplier: 1, constant: -10)
+        contentView.addConstraint(stackViewbottomConstraint)
     }
     
     override func configure(data:Any?){

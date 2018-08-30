@@ -14,7 +14,7 @@ class MDStackView : UIStackView {
     
     let authorNameLabel:TTTAttributedLabel = {
         let label = TTTAttributedLabel(frame: .zero)
-        label.backgroundColor = .white
+//        label.backgroundColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
 //        label.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
 //        label.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
@@ -26,7 +26,7 @@ class MDStackView : UIStackView {
     
     let publishTimeLabel:TTTAttributedLabel = {
         let label = TTTAttributedLabel(frame: .zero)
-        label.backgroundColor = .white
+//        label.backgroundColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setProperties()
         label.isHidden = true
@@ -36,7 +36,7 @@ class MDStackView : UIStackView {
     let authorImageView:UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = .green
+//        imageView.backgroundColor = .green
         imageView.isHidden = true
         return imageView
     }()
@@ -45,6 +45,7 @@ class MDStackView : UIStackView {
         let label = TTTAttributedLabel(frame: .zero)
         label.backgroundColor = .black
         label.textColor = .white
+
 //        label.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
 //        label.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
 //        label.insets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
@@ -55,7 +56,7 @@ class MDStackView : UIStackView {
     
     let sectionUnderLineView:UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+//        view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isHidden = true
         return view
@@ -63,7 +64,7 @@ class MDStackView : UIStackView {
     
     var headlineLabel:TTTAttributedLabel = {
         let label = TTTAttributedLabel(frame: .zero)
-        label.backgroundColor = .white
+//        label.backgroundColor = .white
         
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 3
@@ -74,7 +75,7 @@ class MDStackView : UIStackView {
     
     var subHeadlineLabel:TTTAttributedLabel = {
         let label = TTTAttributedLabel(frame: .zero)
-        label.backgroundColor = .white
+//        label.backgroundColor = .white
         
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 3

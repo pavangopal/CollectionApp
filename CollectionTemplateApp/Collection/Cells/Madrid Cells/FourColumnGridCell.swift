@@ -44,7 +44,7 @@ class FourColumnGridCell: BaseCollectionCell {
     
     var containerView:UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
         return view
     }()
     

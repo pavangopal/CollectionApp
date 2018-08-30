@@ -37,7 +37,7 @@ enum HomeCellType:String{
             return 450
         
         case .ImageTextCell:
-            return 300
+            return 400
         default:
             return 250
         }

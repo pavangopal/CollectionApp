@@ -13,6 +13,7 @@ class CollectionTitleCell: BaseCollectionCell {
     
     var containerView: UIView = {
         let view = UIView()
+        view.backgroundColor = UIColor(hexString: "#F5F5F5")
         return view
     }()
     

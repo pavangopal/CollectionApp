@@ -11,9 +11,14 @@ import Quintype
 
 class ImageTextCell: BaseCollectionCell {
     
+    var containerView:UIView = {
+       let view = UIView()
+        return view
+    }()
+    
     var imageView:UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .red
+//        imageView.backgroundColor = .red
         return imageView
     }()
     
@@ -21,22 +26,29 @@ class ImageTextCell: BaseCollectionCell {
     
     override func setupViews() {
         super.setupViews()
-        
-        contentView.backgroundColor = .red
-        
+//        setBackgroundView()
+//        contentView.backgroundColor = .red
+        contentView.addSubview(containerView)
+        containerView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 2, leftConstant: 2, bottomConstant: 2, rightConstant: 2, widthConstant: 0, heightConstant: 0)
         if stackView != nil{
             print("stackview is not nil")
             return
         }
         stackView = MDStackView(metaData: nil)
+//        stackView.publishTimeLabel.isHidden = false
+//        stackView.sectionNameLabel.isHidden = true
+//        stackView.headlineLabel.isHidden = true
+//        stackView.sectionUnderLineView.isHidden = true
+//
+        containerView.addSubview(imageView)
+        containerView.addSubview(stackView)
         
-        self.contentView.addSubview(imageView)
-        self.contentView.addSubview(stackView)
+        imageView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 200)
         
-        imageView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: nil, right: contentView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 175)
+        stackView.anchor(imageView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 0)
         
-        stackView.anchor(imageView.bottomAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 10, rightConstant: 10, widthConstant: 0, heightConstant: 0)
-        
+        let bottomConstraint = NSLayoutConstraint.init(item: containerView, attribute: .bottom, relatedBy: NSLayoutRelation.greaterThanOrEqual, toItem: stackView, attribute: .bottom, multiplier: 1, constant: -10)
+        contentView.addConstraint(bottomConstraint)
     }
 
     override func configure(data:Any?){

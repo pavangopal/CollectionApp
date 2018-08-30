@@ -76,7 +76,7 @@ class TextComponent : Component {
     func getConstrainedWidth(type:TextComponentType,containerWidth:CGFloat) -> CGFloat {
         switch type {
         case .AuthorName:
-            return containerWidth - 100 - horizontalPagging
+            return containerWidth//- 100 - horizontalPagging
         default:
             return CGFloat.greatestFiniteMagnitude
         }

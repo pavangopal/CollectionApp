@@ -83,6 +83,7 @@
 		1D406312212D5E4400228FC8 /* FloatRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D406311212D5E4400228FC8 /* FloatRatingView.swift */; };
 		1D406314212D7A0100228FC8 /* FullImageSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D406313212D7A0100228FC8 /* FullImageSliderCell.swift */; };
 		1D6B8DA32122C9680091D4DB /* CollectionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6B8DA22122C9680091D4DB /* CollectionLayout.swift */; };
+		1D9139BB21380A1A0009B655 /* CoverImageStoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9139BA21380A1A0009B655 /* CoverImageStoryCell.swift */; };
 		1DA05102212AC29900AEA41B /* FourColumnGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA05101212AC29900AEA41B /* FourColumnGridCell.swift */; };
 		2396A5C30F0B3D9E67A1AD1A /* Pods_CollectionTemplateApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7E3E72581AF9F22F572142 /* Pods_CollectionTemplateApp.framework */; };
 /* End PBXBuildFile section */
@@ -168,6 +169,7 @@
 		1D406311212D5E4400228FC8 /* FloatRatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatRatingView.swift; sourceTree = "<group>"; };
 		1D406313212D7A0100228FC8 /* FullImageSliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageSliderCell.swift; sourceTree = "<group>"; };
 		1D6B8DA22122C9680091D4DB /* CollectionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionLayout.swift; sourceTree = "<group>"; };
+		1D9139BA21380A1A0009B655 /* CoverImageStoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverImageStoryCell.swift; sourceTree = "<group>"; };
 		1DA05101212AC29900AEA41B /* FourColumnGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourColumnGridCell.swift; sourceTree = "<group>"; };
 		2FB49CA0CE8CB7926CE04042 /* Pods-CollectionTemplateApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollectionTemplateApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-CollectionTemplateApp/Pods-CollectionTemplateApp.release.xcconfig"; sourceTree = "<group>"; };
 		4D7E3E72581AF9F22F572142 /* Pods_CollectionTemplateApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CollectionTemplateApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -198,6 +200,7 @@
 				1DA05101212AC29900AEA41B /* FourColumnGridCell.swift */,
 				1D406313212D7A0100228FC8 /* FullImageSliderCell.swift */,
 				1D341EC1212ED1DF00925125 /* SimpleSliderCell.swift */,
+				1D9139BA21380A1A0009B655 /* CoverImageStoryCell.swift */,
 			);
 			path = "Madrid Cells";
 			sourceTree = "<group>";
@@ -660,6 +663,7 @@
 				1D341EBC212EBF8300925125 /* StoryViewModel.swift in Sources */,
 				1D341EB3212E97B200925125 /* ImageComponent.swift in Sources */,
 				1D15FA2A2121B6E5004297B2 /* URLParameterEncoder.swift in Sources */,
+				1D9139BB21380A1A0009B655 /* CoverImageStoryCell.swift in Sources */,
 				1D15FA562121B87B004297B2 /* DeviceExtension.swift in Sources */,
 				1D15FA742121B952004297B2 /* CommonRedirect.swift in Sources */,
 				1D15FA5B2121B87B004297B2 /* UIColorExtension.swift in Sources */,
@@ -810,7 +814,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = WDRPWY7V7C;
+				DEVELOPMENT_TEAM = 6HF7JNZ5A9;
 				INFOPLIST_FILE = "$(SRCROOT)/CollectionTemplateApp/System Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.quintype.staging.CollectionTemplateApp;
@@ -827,7 +831,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = WDRPWY7V7C;
+				DEVELOPMENT_TEAM = 6HF7JNZ5A9;
 				INFOPLIST_FILE = "$(SRCROOT)/CollectionTemplateApp/System Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.quintype.staging.CollectionTemplateApp;

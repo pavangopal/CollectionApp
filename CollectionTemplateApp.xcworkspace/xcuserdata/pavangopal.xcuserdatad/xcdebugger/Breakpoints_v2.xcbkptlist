@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CollectionTemplateApp/Controllers/HomeController.swift"
-            timestampString = "557306020.649809"
+            timestampString = "557323339.6564651"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
+            startingLineNumber = "245"
+            endingLineNumber = "245"
             landmarkName = "didRecieveData(sectionLayoutArray:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CollectionTemplateApp/Collection/ViewModel/CollectionViewModel.swift"
-            timestampString = "557303588.019709"
+            filePath = "CollectionTemplateApp/Collection/Cells/Madrid Cells/FullImageSliderCell.swift"
+            timestampString = "557323339.656536"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "didRecieveData(collectionModel:)"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "configure(data:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

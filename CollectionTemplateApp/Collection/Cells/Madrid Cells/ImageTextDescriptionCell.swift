@@ -1,20 +1,23 @@
 //
-//  FullImageSliderCell.swift
+//  ImageTextDescriptionCell.swift
 //  CollectionTemplateApp
 //
-//  Created by Pavan Gopal on 8/22/18.
+//  Created by Pavan Gopal on 9/3/18.
 //  Copyright © 2018 Pavan Gopal. All rights reserved.
 //
 
 import UIKit
 import Quintype
 
-class FullImageSliderCell: BaseCollectionCell {
+class ImageTextDescriptionCell: BaseCollectionCell {
+    
+    var containerView:UIView = {
+        let view = UIView()
+        return view
+    }()
     
     var imageView:UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleToFill
-        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -23,27 +26,22 @@ class FullImageSliderCell: BaseCollectionCell {
     override func setupViews() {
         super.setupViews()
         
-        contentView.clipsToBounds = true
-        contentView.backgroundColor = .white
+        contentView.addSubview(containerView)
+        containerView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 2, leftConstant: 2, bottomConstant: 2, rightConstant: 2, widthConstant: 0, heightConstant: 0)
         
         stackView = MDStackView()
-        stackView.headlineLabel.textColor = .white
-        stackView.authorNameLabel.textColor = .white
-        stackView.sectionUnderLineView.isHidden = true
-        stackView.publishTimeLabel.textColor = .white
         
-        self.contentView.addSubview(imageView)
-        self.contentView.addSubview(stackView)
+        containerView.addSubview(imageView)
+        containerView.addSubview(stackView)
         
-        imageView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        imageView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 200)
         
-        imageView.applyGradient(colors: [UIColor.clear,UIColor.black], locations: nil, startPoint: CGPoint(x: 1, y: 0), endPoint: CGPoint(x: 1, y: 1),frame:CGRect(x: 0, y: 0, width:
-            screenWidth, height: 450))
+        stackView.anchor(imageView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 0)
         
-        stackView.anchor(nil, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 10, rightConstant: 10, widthConstant: 0, heightConstant: 0)
-        
+        let bottomConstraint = NSLayoutConstraint.init(item: containerView, attribute: .bottom, relatedBy: NSLayoutRelation.greaterThanOrEqual, toItem: stackView, attribute: .bottom, multiplier: 1, constant: -10)
+        contentView.addConstraint(bottomConstraint)
     }
-   
+    
     override func configure(data:Any?,associatedMetaData:AssociatedMetadata?){
         
         guard let story = data as? Story else{
@@ -52,14 +50,14 @@ class FullImageSliderCell: BaseCollectionCell {
         
         self.stackView.updateViewFor(associatedMetaData: associatedMetaData)
         
-        if let heroImageS3Key = story.hero_image_s3_key{
+        if let heroImageS3Key = story.hero_image_s3_key {
             
-            let imageSize = self.bounds.size
+            let imageSize = CGSize(width: UIScreen.main.bounds.width-30, height: 200)
             imageView.loadImage(imageMetaData: story.hero_image_metadata, imageS3Key: heroImageS3Key, targetSize: imageSize, placeholder: nil)
         }
         
-        stackView.headlineLabel.text = story.headline?.trim()
-        //        stackView.subHeadlineLabel.text = story.subheadline?.trim()
+        stackView.headlineLabel.text = story.headline ?? ""
+        stackView.subHeadlineLabel.text = story.subheadline?.trim()
         
         if story.story_template == StoryTemplet.Review {
             stackView.ratingView.isHidden = false
@@ -77,15 +75,14 @@ class FullImageSliderCell: BaseCollectionCell {
             self.stackView.authorImageView.kf.setImage(with: imageURL, completionHandler: { [weak self] (image, error, cachetype, url) in
                 guard let selfD = self else{return}
                 
-                //                selfD.stackView.authorImageView.isHidden = false
                 selfD.stackView.authorImageView.image = image
             })
-        }else{
-            //            stackView.authorImageView.isHidden = true
         }
         
         self.stackView.publishTimeLabel.text = (story.first_published_at?.convertTimeStampToDate ?? "" ).trim()
         
+        
     }
+    
     
 }

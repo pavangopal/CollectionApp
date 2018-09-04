@@ -38,7 +38,6 @@ class FourColumnGridCell: BaseCollectionCell {
         let label = TTTAttributedLabel(frame: .zero)
         label.textColor = .white
         label.setProperties()
-        label.verticalAlignment = TTTAttributedLabelVerticalAlignment.top
         return label
     }()
     
@@ -48,15 +47,34 @@ class FourColumnGridCell: BaseCollectionCell {
         return view
     }()
     
+    var ratingView:FloatRatingView = {
+        let ratingView = FloatRatingView()
+        ratingView.isHidden = true
+        ratingView.clipsToBounds = true
+        ratingView.maxRating = 5
+        ratingView.minRating = 0
+        ratingView.fullImage = AssetImage.FullStarRating.image
+        ratingView.emptyImage = AssetImage.EmptyStarRating.image
+        ratingView.editable = false
+        ratingView.type = FloatRatingView.FloatRatingViewType.halfRatings
+        ratingView.translatesAutoresizingMaskIntoConstraints = false
+        return ratingView
+    }()
+    
+    var ratingViewHeightConstraint:NSLayoutConstraint?
+    
     override func setupViews() {
         super.setupViews()
         
         contentView.backgroundColor = .white
         contentView.addSubview(containerView)
+        
         containerView.addSubview(imageView)
         containerView.addSubview(sectionNameLabel)
         containerView.addSubview(storyTitleContainerView)
         storyTitleContainerView.addSubview(headlineLabel)
+        
+        containerView.addSubview(ratingView)
         
         containerView.fillSuperview()
         
@@ -64,16 +82,23 @@ class FourColumnGridCell: BaseCollectionCell {
         
         sectionNameLabel.anchor(nil, left: containerView.leftAnchor, bottom: imageView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 15, bottomConstant: 15, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
-        storyTitleContainerView.anchor(imageView.bottomAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 120)
+        storyTitleContainerView.anchor(imageView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         headlineLabel.anchor(storyTitleContainerView.topAnchor, left: storyTitleContainerView.leftAnchor, bottom: storyTitleContainerView.bottomAnchor, right: storyTitleContainerView.rightAnchor, topConstant: 8, leftConstant: 8, bottomConstant: 8, rightConstant: 8, widthConstant: 0, heightConstant: 0)
         
-        styleUIFor(metaData: nil)
+        ratingView.anchor(storyTitleContainerView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 0, widthConstant: 120, heightConstant: 0)
+        ratingViewHeightConstraint = ratingView.heightAnchor.constraint(equalToConstant: 20)
+        ratingViewHeightConstraint?.isActive = true
+        
+        let bottomConstraint = NSLayoutConstraint(item: containerView, attribute: .bottom, relatedBy: .greaterThanOrEqual, toItem: ratingView, attribute: .bottom, multiplier: 1, constant: -10)
+        contentView.addConstraint(bottomConstraint)
+        
     }
-
     
-    override func configure(data: Any?) {
+    
+    override func configure(data: Any?,associatedMetaData:AssociatedMetadata?) {
         guard let story = data as? Story else {return}
+        
         
         if let heroImageS3Key = story.hero_image_s3_key{
             
@@ -81,18 +106,31 @@ class FourColumnGridCell: BaseCollectionCell {
             imageView.loadImage(imageMetaData: story.hero_image_metadata, imageS3Key: heroImageS3Key, targetSize: imageSize, placeholder: nil)
         }
         
+        
+        if story.story_template == StoryTemplet.Review {
+            ratingViewHeightConstraint?.constant = 20
+            ratingView.isHidden = false
+            ratingView.rating = story.storyMetadata?.review_rating?.value ?? 0.0
+        }else{
+            ratingViewHeightConstraint?.constant = 0
+            ratingView.isHidden = true
+        }
+        
         headlineLabel.text = story.headline ?? ""
         sectionNameLabel.text = story.sections.first?.display_name ?? story.sections.first?.name ?? ""
         
+        styleUIFor(metaData: associatedMetaData)
     }
     
     
     private func styleUIFor(metaData:AssociatedMetadata?) {
         if metaData?.theme == .Dark{
+            contentView.backgroundColor = .black
             headlineLabel.backgroundColor = .black
             storyTitleContainerView.backgroundColor = .black
             headlineLabel.textColor = .white
         }else{
+            contentView.backgroundColor = .white
             headlineLabel.backgroundColor = .white
             storyTitleContainerView.backgroundColor = .white
             headlineLabel.textColor = .black

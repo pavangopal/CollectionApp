@@ -14,29 +14,27 @@ class MDStackView : UIStackView {
     
     let authorNameLabel:TTTAttributedLabel = {
         let label = TTTAttributedLabel(frame: .zero)
-//        label.backgroundColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
-//        label.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
-//        label.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
-//        label.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
         label.setProperties()
-//        label.isHidden = true
+        label.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
         return label
     }()
     
     let publishTimeLabel:TTTAttributedLabel = {
         let label = TTTAttributedLabel(frame: .zero)
-//        label.backgroundColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setProperties()
         label.isHidden = true
+//        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+//        label.setContentHuggingPriority(.required, for: .horizontal)
         return label
     }()
     
     let authorImageView:UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-//        imageView.backgroundColor = .green
         imageView.isHidden = true
         return imageView
     }()
@@ -45,18 +43,12 @@ class MDStackView : UIStackView {
         let label = TTTAttributedLabel(frame: .zero)
         label.backgroundColor = .black
         label.textColor = .white
-
-//        label.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
-//        label.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-//        label.insets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         label.translatesAutoresizingMaskIntoConstraints = false
-//        label.isHidden = true
         return label
     }()
     
     let sectionUnderLineView:UIView = {
         let view = UIView()
-//        view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isHidden = true
         return view
@@ -64,8 +56,6 @@ class MDStackView : UIStackView {
     
     var headlineLabel:TTTAttributedLabel = {
         let label = TTTAttributedLabel(frame: .zero)
-//        label.backgroundColor = .white
-        
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 3
         label.lineBreakMode = .byTruncatingTail
@@ -75,8 +65,6 @@ class MDStackView : UIStackView {
     
     var subHeadlineLabel:TTTAttributedLabel = {
         let label = TTTAttributedLabel(frame: .zero)
-//        label.backgroundColor = .white
-        
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 3
         label.lineBreakMode = .byTruncatingTail
@@ -106,65 +94,44 @@ class MDStackView : UIStackView {
         super.init(frame: frame)
     }
     
-    convenience init(metaData:AssociatedMetadata?) {
+    convenience init() {
         self.init(frame: .zero)
         self.axis = .vertical
         self.alignment = .leading
         self.distribution = .fill
         self.spacing = 10
         
-        guard let metaDataD = metaData else{
-            createDefaultStackView()
-            return
-        }
-        
-        createStackView(for: metaDataD)
+        createStackView()
     }
     
-    private func createStackView(`for` metaData:AssociatedMetadata){
-        
-        if metaData.show_section_tag{
-            self.addArrangedSubview(createSectionStackView(metaData: metaData))
-        }else{
-//            sectionNameLabel.isHidden = true
-            sectionUnderLineView.isHidden = true
-        }
-        
+    private func createStackView(){
+        //#1
+        let sectionStackView = createSectionStackView()
+        self.addArrangedSubview(sectionStackView)
+        //#2
         self.addArrangedSubview(headlineLabel)
         headlineLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
         headlineLabel.isHidden = false
+        
         //        self.addArrangedSubview(subHeadlineLabel)
         //        subHeadlineLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
         
+        //#3
         self.addArrangedSubview(ratingView)
         
         let heightConstraint = ratingView.heightAnchor.constraint(equalToConstant: 20)
         heightConstraint.priority = UILayoutPriority.defaultHigh
         heightConstraint.isActive = true
         ratingView.widthAnchor.constraint(equalToConstant: 125).isActive = true
+        
+        let authorStackView = createAuthorStackView()
+        //#4
+        self.addArrangedSubview(authorStackView)
+        
+        authorStackView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
+    }
 
-        createAuthorStackView(metaData: metaData)
-    }
-    
-    private func createDefaultStackView(){
-        
-        self.addArrangedSubview(createSectionStackView(metaData: AssociatedMetadata()))
-        self.addArrangedSubview(headlineLabel)
-        headlineLabel.isHidden = false
-        headlineLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
-        
-        //        self.addArrangedSubview(subHeadlineLabel)
-        //        subHeadlineLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
-        self.addArrangedSubview(ratingView)
-        
-        let heightConstraint = ratingView.heightAnchor.constraint(equalToConstant: 20)
-        heightConstraint.priority = UILayoutPriority.defaultHigh
-        heightConstraint.isActive = true
-        ratingView.widthAnchor.constraint(equalToConstant: 125).isActive = true
-        createAuthorStackView(metaData: AssociatedMetadata())
-    }
-    
-    private func createSectionStackView(metaData:AssociatedMetadata) -> UIStackView {
+    private func createSectionStackView() -> UIStackView {
         
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -184,7 +151,7 @@ class MDStackView : UIStackView {
     }
     
     
-    private func createAuthorStackView(metaData:AssociatedMetadata) {
+    private func createAuthorStackView() -> UIStackView {
         
         let authorStackView = UIStackView()
         authorStackView.axis = .horizontal
@@ -198,83 +165,53 @@ class MDStackView : UIStackView {
         labelStackView.spacing = 5
         labelStackView.distribution = .fill
         
+        authorImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        let heightConstraint = authorImageView.heightAnchor.constraint(equalToConstant: 50)
+        heightConstraint.priority = UILayoutPriority.defaultHigh
+        heightConstraint.isActive = true
         
-        if metaData.show_author_name {
-            
-            authorImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-            let heightConstraint = authorImageView.heightAnchor.constraint(equalToConstant: 50)
-            heightConstraint.priority = UILayoutPriority.defaultHigh
-            heightConstraint.isActive = true
-            
-            authorStackView.addArrangedSubview(authorImageView)
-            labelStackView.addArrangedSubview(authorNameLabel)
-//            authorImageView.isHidden = false
-//            authorNameLabel.isHidden = false
-        }else{
-//            authorNameLabel.isHidden = true
-            authorImageView.isHidden = true
-        }
+        authorStackView.addArrangedSubview(authorImageView)
+        labelStackView.addArrangedSubview(authorNameLabel)
         
-        if metaData.show_time_of_publish{
-            publishTimeLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 50).isActive = true
-            labelStackView.addArrangedSubview(publishTimeLabel)
-//            publishTimeLabel.isHidden = false
-        }else{
-            print("hide publishTimeLabel")
-//            publishTimeLabel.isHidden = true
-        }
+        
+        publishTimeLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 50).isActive = true
+        labelStackView.addArrangedSubview(publishTimeLabel)
         
         authorStackView.addArrangedSubview(labelStackView)
-        self.addArrangedSubview(authorStackView)
+//        self.addArrangedSubview(authorStackView)
         
-        authorStackView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
+        return authorStackView
     }
     
-    private func createAuthorStackView(metaData:AssociatedMetadata,axis:UILayoutConstraintAxis) {
+    func updateViewFor(associatedMetaData:AssociatedMetadata?) {
+        guard let associatedMetaData = associatedMetaData else{return}
         
-        let authorStackView = UIStackView()
-        authorStackView.axis = axis
-        authorStackView.alignment = .top
-        authorStackView.distribution = .fill
-        authorStackView.spacing = 5
-        
-        let labelStackView = UIStackView()
-        labelStackView.alignment = .center
-        labelStackView.axis = .horizontal
-        labelStackView.spacing = 5
-        labelStackView.distribution = .fill
-        
-        if metaData.show_author_name {
-            
-            authorImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-            let heightConstraint = authorImageView.heightAnchor.constraint(equalToConstant: 50)
-            heightConstraint.priority = UILayoutPriority.defaultHigh
-            heightConstraint.isActive = true
-            
-            authorStackView.addArrangedSubview(authorImageView)
-            labelStackView.addArrangedSubview(authorNameLabel)
-            //            authorImageView.isHidden = false
-//            authorNameLabel.isHidden = false
+        if associatedMetaData.show_author_name{
+            self.authorNameLabel.isHidden = false
+            self.authorImageView.isHidden = true
         }else{
-//            authorNameLabel.isHidden = true
-            authorImageView.isHidden = true
+            self.authorNameLabel.isHidden = true
+            self.authorImageView.isHidden = true
         }
         
-        if metaData.show_time_of_publish{
-            publishTimeLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 50).isActive = true
-            labelStackView.addArrangedSubview(publishTimeLabel)
-//            publishTimeLabel.isHidden = false
+        if associatedMetaData.show_time_of_publish{
+            self.publishTimeLabel.isHidden = false
+            self.publishTimeLabel.isHidden = false
         }else{
-            print("hide publishTimeLabel")
-//            publishTimeLabel.isHidden = true
+            self.publishTimeLabel.isHidden = true
+            self.publishTimeLabel.isHidden = true
         }
         
-        authorStackView.addArrangedSubview(labelStackView)
-        self.addArrangedSubview(authorStackView)
-        
-        authorStackView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
+        if associatedMetaData.show_section_tag{
+            self.sectionNameLabel.isHidden = false
+            self.sectionNameLabel.isHidden = false
+            self.sectionUnderLineView.isHidden = false
+        }else{
+            self.sectionNameLabel.isHidden = true
+            self.sectionNameLabel.isHidden = true
+            self.sectionUnderLineView.isHidden = true
+        }
     }
-  
 }
 
 

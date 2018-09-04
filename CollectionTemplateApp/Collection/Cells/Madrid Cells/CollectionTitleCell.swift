@@ -54,7 +54,7 @@ class CollectionTitleCell: BaseCollectionCell {
         underLineView.anchor(collectionTitleLabel.bottomAnchor, left: collectionTitleLabel.leftAnchor, bottom: nil, right: collectionTitleLabel.rightAnchor, topConstant: 2, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 2)
     }
     
-    override func configure(data: Any?) {
+    override func configure(data: Any?,associatedMetaData:AssociatedMetadata?) {
         
         guard let collectionName = data as? String else{
             return

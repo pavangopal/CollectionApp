@@ -47,7 +47,7 @@ class BaseCollectionCell: UICollectionViewCell {
 ////        self.setBackgroundView()
 //    }
     
-    func configure(data:Any?){
+    func configure(data:Any?,associatedMetaData:AssociatedMetadata?){
         
     }
     

@@ -77,8 +77,8 @@ public class AssociatedMetadata:SafeJsonObject {
     public var show_author_name : Bool = true
     public var number_of_slides_to_show : Int = 0
     public var number_of_slides_to_scroll : Int = 0
-    public var show_section_tag : Bool = true
-    public var show_time_of_publish : Bool = true
+    public var show_section_tag : Bool = false
+    public var show_time_of_publish : Bool = false
     public var set_scroll_speed : Int = 0
     
     public var show_collection_name : Bool = true

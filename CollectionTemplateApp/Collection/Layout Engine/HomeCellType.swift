@@ -11,31 +11,26 @@ import Foundation
 enum HomeCellType:String{
     
     case CollectionTitleCell = "CollectionTitleCell"
-    
     case DefaultCell = "defaultStoryCell"
-    
-    case FullScreenCarouselCell = "FullscreenCarouselCell"
-    
     case EmptyCell = "EmptyCell"
-    
     case DefaultCollectionCell = "DefaultCollectionCell"
-    
     case ImageTextCell = "ImageTextCell"
-    
-    
     case FourColumnGridCell = "FourColumnGridCell"
     case FullImageSliderCell = "FullImageSliderCell"
-    
     case StoryListCell = "StoryListCell"
-    case ImageStoryListCell = "ImageStoryListCell"
+    case ImageStoryListCardCell = "ImageStoryListCardCell"
     case CarousalContainerCell = "CarousalContainerCell"
     case SimpleSliderCell = "SimpleSliderCell"
+    case LinearGallerySliderCell = "LinearGallerySliderCell"
+    case LinerGalleryCarousalContainer = "LinerGalleryCarousalContainer"
+    case ImageStoryListCell = "ImageStoryListCell"
 
     var innerCellHeight:CGFloat{
         switch self {
-        case .FullScreenCarouselCell,.SimpleSliderCell,.FullImageSliderCell:
+        case .SimpleSliderCell,.FullImageSliderCell:
             return 450
-        
+        case .LinearGallerySliderCell:
+            return 300
         case .ImageTextCell:
             return 400
         default:

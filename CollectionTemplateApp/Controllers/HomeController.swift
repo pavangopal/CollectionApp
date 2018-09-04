@@ -19,9 +19,11 @@ final class HomeController: UIViewController {
         case ImageTextCell = "ImageTextCell"
         case FourColumnGridCell = "FourColumnGridCell"
         case StoryListCell = "StoryListCell"
-        case ImageStoryListCell = "ImageStoryListCell"
+        case ImageStoryListCardCell = "ImageStoryListCardCell"
         case CarousalContainerCell = "CarousalContainerCell"
         case FullImageSliderCell = "FullImageSliderCell"
+        case LinerGalleryCarousalContainer = "LinerGalleryCarousalContainer"
+        case ImageStoryListCell = "ImageStoryListCell"
     }
     
     lazy var collectionView:UICollectionView = {
@@ -68,9 +70,12 @@ final class HomeController: UIViewController {
         collectionView.register(ImageTextCell.self, forCellWithReuseIdentifier: CellType.ImageTextCell.rawValue)
         collectionView.register(FourColumnGridCell.self, forCellWithReuseIdentifier: CellType.FourColumnGridCell.rawValue)
         collectionView.register(StoryListCell.self, forCellWithReuseIdentifier: CellType.StoryListCell.rawValue)
-        collectionView.register(ImageStoryListCell.self, forCellWithReuseIdentifier: CellType.ImageStoryListCell.rawValue)
+        collectionView.register(ImageStoryListCardCell.self, forCellWithReuseIdentifier: CellType.ImageStoryListCardCell.rawValue)
         collectionView.register(CarousalContainerCell.self, forCellWithReuseIdentifier: CellType.CarousalContainerCell.rawValue)
         collectionView.register(FullImageSliderCell.self, forCellWithReuseIdentifier: CellType.FullImageSliderCell.rawValue)
+        collectionView.register(LinerGalleryCarousalContainer.self, forCellWithReuseIdentifier: CellType.LinerGalleryCarousalContainer.rawValue)
+        collectionView.register(ImageStoryListCell.self, forCellWithReuseIdentifier: CellType.ImageStoryListCell.rawValue)
+        
         
     }
     
@@ -96,41 +101,41 @@ extension HomeController: UICollectionViewDataSource,UICollectionViewDelegate,UI
         case .CollectionTitleCell:
 
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellType.CollectionTitleCell.rawValue, for: indexPath) as? BaseCollectionCell
-            cell?.configure(data: layout.data)
+            cell?.configure(data: layout.data,associatedMetaData:layout.associatedMetaData)
 
             
         case .ImageTextCell:
             let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? ImageTextCell// as? ImageTextCell
             
-            imageTextCell?.configure(data: layout.story)
+            imageTextCell?.configure(data: layout.story,associatedMetaData:layout.associatedMetaData)
             
             cell = imageTextCell
             
         case .FourColumnGridCell:
             let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? FourColumnGridCell// as? ImageTextCell
             
-            imageTextCell?.configure(data: layout.story)
+            imageTextCell?.configure(data: layout.story,associatedMetaData:layout.associatedMetaData)
             
             cell = imageTextCell
             
         case .StoryListCell:
             let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? StoryListCell// as? ImageTextCell
             
-            imageTextCell?.configure(data: layout.story)
+            imageTextCell?.configure(data: layout.story,associatedMetaData:layout.associatedMetaData)
             
             cell = imageTextCell
             
-        case .ImageStoryListCell:
-            let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? ImageStoryListCell// as? ImageTextCell
+        case .ImageStoryListCardCell:
+            let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? ImageStoryListCardCell// as? ImageTextCell
             
-            imageTextCell?.configure(data: layout.story)
+            imageTextCell?.configure(data: layout.story,associatedMetaData:layout.associatedMetaData)
             
             cell = imageTextCell
             
         case .CarousalContainerCell:
             let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? CarousalContainerCell
             
-            imageTextCell?.configure(data: layout.carouselModel)
+            imageTextCell?.configure(data: layout.carouselModel,associatedMetaData:layout.associatedMetaData)
             
             cell = imageTextCell
             
@@ -138,15 +143,29 @@ extension HomeController: UICollectionViewDataSource,UICollectionViewDelegate,UI
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.FullImageSliderCell.rawValue, for: indexPath) as? FullImageSliderCell
             
-            cell?.configure(data: layout.story)
+            cell?.configure(data: layout.story,associatedMetaData:layout.associatedMetaData)
             
             return cell!
+            
+        case .LinerGalleryCarousalContainer:
+            let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? LinerGalleryCarousalContainer
+            
+            imageTextCell?.configure(data: layout.carouselModel,associatedMetaData:layout.associatedMetaData)
+            
+            cell = imageTextCell
+            
+        case .ImageStoryListCell:
+            
+            let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? ImageStoryListCell
+            
+            imageTextCell?.configure(data: layout.story,associatedMetaData:layout.associatedMetaData)
+            cell = imageTextCell
             
         default:
             
             let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? ImageTextCell// as? ImageTextCell
             
-            imageTextCell?.configure(data: layout.story)
+            imageTextCell?.configure(data: layout.story,associatedMetaData:layout.associatedMetaData)
             
             cell = imageTextCell
         }
@@ -184,8 +203,8 @@ extension HomeController: UICollectionViewDataSource,UICollectionViewDelegate,UI
 //            return size
             return layout.size
 
-        case .ImageStoryListCell:
-//            let sizingCell = ImageStoryListCell(frame: CGRect.zero)
+        case .ImageStoryListCardCell:
+//            let sizingCell = ImageStoryListCardCell(frame: CGRect.zero)
 //            sizingCell.configure(data: layout.story)
 //            let size = sizingCell.calculateHeight(targetSize: targetSize)
 //
@@ -197,9 +216,15 @@ extension HomeController: UICollectionViewDataSource,UICollectionViewDelegate,UI
             let size = CGSize(width: targetSize.width, height: (layout.carouselModel?.estimatedInnerCellHeight ?? 0) + CGFloat(20))
             return size
             
-        case .FullImageSliderCell:
-            return CGSize(width: width, height: 450)
+        case .LinerGalleryCarousalContainer:
+            let size = CGSize(width: targetSize.width+30, height: (layout.carouselModel?.estimatedInnerCellHeight ?? 0) + CGFloat(20))
+            return size
             
+        case .FullImageSliderCell:
+            return layout.size
+//            return CGSize(width: width, height: 450)
+        case .ImageStoryListCell:
+            return layout.size
         default:
             return CGSize(width: width, height: 50)
         }
@@ -212,15 +237,18 @@ extension HomeController: UICollectionViewDataSource,UICollectionViewDelegate,UI
             return .zero
         }
         
-        switch layout.homeCellType {
+        
+        switch layout.collectionLayoutType! {
             
-        case .CollectionTitleCell:
-            return UIEdgeInsets(top: 20, left: 15, bottom: 20, right: 15)
+        case .FullscreenLinearGallerySlider:
+            return UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+            
         default:
-            return UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+            return UIEdgeInsets(top: 20, left: 15, bottom: 20, right: 15)
         }
         
     }
+    
     
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

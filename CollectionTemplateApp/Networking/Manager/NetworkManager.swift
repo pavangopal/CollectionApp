@@ -50,8 +50,6 @@ class NetworkManager {
     
     func startFetch(slug:String,limit:Int,offset:Int) {
         
-        
-        
         if  page.status == Page.PagingStatus.Paging ||
             page.status == Page.PagingStatus.LastPage
         {return}
@@ -124,9 +122,11 @@ class NetworkManager {
         }
     }
     
+    var childKeyparentKeyMapping:[String:String] = [:]
+    
     func recursiveBulkCall(numberOfLevel:Int,parentCollection:CollectionModel,collectionItems:[CollectionItem],completion: @escaping (CollectionModel)->(),Error:((Error)->())?){
         
-        if numberOfLevel == 0 || collectionItems.count == 0{
+        if numberOfLevel == 0 || collectionItems.count == 0 {
             completion(parentCollection)
             return 
         }
@@ -139,9 +139,25 @@ class NetworkManager {
             var nestedCollectionItemArray:[CollectionItem] = []
             
             collectionItems.forEach({ (collectionItem) in
-                collectionItem.collection = stringCollectionModel[collectionItem.slug!]
                 
-                if let collectionItem = collectionItem.collection!.items.first(where: {$0.type == "collection"}){
+                //If collection is present in the nested Api call show the stories of that
+                
+                let collectionModel = stringCollectionModel[collectionItem.slug!]
+                
+                if collectionItem.collection?.items.first?.type == "collection"{
+                    let innerCollectionModelItems = collectionModel?.items
+                    collectionItem.collection?.items = innerCollectionModelItems ?? []
+                    let parentKey = self.childKeyparentKeyMapping[collectionItem.slug!]
+                    collectionItem.slug = parentKey
+                    
+                }else{
+                  collectionItem.collection = collectionModel
+                }
+                
+                if let innercollectionItem = collectionItem.collection!.items.first(where: {$0.type == "collection"}){
+                    self.childKeyparentKeyMapping[innercollectionItem.slug!] = collectionItem.slug
+                    
+                    collectionItem.slug = innercollectionItem.slug
                     nestedCollectionItemArray.append(collectionItem)
                 }
             })
@@ -158,7 +174,7 @@ class NetworkManager {
     
     func PostBulkApiCall(slugArray:[String],limit:Int,Completion: @escaping ([String:CollectionModel])->(),Error: @escaping (Error)->()) {
         
-        self.router.request(CollectionApi.BulkPost(slugArray: slugArray, limit: limit)) { data, response, error in
+        self.router.request(CollectionApi.BulkPost(slugArray: slugArray, limit: limit,itemType: ItemType.Story.rawValue)) { data, response, error in
             
             if error != nil{
                 Error(NetworkError.NoInternet)
@@ -252,6 +268,12 @@ class NetworkManager {
         case 600: return .failure(NetworkResponse.outdated.rawValue)
         default: return .failure(NetworkResponse.failed.rawValue)
         }
+    }
+    
+    enum ItemType:String{
+        case Story = "story"
+        case Collection = "collection"
+        case All = ""
     }
 }
 

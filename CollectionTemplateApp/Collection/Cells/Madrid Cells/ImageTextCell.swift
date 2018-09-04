@@ -26,20 +26,12 @@ class ImageTextCell: BaseCollectionCell {
     
     override func setupViews() {
         super.setupViews()
-//        setBackgroundView()
-//        contentView.backgroundColor = .red
+
         contentView.addSubview(containerView)
         containerView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 2, leftConstant: 2, bottomConstant: 2, rightConstant: 2, widthConstant: 0, heightConstant: 0)
-        if stackView != nil{
-            print("stackview is not nil")
-            return
-        }
-        stackView = MDStackView(metaData: nil)
-//        stackView.publishTimeLabel.isHidden = false
-//        stackView.sectionNameLabel.isHidden = true
-//        stackView.headlineLabel.isHidden = true
-//        stackView.sectionUnderLineView.isHidden = true
-//
+        
+        stackView = MDStackView()
+        
         containerView.addSubview(imageView)
         containerView.addSubview(stackView)
         
@@ -51,11 +43,13 @@ class ImageTextCell: BaseCollectionCell {
         contentView.addConstraint(bottomConstraint)
     }
 
-    override func configure(data:Any?){
+    override func configure(data:Any?,associatedMetaData:AssociatedMetadata?){
         
         guard let story = data as? Story else{
             return
         }
+        
+        self.stackView.updateViewFor(associatedMetaData: associatedMetaData)
         
         if let heroImageS3Key = story.hero_image_s3_key {
             
@@ -66,30 +60,28 @@ class ImageTextCell: BaseCollectionCell {
         stackView.headlineLabel.text = story.headline ?? ""
         //        stackView.subHeadlineLabel.text = story.subheadline?.trim()
         
-//        if story.story_template == StoryTemplet.Review {
-//            stackView.ratingView.isHidden = false
-//            stackView.ratingView.rating = story.storyMetadata?.review_rating?.value ?? 0.0
-//        }else{
-//            stackView.ratingView.isHidden = true
-//        }
+        if story.story_template == StoryTemplet.Review {
+            stackView.ratingView.isHidden = false
+            stackView.ratingView.rating = story.storyMetadata?.review_rating?.value ?? 0.0
+        }else{
+            stackView.ratingView.isHidden = true
+        }
         
         stackView.sectionNameLabel.text = story.sections.first?.display_name ?? story.sections.first?.name ?? ""
         
-        stackView.authorNameLabel.text = story.authors.first?.name ?? ""
+        stackView.authorNameLabel.text = story.author_name ?? ""
         
         if let imageString = story.authors.first?.avatar_url?.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed),let imageURL = URL(string:"\(imageString)"){
             
             self.stackView.authorImageView.kf.setImage(with: imageURL, completionHandler: { [weak self] (image, error, cachetype, url) in
                 guard let selfD = self else{return}
                 
-                //                selfD.stackView.authorImageView.isHidden = false
                 selfD.stackView.authorImageView.image = image
             })
-        }else{
-            //            stackView.authorImageView.isHidden = true
         }
         
         self.stackView.publishTimeLabel.text = (story.first_published_at?.convertTimeStampToDate ?? "" ).trim()
+        
         
     }
     

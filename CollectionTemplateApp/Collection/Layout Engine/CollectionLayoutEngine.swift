@@ -19,6 +19,12 @@ class CollectionLayoutEngine {
         
         collection.items.forEach { (collectionItem) in
             let sectionLayoutArray = pickLayoutForTemplet(collectionItem: collectionItem)
+            
+            let layout = collectionItem.associatedMetadata?.layout ?? ""
+            let collectionTemplet = CollectionLayout(rawValue: layout) ?? .UNKNOWN
+            
+            sectionLayoutArray.first?.collectionLayoutType = collectionTemplet
+            
             if sectionLayoutArray.count > 0{
                 self.sectionLayout.append(sectionLayoutArray)
             }
@@ -32,14 +38,11 @@ class CollectionLayoutEngine {
         let layout = collectionItem.associatedMetadata?.layout ?? ""
         let collectionTemplet = CollectionLayout(rawValue: layout) ?? .UNKNOWN
         
-        
         switch collectionTemplet {
             
         case .FourColGrid:
-           return  getFourColumGrid(collectionItem:collectionItem)
+            return  getFourColumGrid(collectionItem:collectionItem)
             
-        case .FullscreenCarousel:
-            return getCarouselLayout(for: HomeCellType.FullScreenCarouselCell, collectionItem: collectionItem)
             
         case .HalfImageSlider:
             return getCarouselLayout(for: HomeCellType.ImageTextCell, collectionItem: collectionItem)
@@ -62,12 +65,123 @@ class CollectionLayoutEngine {
             
         case .OneColStoryList:
             return getOneColStoryListLayout(collectionItem:collectionItem)
+            
+        case .FullscreenLinearGallerySlider:
+            return getLinearGallerySliderCarouselLayout(for: HomeCellType.LinearGallerySliderCell, collectionItem: collectionItem)
+            
+        case .LShapeOneWidget:
+            return getLShapeOneWidgetLayout(collectionItem: collectionItem)
+            
+        case .TwoColCarousel:
+            return getTwoColCarouselLayout(collectionItem: collectionItem)
+            
+        case .TwoColHighlight:
+            return getTwoColHighlightLayout(collectionItem: collectionItem)
+            
         default:
-        
+            
             return makeInnerLayout(collectionItem: collectionItem)
             
         }
+    }
+    
+    func getTwoColHighlightLayout(collectionItem:CollectionItem) -> [SectionLayout] {
+        var sectionLayoutArray:[SectionLayout] = []
         
+        if let innerCollection = collectionItem.collection,innerCollection.items.count > 0 {
+            //collection title
+            if (collectionItem.associatedMetadata?.show_collection_name ?? true) {
+                if let titleElement = getTitleLayout(collectionItem: collectionItem){
+                    sectionLayoutArray.append(titleElement)
+                }
+            }
+            
+            let stories:[Story] = innerCollection.items.filter({$0.story != nil}).map({$0.story!})
+            
+            for (index,story) in stories.enumerated(){
+                if index == 0{
+                    let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
+                    let size = calculateHeight(story: story)
+                    sectionLayout.size = size
+                    sectionLayoutArray.append(contentsOf: [sectionLayout])
+                    
+                }else{
+                    let sectionLayout =  SectionLayout(homeCellType: HomeCellType.ImageStoryListCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
+                    let size = calculatedHeightForImageStoryListCell(story: story)
+                    let newHeight = size.height<95 ? 95 : size.height
+                    sectionLayout.size = CGSize(width: size.width, height: newHeight)
+                    sectionLayout.associatedMetaData = collectionItem.associatedMetadata
+                    sectionLayoutArray.append(sectionLayout)
+                }
+            }
+        }
+        
+        return  sectionLayoutArray
+    }
+    
+    func getTwoColCarouselLayout(collectionItem:CollectionItem) -> [SectionLayout] {
+        var sectionLayoutArray:[SectionLayout] = []
+        
+        if let innerCollection = collectionItem.collection,innerCollection.items.count > 0 {
+            //collection title
+            if (collectionItem.associatedMetadata?.show_collection_name ?? true) {
+                if let titleElement = getTitleLayout(collectionItem: collectionItem){
+                    sectionLayoutArray.append(titleElement)
+                }
+            }
+            
+            let stories:[Story] = innerCollection.items.filter({$0.story != nil}).map({$0.story!})
+            let carousalStories = Array<Story>(stories.prefix(3))
+            
+            let carouselModel = CarouselModel.init(layoutType: HomeCellType.ImageTextCell, stories: carousalStories, collectionName: innerCollection.name, estimatedInnerCellHeight: HomeCellType.ImageTextCell.innerCellHeight,associatedMetaData:collectionItem.associatedMetadata)
+            
+            let sectionLayout = [SectionLayout(homeCellType: HomeCellType.CarousalContainerCell, carouselModel: carouselModel, associatedMetadata: collectionItem.associatedMetadata)]
+            
+            sectionLayoutArray.append(contentsOf: sectionLayout)
+            
+            for index in carousalStories.count..<stories.count {
+                let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: stories[index],associatedMetadata:collectionItem.associatedMetadata)
+                let size = calculateHeight(story: stories[index])
+                sectionLayout.size = size
+                sectionLayoutArray.append(sectionLayout)
+            }
+        }
+        
+        return  sectionLayoutArray
+    }
+    
+    func getLShapeOneWidgetLayout(collectionItem:CollectionItem) -> [SectionLayout] {
+        var sectionLayoutArray:[SectionLayout] = []
+        
+        if let innerCollection = collectionItem.collection,innerCollection.items.count > 0 {
+            //collection title
+            if (collectionItem.associatedMetadata?.show_collection_name ?? true) {
+                if let titleElement = getTitleLayout(collectionItem: collectionItem){
+                    sectionLayoutArray.append(titleElement)
+                }
+            }
+            
+            let stories:[Story] = innerCollection.items.filter({$0.story != nil}).map({$0.story!})
+            
+            for (index,story) in stories.enumerated(){
+                if index == 0{
+                    let sectionLayout = SectionLayout(homeCellType: HomeCellType.FullImageSliderCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
+                    sectionLayout.size = CGSize(width: UIScreen.main.bounds.width-30, height: 300)
+                    sectionLayoutArray.append(contentsOf: [sectionLayout])
+                    
+                }else {
+                    
+                    let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
+                    let size = calculateHeight(story: story)
+                    sectionLayout.size = size
+                    sectionLayoutArray.append(contentsOf: [sectionLayout])
+                    
+                }
+            }
+            
+        }
+        
+        return  sectionLayoutArray
     }
     
     func getOneColStoryListLayout(collectionItem:CollectionItem) -> [SectionLayout] {
@@ -82,17 +196,14 @@ class CollectionLayoutEngine {
             
             let stories:[Story] = innerCollection.items.filter({$0.story != nil}).map({$0.story!})
             
-            for (index,story) in stories.enumerated(){
-                
-                let sectionLayout =  SectionLayout(homeCellType: HomeCellType.ImageStoryListCell, story: story)
+            stories.forEach { (story) in
+                let sectionLayout =  SectionLayout(homeCellType: HomeCellType.ImageStoryListCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
                 let size = calculatedHeightForImageStoryListCell(story: story)
-                let newHeight = size.height<100 ? 100 : size.height
+                let newHeight = size.height<95 ? 95 : size.height
                 sectionLayout.size = CGSize(width: size.width, height: newHeight)
                 sectionLayout.associatedMetaData = collectionItem.associatedMetadata
                 sectionLayoutArray.append(sectionLayout)
-                
             }
-            
         }
         return sectionLayoutArray
     }
@@ -108,23 +219,34 @@ class CollectionLayoutEngine {
             }
             
             let stories:[Story] = innerCollection.items.filter({$0.story != nil}).map({$0.story!})
-            
+
             for (index,story) in stories.enumerated(){
-                 if index == stories.count - 1 && index > 2{
+                if index == stories.count - 1 && index > 2{
                     let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
                     sectionLayout.size = calculateHeight(story: story)
                     sectionLayoutArray.append(sectionLayout)
-                 }else{
-                    
-                    let sectionLayout =  SectionLayout(homeCellType: HomeCellType.ImageStoryListCell, story: story)
-                    let size = calculatedHeightForImageStoryListCell(story: story)
+                }else{
+
+                    let sectionLayout =  SectionLayout(homeCellType: HomeCellType.ImageStoryListCardCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
+                    let size = calculatedHeightForImageStoryListCardCell(story: story)
                     let newHeight = size.height<100 ? 100 : size.height
                     sectionLayout.size = CGSize(width: size.width, height: newHeight)
                     sectionLayout.associatedMetaData = collectionItem.associatedMetadata
                     sectionLayoutArray.append(sectionLayout)
                 }
-                
+
             }
+            
+//            innerCollection.items.forEach { (collectionItem) in
+//                if let story = collectionItem.story {
+//                    let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
+//                    sectionLayout.size = calculateHeight(story: story)
+//                    sectionLayoutArray.append(sectionLayout)
+//                }else if let innerCollection = collectionItem.collection {
+//                    let sectionLayout = getTwoColLayout(collectionItem: collectionItem)
+//                    print(sectionLayout)
+//                }
+//            }
             
         }
         return sectionLayoutArray
@@ -145,12 +267,13 @@ class CollectionLayoutEngine {
             
             for (index,story) in stories.enumerated(){
                 if index == 0{
-                    let sectionLayout = [SectionLayout(homeCellType: HomeCellType.FullImageSliderCell, story: story)]
-                    sectionLayoutArray.append(contentsOf: sectionLayout)
+                    let sectionLayout = SectionLayout(homeCellType: HomeCellType.FullImageSliderCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
+                    sectionLayout.size = CGSize(width: UIScreen.main.bounds.width-30, height: 450)
+                    sectionLayoutArray.append(contentsOf: [sectionLayout])
                     
                 }else if index == 1{
-
-                    let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: story)
+                    
+                    let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
                     let size = calculateHeight(story: story)
                     sectionLayout.size = size
                     sectionLayoutArray.append(contentsOf: [sectionLayout])
@@ -158,10 +281,10 @@ class CollectionLayoutEngine {
                 }else if index == 2{
                     
                     //TODO: needs to look like a card
-                    let sectionLayout = SectionLayout(homeCellType: HomeCellType.StoryListCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                    sectionLayout.size = calculatedHeightForStoryListCell(story: story)
+                    let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageStoryListCardCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
+                    sectionLayout.size = calculatedHeightForImageStoryListCardCell(story: story)
                     sectionLayoutArray.append(sectionLayout)
-                
+                    
                 }else{
                     let sectionLayout = SectionLayout(homeCellType: HomeCellType.StoryListCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
                     sectionLayout.size = calculatedHeightForStoryListCell(story: story)
@@ -169,6 +292,28 @@ class CollectionLayoutEngine {
                 }
             }
             
+        }
+        
+        return  sectionLayoutArray
+    }
+    
+    private func getLinearGallerySliderCarouselLayout(`for` innerLayoutType:HomeCellType,collectionItem:CollectionItem) -> [SectionLayout] {
+        var sectionLayoutArray:[SectionLayout] = []
+        
+        if let innerCollection = collectionItem.collection,innerCollection.items.count > 0 {
+            //collection title
+            if (collectionItem.associatedMetadata?.show_collection_name ?? true) {
+                if let titleElement = getTitleLayout(collectionItem: collectionItem){
+                    sectionLayoutArray.append(titleElement)
+                }
+            }
+            
+            let stories:[Story] = innerCollection.items.filter({$0.story != nil}).map({$0.story!})
+            
+            let carouselModel = CarouselModel.init(layoutType: innerLayoutType, stories: stories, collectionName: innerCollection.name, estimatedInnerCellHeight: innerLayoutType.innerCellHeight,associatedMetaData:collectionItem.associatedMetadata)
+            let sectionLayout = [SectionLayout(homeCellType: HomeCellType.LinerGalleryCarousalContainer, carouselModel: carouselModel, associatedMetadata: collectionItem.associatedMetadata)]
+            
+            sectionLayoutArray.append(contentsOf: sectionLayout)
         }
         
         return  sectionLayoutArray
@@ -187,15 +332,15 @@ class CollectionLayoutEngine {
             
             let stories:[Story] = innerCollection.items.filter({$0.story != nil}).map({$0.story!})
             
-            let carouselModel = CarouselModel.init(layoutType: innerLayoutType, stories: stories, collectionName: innerCollection.name, estimatedInnerCellHeight: innerLayoutType.innerCellHeight)
-            let sectionLayout = [SectionLayout(homeCellType: HomeCellType.CarousalContainerCell, carouselModel: carouselModel, associatedMetadata: collectionItem.associatedMetadata)]
+            let carouselModel = CarouselModel.init(layoutType: innerLayoutType, stories: stories, collectionName: innerCollection.name, estimatedInnerCellHeight: innerLayoutType.innerCellHeight,associatedMetaData:collectionItem.associatedMetadata)
+            let sectionLayout = SectionLayout(homeCellType: HomeCellType.CarousalContainerCell, carouselModel: carouselModel, associatedMetadata: collectionItem.associatedMetadata)
             
-            sectionLayoutArray.append(contentsOf: sectionLayout)
+            sectionLayoutArray.append(contentsOf: [sectionLayout])
         }
         
         return  sectionLayoutArray
     }
-
+    
     private func getFourColumGrid(collectionItem:CollectionItem) -> [SectionLayout] {
         var sectionLayoutArray:[SectionLayout] = []
         
@@ -214,7 +359,7 @@ class CollectionLayoutEngine {
         
         return sectionLayoutArray
     }
-   
+    
     private func getTwoColOneAd(collectionItem:CollectionItem) -> [SectionLayout] {
         
         var sectionedLayout:[SectionLayout] = []
@@ -234,8 +379,8 @@ class CollectionLayoutEngine {
                     }
                     
                 }else{
-                    if let sectionLayout = makeStoryCellLayout(for: HomeCellType.ImageStoryListCell, collectionItem: innerCollectinItem){
-                        let size = calculatedHeightForImageStoryListCell(story: collectionItem.story!)
+                    if let sectionLayout = makeStoryCellLayout(for: HomeCellType.ImageStoryListCardCell, collectionItem: innerCollectinItem){
+                        let size = calculatedHeightForImageStoryListCardCell(story: collectionItem.story!)
                         let newHeight = size.height<100 ? 100 : size.height
                         sectionLayout.size = CGSize(width: size.width, height: newHeight)
                         sectionLayout.associatedMetaData = collectionItem.associatedMetadata
@@ -291,16 +436,14 @@ class CollectionLayoutEngine {
             }
             
         }else if let story = collectionItem.story {
-//            let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-//            let size = calculateHeight(story: story)
-//            sectionLayout.size = size
-//            sectionedLayout.append(sectionLayout)
-            let sectionLayout =  SectionLayout(homeCellType: HomeCellType.ImageStoryListCell, story: story)
+            
+            let sectionLayout =  SectionLayout(homeCellType: HomeCellType.ImageStoryListCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
             let size = calculatedHeightForImageStoryListCell(story: story)
-            let newHeight = size.height<100 ? 100 : size.height
+            let newHeight = size.height<95 ? 95 : size.height
             sectionLayout.size = CGSize(width: size.width, height: newHeight)
             sectionLayout.associatedMetaData = collectionItem.associatedMetadata
             sectionedLayout.append(sectionLayout)
+            
         }
         
         return sectionedLayout
@@ -309,17 +452,17 @@ class CollectionLayoutEngine {
     func makeStoryCellLayout(`for` type:HomeCellType,collectionItem:CollectionItem) -> SectionLayout?{
         if let innerCollectionItemStory = collectionItem.story {
             
-            let sectionLayout = SectionLayout(homeCellType: type, story: innerCollectionItemStory)
+            let sectionLayout = SectionLayout(homeCellType: type, story: innerCollectionItemStory,associatedMetadata:collectionItem.associatedMetadata)
             let size = calculateHeight(story: innerCollectionItemStory)
             sectionLayout.size = size
             return sectionLayout
             
         }
-//        else if let innerCollectionItemCollection = collectionItem.collection {
-//
-//            let sectionLayout = SectionLayout(homeCellType: HomeCellType.DefaultCollectionCell, collection: innerCollectionItemCollection)
-//            return sectionLayout
-//        }
+        //        else if let innerCollectionItemCollection = collectionItem.collection {
+        //
+        //            let sectionLayout = SectionLayout(homeCellType: HomeCellType.DefaultCollectionCell, collection: innerCollectionItemCollection)
+        //            return sectionLayout
+        //        }
         
         return nil
     }
@@ -375,7 +518,7 @@ class CollectionLayoutEngine {
         
     }
     
-    func calculatedHeightForImageStoryListCell(story:Story) -> CGSize {
+    func calculatedHeightForImageStoryListCardCell(story:Story) -> CGSize {
         let targetSize = CGSize(width: UIScreen.main.bounds.width-30-150, height: CGFloat.greatestFiniteMagnitude)
         
         let authorComponent = TextComponent(type: TextComponentType.AuthorName)
@@ -394,7 +537,31 @@ class CollectionLayoutEngine {
         let authorSize = CGSize(width: timeStampComponentSize.width, height: maxSize)
         let totalSize = sectionComponentSize + textComponentSize + authorSize
         return CGSize(width: targetSize.width+150, height: totalSize.height + 40 + 4 + 5)
+    }
+    
+    func calculatedHeightForImageStoryListCell(story:Story) -> CGSize {
+        let targetSize = CGSize(width: UIScreen.main.bounds.width-30-95, height: CGFloat.greatestFiniteMagnitude)
         
+        let authorComponent = TextComponent(type: TextComponentType.AuthorName)
+        let timeStampComponent = TextComponent(type: TextComponentType.TimeStamp)
+        let sectionComponent = TextComponent(type: TextComponentType.SectionName)
+        let textComponent = TextComponent(type: TextComponentType.Headline)
+        
+        let insetCorrectedSize = CGSize(width: targetSize.width - 20, height: targetSize.height)
+        
+        let sectionComponentSize = sectionComponent.preferredViewSize(forDisplayingModel:story, containerSize: insetCorrectedSize)
+        let textComponentSize = textComponent.preferredViewSize(forDisplayingModel: story, containerSize: insetCorrectedSize)
+        let authorComponentSize = authorComponent.preferredViewSize(forDisplayingModel: story, containerSize: insetCorrectedSize)
+        let timeStampComponentSize = timeStampComponent.preferredViewSize(forDisplayingModel: story, containerSize: insetCorrectedSize)
+        
+        var reviewStarHeight:CGSize = .zero
+        
+        if story.story_template == StoryTemplet.Review{
+            reviewStarHeight = CGSize(width: targetSize.width, height: 20)
+        }
+        
+        let totalSize = sectionComponentSize + textComponentSize + authorComponentSize + timeStampComponentSize + reviewStarHeight
+        return CGSize(width: targetSize.width+95, height: totalSize.height + 40 + 4 + 5 + 5)
     }
 }
 

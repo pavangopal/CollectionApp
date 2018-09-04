@@ -84,7 +84,7 @@ class SimpleSliderCell: BaseCollectionCell {
         readStoryButton.addTarget(self, action: #selector(self.readStoryButtonPressed), for: .touchUpInside)
     }
     
-    override func configure(data: Any?) {
+    override func configure(data: Any?,associatedMetaData:AssociatedMetadata?) {
         
         guard let collectionTitleStoryTuple = data as? (String?,Story?),let collectionName = collectionTitleStoryTuple.0,let story = collectionTitleStoryTuple.1 else{return}
         
@@ -92,7 +92,7 @@ class SimpleSliderCell: BaseCollectionCell {
         
         if let heroImageS3Key = story.hero_image_s3_key {
             
-            let imageSize = CGSize(width: UIScreen.main.bounds.width-30, height: 200)
+            let imageSize = CGSize(width: UIScreen.main.bounds.width-30, height: bounds.height)
             imageView.loadImage(imageMetaData: story.hero_image_metadata, imageS3Key: heroImageS3Key, targetSize: imageSize, placeholder: nil)
         }
         

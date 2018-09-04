@@ -46,11 +46,7 @@ class TextComponent : Component {
             text = forDisplayingModel.sections.first?.display_name ?? forDisplayingModel.sections.first?.name ?? ""
             
         case .Headline:
-            if (forDisplayingModel.headline?.contains("The notch is here"))!{
-                print("This is the one")
-                let textHeight = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentiall".getHeightOfString(width: constrainedWidth, font: type.font)
-                print(textHeight)
-            }
+           
             text = forDisplayingModel.headline ?? ""
             
         case .SubHeadline:
@@ -58,7 +54,7 @@ class TextComponent : Component {
             
         case .AuthorName:
             
-            text = forDisplayingModel.authors.first?.name ?? ""
+            text = forDisplayingModel.author_name ?? ""
             constrainedWidth = getConstrainedWidth(type: TextComponentType.AuthorName, containerWidth: constrainedWidth)
             
         case .TimeStamp:
@@ -66,7 +62,7 @@ class TextComponent : Component {
             
         }
         
-        let textSize = TTTAttributedLabel.sizeThatFitsAttributedString(NSAttributedString(string: text, attributes: [NSAttributedStringKey.font: type.font]), withConstraints: CGSize(width: constrainedWidth, height: CGFloat.greatestFiniteMagnitude), limitedToNumberOfLines: 0)
+        let textSize = TTTAttributedLabel.sizeThatFitsAttributedString(NSAttributedString(string: text, attributes: [NSAttributedStringKey.font: type.font]), withConstraints: CGSize(width: constrainedWidth, height: CGFloat.greatestFiniteMagnitude), limitedToNumberOfLines: 3)
         
         let size = CGSize(width: containerSize.width, height: textSize.height)
         

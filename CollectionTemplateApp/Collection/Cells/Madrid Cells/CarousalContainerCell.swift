@@ -17,7 +17,7 @@ class CarousalContainerCell: BaseCollectionCell {
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
-    
+        layout.sectionInset = .zero
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
@@ -25,10 +25,10 @@ class CarousalContainerCell: BaseCollectionCell {
         collectionView.backgroundColor = UIColor(hexString: "#F5F5F5")
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(cellClass: FullscreenCarouselCell.self)
         collectionView.register(cellClass: ImageTextCell.self)
         collectionView.register(cellClass: FullImageSliderCell.self)
         collectionView.register(cellClass: SimpleSliderCell.self)
+        collectionView.register(cellClass: LinearGallerySliderCell.self)
         
         return collectionView
     }()
@@ -36,8 +36,7 @@ class CarousalContainerCell: BaseCollectionCell {
     var pageControl: UIPageControl = {
         let pageControl = UIPageControl(frame: .zero)
         
-        
-        pageControl.hidesForSinglePage = true
+        pageControl.hidesForSinglePage = false
         pageControl.pageIndicatorTintColor = UIColor.lightGray
         pageControl.currentPageIndicatorTintColor = UIColor.black
         return pageControl
@@ -66,7 +65,7 @@ class CarousalContainerCell: BaseCollectionCell {
         
     }
     
-    override func configure(data: Any?) {
+    override func configure(data: Any?,associatedMetaData:AssociatedMetadata?) {
         
         guard let carousel = data as? CarouselModel,carousel.stories.count > 0 else{return}
         
@@ -74,13 +73,15 @@ class CarousalContainerCell: BaseCollectionCell {
         pageControl.numberOfPages = carousel.stories.count
         carouselModel = carousel
         
-        if carousel.stories.count > 1 {
+        if carousel.stories.count > 1 && (associatedMetaData?.enable_auto_play ?? false) {
             shouldPlayMovement()
         }
+        
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        
         carouselModel = nil
     }
     
@@ -91,7 +92,9 @@ class CarousalContainerCell: BaseCollectionCell {
 }
 
 
-extension CarousalContainerCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+extension CarousalContainerCell : UICollectionViewDelegate,
+                                  UICollectionViewDataSource,
+                                  UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return carouselModel?.stories.count ?? 0
@@ -105,24 +108,24 @@ extension CarousalContainerCell:UICollectionViewDelegate,UICollectionViewDataSou
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.FullImageSliderCell.rawValue, for: indexPath) as? FullImageSliderCell
             
-            cell?.configure(data: carouselModel?.stories[indexPath.row])
+            cell?.configure(data: carouselModel?.stories[indexPath.row],associatedMetaData:carouselModel?.associatedMetaData)
             
             return cell!
-            
-        case .FullScreenCarouselCell:
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.FullScreenCarouselCell.rawValue, for: indexPath) as? FullscreenCarouselCell
-            
-            cell?.configure(data: carouselModel?.stories[indexPath.row])
-            
-            return cell!
-            
+        
         case .SimpleSliderCell:
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.SimpleSliderCell.rawValue, for: indexPath) as? SimpleSliderCell
             
             let tuple:(collectionName:String?,story:Story?) = (collectionName:carouselModel?.collectionName,story:carouselModel?.stories[indexPath.row])
-            cell?.configure(data: tuple)
+            cell?.configure(data: tuple,associatedMetaData:carouselModel?.associatedMetaData)
+            
+            return cell!
+            
+        case .LinearGallerySliderCell:
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.LinearGallerySliderCell.rawValue, for: indexPath) as? LinearGallerySliderCell
+            
+            cell?.configure(data: carouselModel?.stories[indexPath.row],associatedMetaData:carouselModel?.associatedMetaData)
             
             return cell!
             
@@ -130,7 +133,7 @@ extension CarousalContainerCell:UICollectionViewDelegate,UICollectionViewDataSou
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.ImageTextCell.rawValue, for: indexPath) as? ImageTextCell
             
-            cell?.configure(data: carouselModel?.stories[indexPath.row])
+            cell?.configure(data: carouselModel?.stories[indexPath.row],associatedMetaData:carouselModel?.associatedMetaData)
             
             return cell!
             

@@ -21,7 +21,7 @@ class StoryListCell: BaseCollectionCell {
     override func setupViews() {
 //        super.setupViews()
         self.contentView.backgroundColor = UIColor(hexString: "#F5F5F5")
-        stackView = MDStackView(metaData: nil)
+        stackView = MDStackView()
         contentView.addSubview(stackView)
         contentView.addSubview(lineView)
         
@@ -35,25 +35,26 @@ class StoryListCell: BaseCollectionCell {
         lineView.anchor(nil, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 1)
     }
     
-    override func configure(data:Any?){
+    override func configure(data:Any?,associatedMetaData:AssociatedMetadata?){
         
         guard let story = data as? Story else{
             return
         }
+        self.stackView.updateViewFor(associatedMetaData: associatedMetaData)
+        
+        if story.story_template == StoryTemplet.Review {
+            stackView.ratingView.isHidden = false
+            stackView.ratingView.rating = story.storyMetadata?.review_rating?.value ?? 0.0
+        }else{
+            stackView.ratingView.isHidden = true
+        }
         
         stackView.headlineLabel.text = story.headline?.trim()
-        //        stackView.subHeadlineLabel.text = story.subheadline?.trim()
-        
-        //        if story.story_template == StoryTemplet.Review {
-        //            stackView.ratingView.isHidden = false
-        //            stackView.ratingView.rating = story.storyMetadata?.review_rating?.value ?? 0.0
-        //        }else{
-        //            stackView.ratingView.isHidden = true
-        //        }
+       
         
         stackView.sectionNameLabel.text = story.sections.first?.display_name ?? story.sections.first?.name ?? ""
         
-        stackView.authorNameLabel.text = story.authors.first?.name ?? ""
+        stackView.authorNameLabel.text = story.author_name ?? "" 
         
         if let imageString = story.authors.first?.avatar_url?.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed),let imageURL = URL(string:"\(imageString)"){
             

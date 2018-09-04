@@ -10,7 +10,7 @@ import Foundation
 import Quintype
 
 class SectionLayout {
-    
+
     var homeCellType: HomeCellType
     
     var collection:CollectionModel?
@@ -25,6 +25,7 @@ class SectionLayout {
     var carouselModel:CarouselModel?
     var size:CGSize = .zero
     
+    var collectionLayoutType:CollectionLayout?
     
     public init(homeCellType:HomeCellType){
         self.homeCellType = homeCellType
@@ -41,7 +42,7 @@ class SectionLayout {
         
     }
     
-    public init(homeCellType:HomeCellType,story:Story,associatedMetadata:AssociatedMetadata? = nil){
+    public init(homeCellType:HomeCellType,story:Story,associatedMetadata:AssociatedMetadata? ){
         self.associatedMetaData = associatedMetadata
         self.homeCellType = homeCellType
         self.story = story
@@ -52,13 +53,13 @@ class SectionLayout {
         self.collectionItem = collectionItem
     }
     
-    public init(homeCellType:HomeCellType,storyArray:[Story],associatedMetadata:AssociatedMetadata? = nil){
+    public init(homeCellType:HomeCellType,storyArray:[Story],associatedMetadata:AssociatedMetadata? ){
         self.homeCellType = homeCellType
         self.storyArray = storyArray
         self.associatedMetaData = associatedMetadata
     }
     
-    public init(homeCellType:HomeCellType,carouselModel:CarouselModel?,associatedMetadata:AssociatedMetadata? = nil) {
+    public init(homeCellType:HomeCellType,carouselModel:CarouselModel?,associatedMetadata:AssociatedMetadata?) {
         self.homeCellType = homeCellType
         self.carouselModel = carouselModel
         self.associatedMetaData = associatedMetadata

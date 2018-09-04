@@ -11,7 +11,7 @@ import Foundation
 public enum CollectionApi{
     
     case BulkGet(slugArray:[String],limit:Int)
-    case BulkPost(slugArray:[String],limit:Int)
+    case BulkPost(slugArray:[String],limit:Int,itemType:String)
     case Single(slug:String,limit:Int,offset:Int)
     
     
@@ -37,7 +37,7 @@ extension CollectionApi: EndPointType {
         case .BulkGet(_,_):
             return "/api/v1/bulk/collection"
             
-        case .BulkPost(_,_):
+        case .BulkPost(_,_,_):
             return "/api/v1/bulk"
             
         }
@@ -45,7 +45,7 @@ extension CollectionApi: EndPointType {
     
     var httpMethod: HTTPMethod {
         switch self {
-        case .BulkPost(_,_):
+        case .BulkPost(_,_,_):
             return .post
         default:
             return .get
@@ -72,7 +72,7 @@ extension CollectionApi: EndPointType {
             return .requestParameters(bodyParameters: nil, bodyEncoding: .urlEncoding, urlParameters: urlParameters)
             
             
-        case .BulkPost(let slugArray,let limit):
+        case .BulkPost(let slugArray,let limit,let itemType):
             
             var bodyParameters:[String:Any] = [:]
             var outerDict: [String:[String:Any]] = [:]
@@ -84,7 +84,8 @@ extension CollectionApi: EndPointType {
                             "_type":"collection",
                             "slug":slug,
                             "limit":limit,
-                            "story-fields":storyFields
+                            "story-fields":storyFields,
+                            "item-type":itemType
                           ]
                 
                 outerDict[slug] = innerDict

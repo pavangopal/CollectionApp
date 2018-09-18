@@ -49,6 +49,8 @@ class ImageTextDescriptionCell: BaseCollectionCell {
         }
         
         self.stackView.updateViewFor(associatedMetaData: associatedMetaData)
+        self.stackView.subHeadlineLabel.isHidden = false
+        
         
         if let heroImageS3Key = story.hero_image_s3_key {
             
@@ -80,7 +82,6 @@ class ImageTextDescriptionCell: BaseCollectionCell {
         }
         
         self.stackView.publishTimeLabel.text = (story.first_published_at?.convertTimeStampToDate ?? "" ).trim()
-        
         
     }
     

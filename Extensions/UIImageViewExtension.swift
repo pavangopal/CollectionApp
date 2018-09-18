@@ -30,7 +30,7 @@ extension UIImageView {
         
         DispatchQueue.global(qos: .background).async {
             
-            let convertedUrl = ImageManager.imageUrlFor(metaData: imageMetaData, imageS3Key: imageS3Key, size: targetSize, imageQuality: ImageQuality.Medium)
+            let convertedUrl = ImageManager.imageUrlFor(metaData: imageMetaData, imageS3Key: imageS3Key, size: targetSize, imageQuality: ImageQuality.High)
             
             var componetns:URLComponents = URLComponents.init(url: convertedUrl, resolvingAgainstBaseURL: false)!
             componetns.fragment = nil

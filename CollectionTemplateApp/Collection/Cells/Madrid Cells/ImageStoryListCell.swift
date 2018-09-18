@@ -26,6 +26,7 @@ class ImageStoryListCell: BaseCollectionCell {
     
     var timestampLabel:TTTAttributedLabel = {
         let label = TTTAttributedLabel(frame: .zero)
+        label.font = FontService.shared.homeTimestampFont
         label.setProperties()
         return label
     }()
@@ -57,7 +58,7 @@ class ImageStoryListCell: BaseCollectionCell {
         let bottomConstraint = NSLayoutConstraint(item: containerView, attribute: NSLayoutAttribute.bottom, relatedBy: .greaterThanOrEqual, toItem: imageView, attribute: .bottom, multiplier: 1, constant: 0)
         self.contentView.addConstraint(bottomConstraint)
         
-        stackView.anchor(containerView.topAnchor, left: imageView.rightAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 0 )
+        stackView.anchor(containerView.topAnchor, left: imageView.rightAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 0 )
         
         timestampLabel.anchor(stackView.bottomAnchor, left: imageView.rightAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 5, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 0)
         

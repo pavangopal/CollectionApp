@@ -23,6 +23,7 @@ class LinearGallerySliderCell: BaseCollectionCell {
     
     var headlineLabel: TTTAttributedLabel = {
        let label = TTTAttributedLabel(frame: .zero)
+        label.font = FontService.shared.homeHeadlineRegular
         label.textColor = .white
         label.textAlignment = .center
         label.setProperties()

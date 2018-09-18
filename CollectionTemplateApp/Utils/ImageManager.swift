@@ -40,7 +40,7 @@ class ImageManager{
         
         if !(imageS3Key?.hasSuffix(".gif"))!{
             
-            str = str.appendingFormat("?fmt=pjpeg&w=\(targetSize.width.intValue)&q=\((imageQuality.rawValue))")
+            str = str.appendingFormat("?fmt=pjpeg&w=\(targetSize.width.intValue)&h=\(targetSize.height.intValue)&q=\((imageQuality.rawValue))")
             
         }else{
             

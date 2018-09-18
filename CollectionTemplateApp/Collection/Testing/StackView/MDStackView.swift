@@ -14,6 +14,7 @@ class MDStackView : UIStackView {
     
     let authorNameLabel:TTTAttributedLabel = {
         let label = TTTAttributedLabel(frame: .zero)
+        label.font = FontService.shared.homeAuthorFont
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setProperties()
         label.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
@@ -24,11 +25,10 @@ class MDStackView : UIStackView {
     
     let publishTimeLabel:TTTAttributedLabel = {
         let label = TTTAttributedLabel(frame: .zero)
+        label.font = FontService.shared.homeTimestampFont
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setProperties()
         label.isHidden = true
-//        label.setContentCompressionResistancePriority(.required, for: .horizontal)
-//        label.setContentHuggingPriority(.required, for: .horizontal)
         return label
     }()
     
@@ -39,8 +39,10 @@ class MDStackView : UIStackView {
         return imageView
     }()
     
-    let sectionNameLabel:TTTAttributedLabel = {
-        let label = TTTAttributedLabel(frame: .zero)
+    let sectionNameLabel:InsetLabel = {
+        let label = InsetLabel(frame: .zero)
+        label.font = FontService.shared.homeSectionFont
+        label.insets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         label.backgroundColor = .black
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -56,6 +58,7 @@ class MDStackView : UIStackView {
     
     var headlineLabel:TTTAttributedLabel = {
         let label = TTTAttributedLabel(frame: .zero)
+        label.font = FontService.shared.homeHeadlineRegular
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 3
         label.lineBreakMode = .byTruncatingTail
@@ -65,6 +68,7 @@ class MDStackView : UIStackView {
     
     var subHeadlineLabel:TTTAttributedLabel = {
         let label = TTTAttributedLabel(frame: .zero)
+        label.font = FontService.shared.homeSubHeadlineRegular
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 3
         label.lineBreakMode = .byTruncatingTail
@@ -113,8 +117,8 @@ class MDStackView : UIStackView {
         headlineLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
         headlineLabel.isHidden = false
         
-        //        self.addArrangedSubview(subHeadlineLabel)
-        //        subHeadlineLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
+        self.addArrangedSubview(subHeadlineLabel)
+        subHeadlineLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
         
         //#3
         self.addArrangedSubview(ratingView)

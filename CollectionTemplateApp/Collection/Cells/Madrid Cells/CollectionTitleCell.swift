@@ -20,6 +20,7 @@ class CollectionTitleCell: BaseCollectionCell {
     
     var collectionTitleLabel: InsetLabel = {
         let label = InsetLabel()
+        label.font = FontService.shared.collectionTitleFont
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.insets = UIEdgeInsets(top: 2, left: 0, bottom: 0, right: 0)

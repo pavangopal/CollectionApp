@@ -13,7 +13,7 @@ struct Environment{
     
     struct Production{
         
-        static var baseURL = "https://madrid.quintype.io"//"https://www.samachara.com" //
+        static var baseURL = "https://madrid.quintype.io"//"https://www.samachara.com" //"https://www.mediaonetv.in"//
         static var imageBaseURL = "https://" + (Quintype.publisherConfig?.cdn_image)! + "/"
         
         struct RemoteConfig{

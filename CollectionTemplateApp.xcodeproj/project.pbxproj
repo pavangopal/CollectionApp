@@ -64,7 +64,6 @@
 		1D15FA762121B952004297B2 /* HtmlRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15FA6A2121B952004297B2 /* HtmlRender.swift */; };
 		1D15FA772121B952004297B2 /* LocalizationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15FA6B2121B952004297B2 /* LocalizationHelper.swift */; };
 		1D15FA782121B952004297B2 /* MailComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15FA6C2121B952004297B2 /* MailComposer.swift */; };
-		1D15FA792121B952004297B2 /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15FA6D2121B952004297B2 /* MulticastDelegate.swift */; };
 		1D15FA7A2121B952004297B2 /* QuintypeUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15FA6E2121B952004297B2 /* QuintypeUtility.swift */; };
 		1D15FA7B2121B952004297B2 /* RemoteConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15FA6F2121B952004297B2 /* RemoteConfigManager.swift */; };
 		1D15FA7C2121B952004297B2 /* SettingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15FA702121B952004297B2 /* SettingDataSource.swift */; };
@@ -86,6 +85,38 @@
 		1D597667213C2BC30017D569 /* ImageStoryListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D597666213C2BC30017D569 /* ImageStoryListCell.swift */; };
 		1D6B8DA32122C9680091D4DB /* CollectionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6B8DA22122C9680091D4DB /* CollectionLayout.swift */; };
 		1DA05102212AC29900AEA41B /* FourColumnGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA05101212AC29900AEA41B /* FourColumnGridCell.swift */; };
+		1DB92538214057DA005943CC /* UserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB92512214057DA005943CC /* UserDefaultKeys.swift */; };
+		1DB92539214057DA005943CC /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB92513214057DA005943CC /* MulticastDelegate.swift */; };
+		1DB9253A214057DA005943CC /* FontService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB92515214057DA005943CC /* FontService.swift */; };
+		1DB9253B214057DA005943CC /* ThemeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB92516214057DA005943CC /* ThemeService.swift */; };
+		1DB9253C214057DA005943CC /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB92517214057DA005943CC /* ThemeManager.swift */; };
+		1DB9253D214057DA005943CC /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB92518214057DA005943CC /* Fonts.swift */; };
+		1DB9253E214057DA005943CC /* CooperHewitt-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB9251B214057DA005943CC /* CooperHewitt-Bold.otf */; };
+		1DB9253F214057DA005943CC /* CooperHewitt-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB9251C214057DA005943CC /* CooperHewitt-Light.otf */; };
+		1DB92540214057DA005943CC /* CooperHewitt-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB9251D214057DA005943CC /* CooperHewitt-Semibold.otf */; };
+		1DB92541214057DA005943CC /* Merriweather-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB9251F214057DA005943CC /* Merriweather-Bold.ttf */; };
+		1DB92542214057DA005943CC /* Merriweather-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB92520214057DA005943CC /* Merriweather-Regular.ttf */; };
+		1DB92543214057DA005943CC /* Merriweather-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB92521214057DA005943CC /* Merriweather-Light.ttf */; };
+		1DB92544214057DA005943CC /* Merriweather-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB92522214057DA005943CC /* Merriweather-BoldItalic.ttf */; };
+		1DB92545214057DA005943CC /* Merriweather-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB92523214057DA005943CC /* Merriweather-Italic.ttf */; };
+		1DB92546214057DA005943CC /* Merriweather-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB92524214057DA005943CC /* Merriweather-LightItalic.ttf */; };
+		1DB92547214057DA005943CC /* Oswald-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB92526214057DA005943CC /* Oswald-Bold.ttf */; };
+		1DB92548214057DA005943CC /* Oswald-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB92527214057DA005943CC /* Oswald-SemiBold.ttf */; };
+		1DB92549214057DA005943CC /* Oswald-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB92528214057DA005943CC /* Oswald-Medium.ttf */; };
+		1DB9254A214057DA005943CC /* Oswald-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB92529214057DA005943CC /* Oswald-Regular.ttf */; };
+		1DB9254B214057DA005943CC /* Oswald-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB9252A214057DA005943CC /* Oswald-ExtraLight.ttf */; };
+		1DB9254C214057DA005943CC /* Oswald-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB9252B214057DA005943CC /* Oswald-Light.ttf */; };
+		1DB9254D214057DA005943CC /* LibelSuit-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB9252D214057DA005943CC /* LibelSuit-Regular.ttf */; };
+		1DB9254E214057DA005943CC /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB9252F214057DA005943CC /* OpenSans-Semibold.ttf */; };
+		1DB9254F214057DA005943CC /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB92530214057DA005943CC /* OpenSans-Bold.ttf */; };
+		1DB92550214057DA005943CC /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB92531214057DA005943CC /* OpenSans-Regular.ttf */; };
+		1DB92551214057DA005943CC /* DarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB92532214057DA005943CC /* DarkTheme.swift */; };
+		1DB92553214057DA005943CC /* PrimaryTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB92536214057DA005943CC /* PrimaryTheme.swift */; };
+		1DB92566214059E3005943CC /* Lato-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB9255B214059E2005943CC /* Lato-Semibold.ttf */; };
+		1DB92567214059E3005943CC /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB9255C214059E2005943CC /* Lato-Bold.ttf */; };
+		1DB9256A214059E3005943CC /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB9255F214059E3005943CC /* Lato-Light.ttf */; };
+		1DB9256B214059E3005943CC /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB92560214059E3005943CC /* Lato-Regular.ttf */; };
+		1DB9256D2140623B005943CC /* StoryListCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB9256C2140623B005943CC /* StoryListCardCell.swift */; };
 		1DBFFC93213D69120080AB2C /* ImageTextDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBFFC92213D69120080AB2C /* ImageTextDescriptionCell.swift */; };
 		1DF728BB213917C50027EA93 /* LinearGallerySliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF728BA213917C50027EA93 /* LinearGallerySliderCell.swift */; };
 		2396A5C30F0B3D9E67A1AD1A /* Pods_CollectionTemplateApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7E3E72581AF9F22F572142 /* Pods_CollectionTemplateApp.framework */; };
@@ -153,7 +184,6 @@
 		1D15FA6A2121B952004297B2 /* HtmlRender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HtmlRender.swift; sourceTree = "<group>"; };
 		1D15FA6B2121B952004297B2 /* LocalizationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationHelper.swift; sourceTree = "<group>"; };
 		1D15FA6C2121B952004297B2 /* MailComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailComposer.swift; sourceTree = "<group>"; };
-		1D15FA6D2121B952004297B2 /* MulticastDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
 		1D15FA6E2121B952004297B2 /* QuintypeUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuintypeUtility.swift; sourceTree = "<group>"; };
 		1D15FA6F2121B952004297B2 /* RemoteConfigManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteConfigManager.swift; sourceTree = "<group>"; };
 		1D15FA702121B952004297B2 /* SettingDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingDataSource.swift; sourceTree = "<group>"; };
@@ -175,6 +205,38 @@
 		1D597666213C2BC30017D569 /* ImageStoryListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStoryListCell.swift; sourceTree = "<group>"; };
 		1D6B8DA22122C9680091D4DB /* CollectionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionLayout.swift; sourceTree = "<group>"; };
 		1DA05101212AC29900AEA41B /* FourColumnGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourColumnGridCell.swift; sourceTree = "<group>"; };
+		1DB92512214057DA005943CC /* UserDefaultKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultKeys.swift; sourceTree = "<group>"; };
+		1DB92513214057DA005943CC /* MulticastDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
+		1DB92515214057DA005943CC /* FontService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontService.swift; sourceTree = "<group>"; };
+		1DB92516214057DA005943CC /* ThemeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeService.swift; sourceTree = "<group>"; };
+		1DB92517214057DA005943CC /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		1DB92518214057DA005943CC /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		1DB9251B214057DA005943CC /* CooperHewitt-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CooperHewitt-Bold.otf"; sourceTree = "<group>"; };
+		1DB9251C214057DA005943CC /* CooperHewitt-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CooperHewitt-Light.otf"; sourceTree = "<group>"; };
+		1DB9251D214057DA005943CC /* CooperHewitt-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CooperHewitt-Semibold.otf"; sourceTree = "<group>"; };
+		1DB9251F214057DA005943CC /* Merriweather-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merriweather-Bold.ttf"; sourceTree = "<group>"; };
+		1DB92520214057DA005943CC /* Merriweather-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merriweather-Regular.ttf"; sourceTree = "<group>"; };
+		1DB92521214057DA005943CC /* Merriweather-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merriweather-Light.ttf"; sourceTree = "<group>"; };
+		1DB92522214057DA005943CC /* Merriweather-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merriweather-BoldItalic.ttf"; sourceTree = "<group>"; };
+		1DB92523214057DA005943CC /* Merriweather-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merriweather-Italic.ttf"; sourceTree = "<group>"; };
+		1DB92524214057DA005943CC /* Merriweather-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merriweather-LightItalic.ttf"; sourceTree = "<group>"; };
+		1DB92526214057DA005943CC /* Oswald-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Bold.ttf"; sourceTree = "<group>"; };
+		1DB92527214057DA005943CC /* Oswald-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-SemiBold.ttf"; sourceTree = "<group>"; };
+		1DB92528214057DA005943CC /* Oswald-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Medium.ttf"; sourceTree = "<group>"; };
+		1DB92529214057DA005943CC /* Oswald-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Regular.ttf"; sourceTree = "<group>"; };
+		1DB9252A214057DA005943CC /* Oswald-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-ExtraLight.ttf"; sourceTree = "<group>"; };
+		1DB9252B214057DA005943CC /* Oswald-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Light.ttf"; sourceTree = "<group>"; };
+		1DB9252D214057DA005943CC /* LibelSuit-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LibelSuit-Regular.ttf"; sourceTree = "<group>"; };
+		1DB9252F214057DA005943CC /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
+		1DB92530214057DA005943CC /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
+		1DB92531214057DA005943CC /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		1DB92532214057DA005943CC /* DarkTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarkTheme.swift; sourceTree = "<group>"; };
+		1DB92536214057DA005943CC /* PrimaryTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryTheme.swift; sourceTree = "<group>"; };
+		1DB9255B214059E2005943CC /* Lato-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Semibold.ttf"; sourceTree = "<group>"; };
+		1DB9255C214059E2005943CC /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
+		1DB9255F214059E3005943CC /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
+		1DB92560214059E3005943CC /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
+		1DB9256C2140623B005943CC /* StoryListCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListCardCell.swift; sourceTree = "<group>"; };
 		1DBFFC92213D69120080AB2C /* ImageTextDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTextDescriptionCell.swift; sourceTree = "<group>"; };
 		1DF728BA213917C50027EA93 /* LinearGallerySliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearGallerySliderCell.swift; sourceTree = "<group>"; };
 		2FB49CA0CE8CB7926CE04042 /* Pods-CollectionTemplateApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollectionTemplateApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-CollectionTemplateApp/Pods-CollectionTemplateApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -209,6 +271,7 @@
 				1D0A954D21391DDD0036DB53 /* LinerGalleryCarousalContainer.swift */,
 				1D597666213C2BC30017D569 /* ImageStoryListCell.swift */,
 				1DBFFC92213D69120080AB2C /* ImageTextDescriptionCell.swift */,
+				1DB9256C2140623B005943CC /* StoryListCardCell.swift */,
 			);
 			path = "Madrid Cells";
 			sourceTree = "<group>";
@@ -369,7 +432,6 @@
 				1D15FA6A2121B952004297B2 /* HtmlRender.swift */,
 				1D15FA6B2121B952004297B2 /* LocalizationHelper.swift */,
 				1D15FA6C2121B952004297B2 /* MailComposer.swift */,
-				1D15FA6D2121B952004297B2 /* MulticastDelegate.swift */,
 				1D15FA6E2121B952004297B2 /* QuintypeUtility.swift */,
 				1D15FA6F2121B952004297B2 /* RemoteConfigManager.swift */,
 				1D15FA702121B952004297B2 /* SettingDataSource.swift */,
@@ -432,9 +494,112 @@
 			path = "Layout Engine";
 			sourceTree = "<group>";
 		};
+		1DB92511214057DA005943CC /* ThemeService */ = {
+			isa = PBXGroup;
+			children = (
+				1DB92512214057DA005943CC /* UserDefaultKeys.swift */,
+				1DB92513214057DA005943CC /* MulticastDelegate.swift */,
+				1DB92514214057DA005943CC /* Fonts */,
+			);
+			path = ThemeService;
+			sourceTree = "<group>";
+		};
+		1DB92514214057DA005943CC /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				1DB92515214057DA005943CC /* FontService.swift */,
+				1DB92516214057DA005943CC /* ThemeService.swift */,
+				1DB92517214057DA005943CC /* ThemeManager.swift */,
+				1DB92518214057DA005943CC /* Fonts.swift */,
+				1DB92519214057DA005943CC /* Theme */,
+				1DB92532214057DA005943CC /* DarkTheme.swift */,
+				1DB92536214057DA005943CC /* PrimaryTheme.swift */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		1DB92519214057DA005943CC /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				1DB92555214059D8005943CC /* Lato */,
+				1DB9251A214057DA005943CC /* CooperHewitt */,
+				1DB9251E214057DA005943CC /* Merriweather */,
+				1DB92525214057DA005943CC /* Oswald */,
+				1DB9252C214057DA005943CC /* Libel */,
+				1DB9252E214057DA005943CC /* OpenSans */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		1DB9251A214057DA005943CC /* CooperHewitt */ = {
+			isa = PBXGroup;
+			children = (
+				1DB9251B214057DA005943CC /* CooperHewitt-Bold.otf */,
+				1DB9251C214057DA005943CC /* CooperHewitt-Light.otf */,
+				1DB9251D214057DA005943CC /* CooperHewitt-Semibold.otf */,
+			);
+			path = CooperHewitt;
+			sourceTree = "<group>";
+		};
+		1DB9251E214057DA005943CC /* Merriweather */ = {
+			isa = PBXGroup;
+			children = (
+				1DB9251F214057DA005943CC /* Merriweather-Bold.ttf */,
+				1DB92520214057DA005943CC /* Merriweather-Regular.ttf */,
+				1DB92521214057DA005943CC /* Merriweather-Light.ttf */,
+				1DB92522214057DA005943CC /* Merriweather-BoldItalic.ttf */,
+				1DB92523214057DA005943CC /* Merriweather-Italic.ttf */,
+				1DB92524214057DA005943CC /* Merriweather-LightItalic.ttf */,
+			);
+			path = Merriweather;
+			sourceTree = "<group>";
+		};
+		1DB92525214057DA005943CC /* Oswald */ = {
+			isa = PBXGroup;
+			children = (
+				1DB92526214057DA005943CC /* Oswald-Bold.ttf */,
+				1DB92527214057DA005943CC /* Oswald-SemiBold.ttf */,
+				1DB92528214057DA005943CC /* Oswald-Medium.ttf */,
+				1DB92529214057DA005943CC /* Oswald-Regular.ttf */,
+				1DB9252A214057DA005943CC /* Oswald-ExtraLight.ttf */,
+				1DB9252B214057DA005943CC /* Oswald-Light.ttf */,
+			);
+			path = Oswald;
+			sourceTree = "<group>";
+		};
+		1DB9252C214057DA005943CC /* Libel */ = {
+			isa = PBXGroup;
+			children = (
+				1DB9252D214057DA005943CC /* LibelSuit-Regular.ttf */,
+			);
+			path = Libel;
+			sourceTree = "<group>";
+		};
+		1DB9252E214057DA005943CC /* OpenSans */ = {
+			isa = PBXGroup;
+			children = (
+				1DB9252F214057DA005943CC /* OpenSans-Semibold.ttf */,
+				1DB92530214057DA005943CC /* OpenSans-Bold.ttf */,
+				1DB92531214057DA005943CC /* OpenSans-Regular.ttf */,
+			);
+			path = OpenSans;
+			sourceTree = "<group>";
+		};
+		1DB92555214059D8005943CC /* Lato */ = {
+			isa = PBXGroup;
+			children = (
+				1DB9255C214059E2005943CC /* Lato-Bold.ttf */,
+				1DB9255F214059E3005943CC /* Lato-Light.ttf */,
+				1DB92560214059E3005943CC /* Lato-Regular.ttf */,
+				1DB9255B214059E2005943CC /* Lato-Semibold.ttf */,
+			);
+			path = Lato;
+			sourceTree = "<group>";
+		};
 		1DDECC3A21255C100041F5BF /* Theme And Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				1DB92511214057DA005943CC /* ThemeService */,
 			);
 			name = "Theme And Fonts";
 			sourceTree = "<group>";
@@ -518,8 +683,31 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DB92541214057DA005943CC /* Merriweather-Bold.ttf in Resources */,
+				1DB9254D214057DA005943CC /* LibelSuit-Regular.ttf in Resources */,
+				1DB92566214059E3005943CC /* Lato-Semibold.ttf in Resources */,
 				1D15F9EF2121B38B004297B2 /* LaunchScreen.storyboard in Resources */,
+				1DB92540214057DA005943CC /* CooperHewitt-Semibold.otf in Resources */,
+				1DB92549214057DA005943CC /* Oswald-Medium.ttf in Resources */,
+				1DB9254B214057DA005943CC /* Oswald-ExtraLight.ttf in Resources */,
+				1DB92567214059E3005943CC /* Lato-Bold.ttf in Resources */,
+				1DB92545214057DA005943CC /* Merriweather-Italic.ttf in Resources */,
+				1DB9254C214057DA005943CC /* Oswald-Light.ttf in Resources */,
+				1DB9253E214057DA005943CC /* CooperHewitt-Bold.otf in Resources */,
+				1DB92544214057DA005943CC /* Merriweather-BoldItalic.ttf in Resources */,
+				1DB92550214057DA005943CC /* OpenSans-Regular.ttf in Resources */,
+				1DB92542214057DA005943CC /* Merriweather-Regular.ttf in Resources */,
+				1DB9254E214057DA005943CC /* OpenSans-Semibold.ttf in Resources */,
+				1DB92546214057DA005943CC /* Merriweather-LightItalic.ttf in Resources */,
 				1D15F9EC2121B38B004297B2 /* Assets.xcassets in Resources */,
+				1DB9254A214057DA005943CC /* Oswald-Regular.ttf in Resources */,
+				1DB9256A214059E3005943CC /* Lato-Light.ttf in Resources */,
+				1DB92543214057DA005943CC /* Merriweather-Light.ttf in Resources */,
+				1DB9253F214057DA005943CC /* CooperHewitt-Light.otf in Resources */,
+				1DB92548214057DA005943CC /* Oswald-SemiBold.ttf in Resources */,
+				1DB9256B214059E3005943CC /* Lato-Regular.ttf in Resources */,
+				1DB9254F214057DA005943CC /* OpenSans-Bold.ttf in Resources */,
+				1DB92547214057DA005943CC /* Oswald-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,6 +805,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DB92538214057DA005943CC /* UserDefaultKeys.swift in Sources */,
 				1D15FA732121B952004297B2 /* Ancher.swift in Sources */,
 				1D15FA302121B6E5004297B2 /* HTTPTask.swift in Sources */,
 				1D15FA292121B6E5004297B2 /* ParameterEncoding.swift in Sources */,
@@ -628,11 +817,12 @@
 				1D0497772133C7C800B26715 /* CarousalContainerCell.swift in Sources */,
 				1D15FA5F2121B87B004297B2 /* UIViewControllerExtension.swift in Sources */,
 				1D15FA242121B6E5004297B2 /* CollectionApiManager.swift in Sources */,
+				1DB9253A214057DA005943CC /* FontService.swift in Sources */,
 				1D0A954E21391DDD0036DB53 /* LinerGalleryCarousalContainer.swift in Sources */,
-				1D15FA792121B952004297B2 /* MulticastDelegate.swift in Sources */,
 				1D15FA802121B9B9004297B2 /* ImageManager.swift in Sources */,
 				1D341EBE212EC3F700925125 /* PrimitiveType+Extension.swift in Sources */,
 				1D15F9F72121B3B0004297B2 /* InitialController.swift in Sources */,
+				1DB92539214057DA005943CC /* MulticastDelegate.swift in Sources */,
 				1D15FA2E2121B6E5004297B2 /* EndPointType.swift in Sources */,
 				1D6B8DA32122C9680091D4DB /* CollectionLayout.swift in Sources */,
 				1D15FA402121B7DB004297B2 /* HomeController.swift in Sources */,
@@ -655,6 +845,7 @@
 				1D15FA3E2121B7A5004297B2 /* CustomTabBarController.swift in Sources */,
 				1D15FA822121BA25004297B2 /* UICollectionViewExtension.swift in Sources */,
 				1D341EC0212ECBC100925125 /* StoryListCell.swift in Sources */,
+				1DB9253D214057DA005943CC /* Fonts.swift in Sources */,
 				1D15FA552121B87B004297B2 /* dateExtension.swift in Sources */,
 				1D15FA7D2121B952004297B2 /* StoryDownloader.swift in Sources */,
 				1D15FA252121B6E5004297B2 /* CollectionEndPoint.swift in Sources */,
@@ -664,6 +855,7 @@
 				1D15F9E22121B38B004297B2 /* AppDelegate.swift in Sources */,
 				1D406312212D5E4400228FC8 /* FloatRatingView.swift in Sources */,
 				1D15FA582121B87B004297B2 /* NavigationExtension.swift in Sources */,
+				1DB92553214057DA005943CC /* PrimaryTheme.swift in Sources */,
 				1D341EBA212EB6D500925125 /* StoryCardComponent.swift in Sources */,
 				1D15FA3C2121B6E5004297B2 /* CollectionViewModel.swift in Sources */,
 				1D15FA2B2121B6E5004297B2 /* HomeCellType.swift in Sources */,
@@ -681,6 +873,7 @@
 				1DBFFC93213D69120080AB2C /* ImageTextDescriptionCell.swift in Sources */,
 				1D15FA7E2121B952004297B2 /* TemplateConstant.swift in Sources */,
 				1D15FA2C2121B6E5004297B2 /* NetworkManager.swift in Sources */,
+				1DB9253B214057DA005943CC /* ThemeService.swift in Sources */,
 				1D15FA772121B952004297B2 /* LocalizationHelper.swift in Sources */,
 				1D15FA262121B6E5004297B2 /* CollectionLayoutEngine.swift in Sources */,
 				1D597667213C2BC30017D569 /* ImageStoryListCell.swift in Sources */,
@@ -691,11 +884,14 @@
 				1D15FA282121B6E5004297B2 /* NetworkError.swift in Sources */,
 				1D05F7D1213016470030CBB8 /* AuthorTimestampStackView.swift in Sources */,
 				1D15F9EA2121B38B004297B2 /* CollectionTemplateApp.xcdatamodeld in Sources */,
+				1DB92551214057DA005943CC /* DarkTheme.swift in Sources */,
 				1D05F7CF212FDF3D0030CBB8 /* HeadLineDescriptionStackView.swift in Sources */,
 				1D15FA572121B87B004297B2 /* HomeContainerNavigationExtension.swift in Sources */,
+				1DB9256D2140623B005943CC /* StoryListCardCell.swift in Sources */,
 				1D15FA392121B6E5004297B2 /* ImageTextCell.swift in Sources */,
 				1D15FA752121B952004297B2 /* Constants.swift in Sources */,
 				1DF728BB213917C50027EA93 /* LinearGallerySliderCell.swift in Sources */,
+				1DB9253C214057DA005943CC /* ThemeManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

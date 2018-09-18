@@ -24,6 +24,8 @@ final class HomeController: UIViewController {
         case FullImageSliderCell = "FullImageSliderCell"
         case LinerGalleryCarousalContainer = "LinerGalleryCarousalContainer"
         case ImageStoryListCell = "ImageStoryListCell"
+        case ImageTextDescriptionCell = "ImageTextDescriptionCell"
+        case StoryListCardCell = "StoryListCardCell"
     }
     
     lazy var collectionView:UICollectionView = {
@@ -75,6 +77,9 @@ final class HomeController: UIViewController {
         collectionView.register(FullImageSliderCell.self, forCellWithReuseIdentifier: CellType.FullImageSliderCell.rawValue)
         collectionView.register(LinerGalleryCarousalContainer.self, forCellWithReuseIdentifier: CellType.LinerGalleryCarousalContainer.rawValue)
         collectionView.register(ImageStoryListCell.self, forCellWithReuseIdentifier: CellType.ImageStoryListCell.rawValue)
+        collectionView.register(ImageTextDescriptionCell.self, forCellWithReuseIdentifier: CellType.ImageTextDescriptionCell.rawValue)
+        collectionView.register(StoryListCardCell.self, forCellWithReuseIdentifier: CellType.StoryListCardCell.rawValue)
+        
         
         
     }
@@ -161,6 +166,18 @@ extension HomeController: UICollectionViewDataSource,UICollectionViewDelegate,UI
             imageTextCell?.configure(data: layout.story,associatedMetaData:layout.associatedMetaData)
             cell = imageTextCell
             
+        case .ImageTextDescriptionCell:
+            let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? ImageTextDescriptionCell
+            
+            imageTextCell?.configure(data: layout.story,associatedMetaData:layout.associatedMetaData)
+            cell = imageTextCell
+            
+        case .StoryListCardCell:
+            let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? StoryListCardCell
+            
+            imageTextCell?.configure(data: layout.story,associatedMetaData:layout.associatedMetaData)
+            cell = imageTextCell
+            
         default:
             
             let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? ImageTextCell// as? ImageTextCell
@@ -188,27 +205,15 @@ extension HomeController: UICollectionViewDataSource,UICollectionViewDelegate,UI
             return CGSize(width: width, height: 300)
             
         case .ImageTextCell :
-//            let sizingCell = ImageTextCell(frame: CGRect.zero)
-//            sizingCell.configure(data: layout.story)
-//            let size = sizingCell.calculateHeight(targetSize: targetSize)
-//
-//            return size
+
             return layout.size
             
         case .StoryListCell:
-//            let sizingCell = StoryListCell(frame: CGRect.zero)
-//            sizingCell.configure(data: layout.story)
-//            let size = sizingCell.calculateHeight(targetSize: targetSize)
-//
-//            return size
+
             return layout.size
 
         case .ImageStoryListCardCell:
-//            let sizingCell = ImageStoryListCardCell(frame: CGRect.zero)
-//            sizingCell.configure(data: layout.story)
-//            let size = sizingCell.calculateHeight(targetSize: targetSize)
-//
-//            return size
+
             return layout.size
 
 
@@ -222,9 +227,15 @@ extension HomeController: UICollectionViewDataSource,UICollectionViewDelegate,UI
             
         case .FullImageSliderCell:
             return layout.size
-//            return CGSize(width: width, height: 450)
+
         case .ImageStoryListCell:
             return layout.size
+        case .ImageTextDescriptionCell:
+            return layout.size
+            
+        case .StoryListCardCell:
+            return layout.size
+            
         default:
             return CGSize(width: width, height: 50)
         }

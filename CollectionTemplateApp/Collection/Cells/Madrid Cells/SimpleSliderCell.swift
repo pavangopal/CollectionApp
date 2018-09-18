@@ -19,6 +19,7 @@ class SimpleSliderCell: BaseCollectionCell {
     
     var collectionTitleLabel:TTTAttributedLabel = {
         let label = TTTAttributedLabel(frame: .zero)
+        label.font = FontService.shared.collectionTitleFont
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         label.numberOfLines  = 1
         label.lineBreakMode = .byTruncatingTail
@@ -30,6 +31,7 @@ class SimpleSliderCell: BaseCollectionCell {
     var storyHeadlineLabel:TTTAttributedLabel = {
         let label = TTTAttributedLabel(frame: .zero)
         label.setProperties()
+        label.font = FontService.shared.homeHeadlineRegular
         label.lineBreakMode = .byTruncatingTail
         label.textColor = .white
         label.backgroundColor = .clear
@@ -38,6 +40,8 @@ class SimpleSliderCell: BaseCollectionCell {
     
     var readStoryButton:UIButton = {
        let button = UIButton()
+        button.titleLabel?.font = FontService.shared.getCorrectedFont(fontName: FontFamilyName.LatoRegular.rawValue, size: 18.0)
+        
         button.setTitle("READ STORY", for: .normal)
         button.clipsToBounds = true
         button.cornerRadius = 25

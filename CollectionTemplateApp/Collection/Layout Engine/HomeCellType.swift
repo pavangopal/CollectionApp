@@ -24,6 +24,8 @@ enum HomeCellType:String{
     case LinearGallerySliderCell = "LinearGallerySliderCell"
     case LinerGalleryCarousalContainer = "LinerGalleryCarousalContainer"
     case ImageStoryListCell = "ImageStoryListCell"
+    case ImageTextDescriptionCell = "ImageTextDescriptionCell"
+    case StoryListCardCell = "StoryListCardCell"
 
     var innerCellHeight:CGFloat{
         switch self {

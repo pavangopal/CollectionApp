@@ -18,6 +18,7 @@ class FourColumnGridCell: BaseCollectionCell {
     
     var sectionNameLabel: InsetLabel = {
         let label = InsetLabel()
+        label.font = FontService.shared.homeSectionFont
         label.backgroundColor = .black
         label.alpha = 0.7
         label.textColor = .white
@@ -36,7 +37,8 @@ class FourColumnGridCell: BaseCollectionCell {
     
     var headlineLabel:TTTAttributedLabel = {
         let label = TTTAttributedLabel(frame: .zero)
-        label.textColor = .white
+//        label.textColor = .white
+        label.font = FontService.shared.homeHeadlineRegular
         label.setProperties()
         return label
     }()
@@ -116,26 +118,37 @@ class FourColumnGridCell: BaseCollectionCell {
             ratingView.isHidden = true
         }
         
-        headlineLabel.text = story.headline ?? ""
+//        headlineLabel.text = story.headline ?? ""
         sectionNameLabel.text = story.sections.first?.display_name ?? story.sections.first?.name ?? ""
         
-        styleUIFor(metaData: associatedMetaData)
+        styleUIFor(metaData: associatedMetaData,story:story)
     }
     
     
-    private func styleUIFor(metaData:AssociatedMetadata?) {
+    private func styleUIFor(metaData:AssociatedMetadata?,story:Story) {
         if metaData?.theme == .Dark{
             contentView.backgroundColor = .black
             headlineLabel.backgroundColor = .black
             storyTitleContainerView.backgroundColor = .black
-            headlineLabel.textColor = .white
+            let attributes = [NSAttributedStringKey.foregroundColor : UIColor.white,NSAttributedStringKey.font:FontService.shared.homeHeadlineRegular]
+            let healineString = NSAttributedString(string: story.headline ?? "", attributes: attributes)
+            headlineLabel.attributedText = healineString
+//            headlineLabel.textColor = .white
         }else{
             contentView.backgroundColor = .white
             headlineLabel.backgroundColor = .white
             storyTitleContainerView.backgroundColor = .white
-            headlineLabel.textColor = .black
+//            headlineLabel.textColor = .black
+            let attributes = [NSAttributedStringKey.foregroundColor : UIColor.black,NSAttributedStringKey.font:FontService.shared.homeHeadlineRegular]
+            let healineString = NSAttributedString(string: story.headline ?? "", attributes: attributes)
+            headlineLabel.attributedText = healineString
         }
     }
+    
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//        headlineLabel.textColor = .black
+//    }
 }
 
 

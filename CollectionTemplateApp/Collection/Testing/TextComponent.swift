@@ -90,6 +90,17 @@ enum TextComponentType {
     
     var font:UIFont {
         switch self {
+            
+        case .SectionName:
+            return FontService.shared.homeSectionFont
+        case .Headline:
+            return FontService.shared.homeHeadlineRegular
+        case .SubHeadline:
+            return FontService.shared.homeSubHeadlineRegular
+        case .AuthorName:
+            return FontService.shared.homeAuthorFont
+        case .TimeStamp:
+            return FontService.shared.homeTimestampFont
         default:
             return UIFont.systemFont(ofSize: 17)
         }

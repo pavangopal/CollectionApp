@@ -40,7 +40,7 @@ class ImageStoryListCardCell: BaseCollectionCell {
         
         containerView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 2, leftConstant: 2, bottomConstant: 2, rightConstant: 2, widthConstant: 0, heightConstant: 0)
         
-        imageView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 150, heightConstant: 100)
+        imageView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 175, heightConstant: 131)
         let bottomConstraint = NSLayoutConstraint(item: containerView, attribute: NSLayoutAttribute.bottom, relatedBy: .greaterThanOrEqual, toItem: imageView, attribute: .bottom, multiplier: 1, constant: 0)
         self.contentView.addConstraint(bottomConstraint)
         
@@ -66,7 +66,7 @@ class ImageStoryListCardCell: BaseCollectionCell {
         
         if let heroImageS3Key = story.hero_image_s3_key {
             
-            let imageSize = CGSize(width: UIScreen.main.bounds.width-30, height: 200)
+            let imageSize = CGSize(width: 175, height: 131)
             imageView.loadImage(imageMetaData: story.hero_image_metadata, imageS3Key: heroImageS3Key, targetSize: imageSize, placeholder: nil)
         }
         

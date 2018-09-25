@@ -73,6 +73,7 @@ extension UIImageView {
     }
     
     func loadImageFromUrl(url:URL?,animation:ImageTransition = ImageTransition.fade(0.2)){
+        self.backgroundColor = UIColor.lightGray
         
         guard let url = url else{
             self.image = nil
@@ -92,9 +93,6 @@ extension UIImageView {
             case imageType.gif.rawValue :
                 DispatchQueue.main.async {
                     self.kf.setImage(with: convertedUrl, options: [.transition(animation)], completionHandler: { (image, error, cache, url) in
-                        
-                        
-                        
                     })
                 }
                 
@@ -102,9 +100,6 @@ extension UIImageView {
                 
             case imageType.webp.rawValue :
                 self.kf.setImage(with: convertedUrl, options: [.processor(WebPProcessor.default), .cacheSerializer(WebPSerializer.default)], completionHandler: { (image, error, cache, url) in
-                    
-                    print(image)
-                    
                 })
                 break
                 
@@ -112,7 +107,6 @@ extension UIImageView {
                 DispatchQueue.main.async {
                     
                     self.kf.setImage(with: convertedUrl, placeholder: nil, options: [.transition(animation)], completionHandler: { (image, error, cache, url) in })
-                    
                     self.kf.indicatorType = .none
                 }
                 break

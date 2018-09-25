@@ -12,7 +12,6 @@ import Quintype
 struct CarouselModel {
     
     var layoutType:HomeCellType?
-//    var stories:[Story] = []
     var collectionName:String?
     var estimatedInnerCellHeight:CGFloat = 0
     var associatedMetaData:AssociatedMetadata?

@@ -150,7 +150,7 @@ class MDStackView : UIStackView {
         let heightConstraint = sectionUnderLineView.heightAnchor.constraint(equalToConstant: 2)
         heightConstraint.priority = UILayoutPriority.defaultHigh
         heightConstraint.isActive = true
-        stackView.addArrangedSubview(sectionUnderLineView)
+//        stackView.addArrangedSubview(sectionUnderLineView)
         
         return stackView
     }

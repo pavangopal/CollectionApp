@@ -32,6 +32,10 @@ class HomeCellSizeCalculator {
         targetWidth:CGFloat,
         cellType:HomeCellType) -> CGSize {
         
+        if cellType.imageTextAlignment == .Cover {
+            return CGSize(width: targetWidth, height: cellType.innerCellHeight)
+        }
+        
         let containerWidth =
             (cellType.imageTextAlignment == .Vertical) ?
             (targetWidth - (2*horizontalPadding)) :

@@ -47,6 +47,7 @@ extension HomeCellType{
     
     var imageWidth:CGFloat{
         switch self {
+        
         case .ImageStoryListCardCell:
             return 175
         case .ImageStoryListCell:
@@ -63,7 +64,7 @@ extension HomeCellType{
         switch self {
         case .ImageStoryListCell:
             return 1
-        case .FullImageSliderCell:
+        case .FullImageSliderCell,.SimpleSliderCell:
             return 2/3
         default:
             return 9/16
@@ -114,6 +115,8 @@ extension HomeCellType{
         switch self {
         case .ImageStoryListCell,.ImageStoryListCardCell:
             return .Horizontal
+        case .FullImageSliderCell,.SimpleSliderCell:
+            return .Cover
         default:
             return .Vertical
         }

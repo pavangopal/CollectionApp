@@ -49,7 +49,7 @@ class CarousalContainerCell: BaseCollectionCell {
     }
     
     var timer:Timer?
-    var currentStoryIndex = -1{
+    var currentStoryIndex = -1 {
         didSet{
             pageControl.currentPage = currentStoryIndex
         }

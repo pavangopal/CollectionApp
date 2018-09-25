@@ -140,7 +140,9 @@ class CollectionLayoutEngine {
             
             let storyViewModelArray = carousalStories.map({createStoryViewModel(story: $0, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageTextCell, targetWidth: CollectionLayoutEngine.targetWidth)})
             
-            let carouselModel = CarouselModel(layoutType: HomeCellType.ImageTextCell,collectionName: innerCollection.name, estimatedInnerCellHeight: HomeCellType.ImageTextCell.innerCellHeight, associatedMetaData: collectionItem.associatedMetadata,storyViewModel:storyViewModelArray)
+            let cellHeight = storyViewModelArray.map({$0.preferredSize}).max(by: {$1.height>$0.height})
+            
+            let carouselModel = CarouselModel(layoutType: HomeCellType.ImageTextCell,collectionName: innerCollection.name, estimatedInnerCellHeight: cellHeight?.height ?? 0, associatedMetaData: collectionItem.associatedMetadata,storyViewModel:storyViewModelArray)
             
             let sectionLayout = [SectionLayout(homeCellType: HomeCellType.CarousalContainerCell, carouselModel: carouselModel, associatedMetadata: collectionItem.associatedMetadata)]
             
@@ -316,7 +318,9 @@ class CollectionLayoutEngine {
             let stories:[Story] = innerCollection.items.filter({$0.story != nil}).map({$0.story!})
             
             let storyViewModelArray = stories.map({createStoryViewModel(story: $0, associatedMetadata: collectionItem.associatedMetadata, cellType: innerLayoutType, targetWidth: CollectionLayoutEngine.targetWidth)})
-            let carouselModel = CarouselModel(layoutType: innerLayoutType, collectionName: innerCollection.name, estimatedInnerCellHeight: innerLayoutType.innerCellHeight, associatedMetaData: collectionItem.associatedMetadata,storyViewModel:storyViewModelArray)
+            
+let cellHeight = storyViewModelArray.map({$0.preferredSize}).max(by: {$1.height>$0.height})
+            let carouselModel = CarouselModel(layoutType: innerLayoutType, collectionName: innerCollection.name, estimatedInnerCellHeight: cellHeight?.height ?? 0, associatedMetaData: collectionItem.associatedMetadata,storyViewModel:storyViewModelArray)
             
             let sectionLayout = [SectionLayout(homeCellType: HomeCellType.LinerGalleryCarousalContainer, carouselModel: carouselModel, associatedMetadata: collectionItem.associatedMetadata)]
             
@@ -340,7 +344,10 @@ class CollectionLayoutEngine {
             let stories:[Story] = innerCollection.items.filter({$0.story != nil}).map({$0.story!})
             let storyViewModelArray = stories.map({createStoryViewModel(story: $0, associatedMetadata: collectionItem.associatedMetadata, cellType: innerLayoutType, targetWidth: CollectionLayoutEngine.targetWidth)})
             
-            let carouselModel = CarouselModel(layoutType: innerLayoutType, collectionName: innerCollection.name, estimatedInnerCellHeight: innerLayoutType.innerCellHeight, associatedMetaData: collectionItem.associatedMetadata,storyViewModel:storyViewModelArray)
+            let cellHeight = storyViewModelArray.map({$0.preferredSize}).max(by: {$1.height>$0.height})
+
+            let carouselModel = CarouselModel(layoutType: innerLayoutType, collectionName: innerCollection.name, estimatedInnerCellHeight: cellHeight?.height ?? 0, associatedMetaData: collectionItem.associatedMetadata,storyViewModel:storyViewModelArray)
+            
             let sectionLayout = SectionLayout(homeCellType: HomeCellType.CarousalContainerCell, carouselModel: carouselModel, associatedMetadata: collectionItem.associatedMetadata)
             
             sectionLayoutArray.append(contentsOf: [sectionLayout])

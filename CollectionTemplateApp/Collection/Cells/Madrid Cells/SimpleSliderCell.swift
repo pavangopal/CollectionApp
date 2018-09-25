@@ -90,17 +90,12 @@ class SimpleSliderCell: BaseCollectionCell {
     
     override func configure(data: Any?,associatedMetaData:AssociatedMetadata?) {
         
-        guard let collectionTitleStoryTuple = data as? (String?,Story?),let collectionName = collectionTitleStoryTuple.0,let story = collectionTitleStoryTuple.1 else{return}
+        guard let collectionTitleStoryTuple = data as? (String?,StoryViewModel?),let collectionName = collectionTitleStoryTuple.0,let story = collectionTitleStoryTuple.1 else{return}
         
         collectionTitleLabel.text = collectionName
         
-        if let heroImageS3Key = story.hero_image_s3_key {
-            
-            let imageSize = CGSize(width: UIScreen.main.bounds.width-30, height: bounds.height)
-            imageView.loadImage(imageMetaData: story.hero_image_metadata, imageS3Key: heroImageS3Key, targetSize: imageSize, placeholder: nil)
-        }
-        
-        storyHeadlineLabel.text = story.headline ?? ""
+        imageView.loadImageFromUrl(url: story.imageURl)
+        storyHeadlineLabel.attributedText = story.headline
         
         
     }

@@ -67,13 +67,13 @@ class CarousalContainerCell: BaseCollectionCell {
     
     override func configure(data: Any?,associatedMetaData:AssociatedMetadata?) {
         
-        guard let carousel = data as? CarouselModel,carousel.stories.count > 0 else{return}
+        guard let carousel = data as? CarouselModel,carousel.storyViewModel.count > 0 else{return}
         
         (self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.itemSize = CGSize(width: contentView.bounds.width, height: carousel.estimatedInnerCellHeight)
-        pageControl.numberOfPages = carousel.stories.count
+        pageControl.numberOfPages = carousel.storyViewModel.count
         carouselModel = carousel
         
-        if carousel.stories.count > 1 && (associatedMetaData?.enable_auto_play ?? false) {
+        if carousel.storyViewModel.count > 1 && (associatedMetaData?.enable_auto_play ?? false) {
             shouldPlayMovement()
         }
         
@@ -97,7 +97,7 @@ extension CarousalContainerCell : UICollectionViewDelegate,
                                   UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return carouselModel?.stories.count ?? 0
+        return carouselModel?.storyViewModel.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -107,8 +107,7 @@ extension CarousalContainerCell : UICollectionViewDelegate,
         case .FullImageSliderCell:
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.FullImageSliderCell.rawValue, for: indexPath) as? FullImageSliderCell
-            
-            cell?.configure(data: carouselModel?.stories[indexPath.row],associatedMetaData:carouselModel?.associatedMetaData)
+            cell?.configure(data: carouselModel?.storyViewModel[indexPath.row], associatedMetaData: carouselModel?.associatedMetaData)
             
             return cell!
         
@@ -116,7 +115,7 @@ extension CarousalContainerCell : UICollectionViewDelegate,
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.SimpleSliderCell.rawValue, for: indexPath) as? SimpleSliderCell
             
-            let tuple:(collectionName:String?,story:Story?) = (collectionName:carouselModel?.collectionName,story:carouselModel?.stories[indexPath.row])
+            let tuple:(collectionName:String?,story:StoryViewModel?) = (collectionName:carouselModel?.collectionName,story:carouselModel?.storyViewModel[indexPath.row])
             cell?.configure(data: tuple,associatedMetaData:carouselModel?.associatedMetaData)
             
             return cell!
@@ -125,7 +124,7 @@ extension CarousalContainerCell : UICollectionViewDelegate,
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.LinearGallerySliderCell.rawValue, for: indexPath) as? LinearGallerySliderCell
             
-            cell?.configure(data: carouselModel?.stories[indexPath.row],associatedMetaData:carouselModel?.associatedMetaData)
+            cell?.configure(data: carouselModel?.storyViewModel[indexPath.row],associatedMetaData:carouselModel?.associatedMetaData)
             
             return cell!
             
@@ -133,7 +132,7 @@ extension CarousalContainerCell : UICollectionViewDelegate,
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.ImageTextCell.rawValue, for: indexPath) as? ImageTextCell
             
-            cell?.configure(data: carouselModel?.stories[indexPath.row],associatedMetaData:carouselModel?.associatedMetaData)
+            cell?.configure(data: carouselModel?.storyViewModel[indexPath.row], associatedMetaData: carouselModel?.associatedMetaData)
             
             return cell!
             
@@ -146,13 +145,13 @@ extension CarousalContainerCell : UICollectionViewDelegate,
 }
 
 extension CarousalContainerCell {
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if let indexPath = collectionView.indexPathsForVisibleItems.first {
             
             currentStoryIndex = indexPath.row
         }
     }
-    
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
@@ -191,7 +190,7 @@ extension CarousalContainerCell {
         
         currentStoryIndex += 1
         
-        if currentStoryIndex <  carouselModel?.stories.count ?? 0 {
+        if currentStoryIndex <  carouselModel?.storyViewModel.count ?? 0 {
             
             collectionView.scrollToItem(at: IndexPath(item: currentStoryIndex, section: 0), at: .left, animated: true)
         }else{

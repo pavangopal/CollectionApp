@@ -45,7 +45,7 @@ struct Environment{
     
     struct Development {
         
-        static var baseURL = "http://mediaone-web.staging.quintype.io"
+        static var baseURL = "https://ace-web.qtstage.io"
         static var imageBaseURL = "https://" + (Quintype.publisherConfig?.cdn_image)! + "/"
 
         struct RemoteConfig{
@@ -78,7 +78,7 @@ struct Environment{
 
 //Change .Development to .Production while Archive
 
-var appConfig = Environment.Production.self
+var appConfig = Environment.Development.self
 
 
 

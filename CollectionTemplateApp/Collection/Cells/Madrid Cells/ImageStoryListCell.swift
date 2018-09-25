@@ -28,6 +28,7 @@ class ImageStoryListCell: BaseCollectionCell {
         let label = TTTAttributedLabel(frame: .zero)
         label.font = FontService.shared.homeTimestampFont
         label.setProperties()
+        
         return label
     }()
     
@@ -38,9 +39,7 @@ class ImageStoryListCell: BaseCollectionCell {
         contentView.clipsToBounds = true
         
         stackView = MDStackView()
-        //        stackView.sectionNameLabel.isHidden = true
-        //        stackView.sectionUnderLineView.isHidden = true
-        
+
         contentView.addSubview(containerView)
         containerView.addSubview(stackView)
         containerView.addSubview(imageView)
@@ -69,37 +68,13 @@ class ImageStoryListCell: BaseCollectionCell {
     }
     
     override func configure(data:Any?,associatedMetaData:AssociatedMetadata?){
-        
-        guard let story = data as? Story else{
+        guard let storyViewModel = data as? StoryViewModel else{
             return
         }
         
-        associatedMetaData?.show_section_tag = true
-        self.stackView.updateViewFor(associatedMetaData: associatedMetaData)
+        imageView.loadImageFromUrl(url: storyViewModel.imageURl)
         
-        if story.story_template == StoryTemplet.Review {
-            stackView.ratingView.isHidden = false
-            stackView.ratingView.rating = story.storyMetadata?.review_rating?.value ?? 0.0
-        }else{
-            stackView.ratingView.isHidden = true
-        }
-        
-        if let heroImageS3Key = story.hero_image_s3_key {
-            
-            let imageSize = CGSize(width: UIScreen.main.bounds.width-30, height: 200)
-            imageView.loadImage(imageMetaData: story.hero_image_metadata, imageS3Key: heroImageS3Key, targetSize: imageSize, placeholder: nil)
-        }
-        
-        stackView.headlineLabel.text = story.headline?.trim()
-        stackView.sectionNameLabel.text = story.sections.first?.display_name ?? story.sections.first?.name ?? ""
-        
-        stackView.authorNameLabel.text = story.author_name ?? ""
-        
-        DispatchQueue.global().async {
-            let publishTime = (story.first_published_at?.convertTimeStampToDate ?? "" ).trim()
-            DispatchQueue.main.async {
-                self.timestampLabel.text = publishTime
-            }
-        }
+        stackView.config(storyViewModel: storyViewModel)
+
     }
 }

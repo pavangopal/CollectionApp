@@ -26,7 +26,12 @@ enum HomeCellType:String{
     case ImageStoryListCell = "ImageStoryListCell"
     case ImageTextDescriptionCell = "ImageTextDescriptionCell"
     case StoryListCardCell = "StoryListCardCell"
+    
+}
 
+
+
+extension HomeCellType{
     var innerCellHeight:CGFloat{
         switch self {
         case .SimpleSliderCell,.FullImageSliderCell:
@@ -37,6 +42,116 @@ enum HomeCellType:String{
             return 400
         default:
             return 250
+        }
+    }
+    
+    var imageWidth:CGFloat{
+        switch self {
+        case .ImageStoryListCardCell:
+            return 175
+        case .ImageStoryListCell:
+            return 95
+            
+        case .StoryListCell,.StoryListCardCell:
+            return 0
+        default:
+            return CollectionLayoutEngine.targetWidth
+        }
+    }
+    
+    var aspectRatio:CGFloat{
+        switch self {
+        case .ImageStoryListCell:
+            return 1
+        case .FullImageSliderCell:
+            return 2/3
+        default:
+            return 9/16
+        }
+    }
+    
+    var sectionFont:UIFont{
+        switch self {
+            
+        default:
+            return FontService.shared.homeSectionFont
+        }
+    }
+    
+    var headlineFont:UIFont{
+        switch self {
+            
+        default:
+            return FontService.shared.homeHeadlineRegular
+        }
+    }
+    
+    var subheadLineFont:UIFont{
+        switch self {
+            
+        default:
+            return FontService.shared.homeSubHeadlineRegular
+        }
+    }
+    
+    var authorFont:UIFont{
+        switch self {
+            
+        default:
+            return FontService.shared.homeAuthorFont
+        }
+    }
+    
+    var timestampFont:UIFont{
+        switch self {
+            
+        default:
+            return FontService.shared.homeTimestampFont
+        }
+    }
+    
+    var imageTextAlignment:ImageTextAlignment{
+        switch self {
+        case .ImageStoryListCell,.ImageStoryListCardCell:
+            return .Horizontal
+        default:
+            return .Vertical
+        }
+    }
+    
+    var sectionColor:UIColor{
+        switch self {
+        case .FullImageSliderCell,.ImageTextCell,.SimpleSliderCell:
+            return .white
+        default:
+            return ThemeService.shared.theme.primaryTextColor
+        }
+    }
+    
+    var headlineColor:UIColor{
+        switch self {
+        case .FullImageSliderCell,.SimpleSliderCell:
+            return .white
+        default:
+            return ThemeService.shared.theme.primaryTextColor
+        }
+    }
+ 
+    var authorColor:UIColor{
+        switch self {
+        case .FullImageSliderCell,.SimpleSliderCell:
+            return .white
+        default:
+            return ThemeService.shared.theme.primaryTextColor
+        }
+    }
+    
+    var timestampColor:UIColor{
+        switch self {
+        case .FullImageSliderCell,.SimpleSliderCell:
+            return .white
+        default:
+            return ThemeService.shared.theme.primaryTextColor
         }
     }
     

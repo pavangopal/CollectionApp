@@ -45,47 +45,14 @@ class FullImageSliderCell: BaseCollectionCell {
     }
    
     override func configure(data:Any?,associatedMetaData:AssociatedMetadata?){
-        
-        guard let story = data as? Story else{
+        guard let storyViewModel = data as? StoryViewModel else{
             return
         }
         
-        self.stackView.updateViewFor(associatedMetaData: associatedMetaData)
+        imageView.loadImageFromUrl(url: storyViewModel.imageURl)
         
-        if let heroImageS3Key = story.hero_image_s3_key{
-            
-            let imageSize = self.bounds.size
-            imageView.loadImage(imageMetaData: story.hero_image_metadata, imageS3Key: heroImageS3Key, targetSize: imageSize, placeholder: nil)
-        }
-        
-        stackView.headlineLabel.text = story.headline?.trim()
-        //        stackView.subHeadlineLabel.text = story.subheadline?.trim()
-        
-        if story.story_template == StoryTemplet.Review {
-            stackView.ratingView.isHidden = false
-            stackView.ratingView.rating = story.storyMetadata?.review_rating?.value ?? 0.0
-        }else{
-            stackView.ratingView.isHidden = true
-        }
-        
-        stackView.sectionNameLabel.text = story.sections.first?.display_name ?? story.sections.first?.name ?? ""
-        
-        stackView.authorNameLabel.text = story.author_name ?? ""
-        
-        if let imageString = story.authors.first?.avatar_url?.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed),let imageURL = URL(string:"\(imageString)"){
-            
-            self.stackView.authorImageView.kf.setImage(with: imageURL, completionHandler: { [weak self] (image, error, cachetype, url) in
-                guard let selfD = self else{return}
-                
-                //                selfD.stackView.authorImageView.isHidden = false
-                selfD.stackView.authorImageView.image = image
-            })
-        }else{
-            //            stackView.authorImageView.isHidden = true
-        }
-        
-        self.stackView.publishTimeLabel.text = (story.first_published_at?.convertTimeStampToDate ?? "" ).trim()
-        
+        stackView.config(storyViewModel: storyViewModel)
+      
     }
     
 }

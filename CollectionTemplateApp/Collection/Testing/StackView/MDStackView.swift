@@ -12,6 +12,8 @@ import Quintype
 
 class MDStackView : UIStackView {
     
+    var sectionStackView:UIStackView!
+    
     let authorNameLabel:TTTAttributedLabel = {
         let label = TTTAttributedLabel(frame: .zero)
         label.font = FontService.shared.homeAuthorFont
@@ -89,7 +91,7 @@ class MDStackView : UIStackView {
         ratingView.translatesAutoresizingMaskIntoConstraints = false
         return ratingView
     }()
-
+    
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -110,7 +112,7 @@ class MDStackView : UIStackView {
     
     private func createStackView(){
         //#1
-        let sectionStackView = createSectionStackView()
+        sectionStackView = createSectionStackView()
         self.addArrangedSubview(sectionStackView)
         //#2
         self.addArrangedSubview(headlineLabel)
@@ -134,7 +136,7 @@ class MDStackView : UIStackView {
         
         authorStackView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
     }
-
+    
     private func createSectionStackView() -> UIStackView {
         
         let stackView = UIStackView()
@@ -143,12 +145,11 @@ class MDStackView : UIStackView {
         stackView.distribution = .fill
         stackView.spacing = 2
         
-//        sectionNameLabel.isHidden = false
         sectionUnderLineView.isHidden = false
-        
-//        sectionNameLabel.insets = UIEdgeInsets(top: 2, left: 5, bottom: 2, right: 5)
         stackView.addArrangedSubview(sectionNameLabel)
-        sectionUnderLineView.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        let heightConstraint = sectionUnderLineView.heightAnchor.constraint(equalToConstant: 2)
+        heightConstraint.priority = UILayoutPriority.defaultHigh
+        heightConstraint.isActive = true
         stackView.addArrangedSubview(sectionUnderLineView)
         
         return stackView
@@ -182,7 +183,7 @@ class MDStackView : UIStackView {
         labelStackView.addArrangedSubview(publishTimeLabel)
         
         authorStackView.addArrangedSubview(labelStackView)
-//        self.addArrangedSubview(authorStackView)
+        //        self.addArrangedSubview(authorStackView)
         
         return authorStackView
     }
@@ -210,24 +211,49 @@ class MDStackView : UIStackView {
             self.sectionNameLabel.isHidden = false
             self.sectionNameLabel.isHidden = false
             self.sectionUnderLineView.isHidden = false
+            sectionStackView.isHidden =  false
         }else{
             self.sectionNameLabel.isHidden = true
             self.sectionNameLabel.isHidden = true
             self.sectionUnderLineView.isHidden = true
+            sectionStackView.isHidden = true
         }
     }
+    
+    func config(storyViewModel:StoryViewModel) {
+        headlineLabel.attributedText = storyViewModel.headline
+        
+        if let sectionName = storyViewModel.sectionName{
+            sectionStackView.isHidden = false
+            sectionNameLabel.attributedText = sectionName
+        }else{
+            sectionStackView.isHidden = true
+        }
+        
+        if let authorName = storyViewModel.authorName{
+            authorNameLabel.isHidden = false
+            authorNameLabel.attributedText = authorName
+        }else{
+            authorNameLabel.isHidden = true
+        }
+        
+        if let timeStamp = storyViewModel.timeStamp{
+            publishTimeLabel.isHidden = false
+            publishTimeLabel.attributedText = timeStamp
+            
+        }else{
+            publishTimeLabel.isHidden = true
+        }
+        
+        if let rating = storyViewModel.reviewRating{
+            ratingView.isHidden = false
+            ratingView.rating = rating
+        }else{
+            ratingView.isHidden = true
+        }
+        
+    }
+    
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 

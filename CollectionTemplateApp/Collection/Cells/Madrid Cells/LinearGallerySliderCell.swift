@@ -45,17 +45,13 @@ class LinearGallerySliderCell: BaseCollectionCell {
         contentView.addConstraint(bottomContraint)
     }
     
-    override func configure(data: Any?,associatedMetaData:AssociatedMetadata?) {
-        guard let story = data as? Story else{return}
-                
-        if let heroImageS3Key = story.hero_image_s3_key {
-            
-            let imageSize = CGSize(width: UIScreen.main.bounds.width-30, height: 200)
-            imageView.loadImage(imageMetaData: story.hero_image_metadata, imageS3Key: heroImageS3Key, targetSize: imageSize, placeholder: nil)
+    override func configure(data:Any?,associatedMetaData:AssociatedMetadata?){
+        guard let storyViewModel = data as? StoryViewModel else{
+            return
         }
         
-        headlineLabel.text = story.headline?.trim()
-        
+        imageView.loadImageFromUrl(url: storyViewModel.imageURl)
+        headlineLabel.attributedText = storyViewModel.headline
     }
     
 }

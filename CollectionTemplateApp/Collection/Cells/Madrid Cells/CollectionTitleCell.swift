@@ -61,7 +61,7 @@ class CollectionTitleCell: BaseCollectionCell {
             return
         }
         
-        collectionTitleLabel.text = collectionName
+        collectionTitleLabel.text = collectionName.capitalized
         
     }
     

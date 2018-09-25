@@ -50,11 +50,11 @@ class LinerGalleryCarousalContainer: BaseCollectionCell {
     
     override func configure(data: Any?,associatedMetaData:AssociatedMetadata?) {
         
-        guard let carousel = data as? CarouselModel,carousel.stories.count > 0 else{return}
+        guard let carousel = data as? CarouselModel,carousel.storyViewModel.count > 0 else{return}
         
         carouselModel = carousel
         
-        if carousel.stories.count > 1 {
+        if carousel.storyViewModel.count > 1 {
             shouldPlayMovement()
         }
     }
@@ -76,7 +76,7 @@ extension LinerGalleryCarousalContainer : UICollectionViewDelegate,
 UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return carouselModel?.stories.count ?? 0
+        return carouselModel?.storyViewModel.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -87,7 +87,7 @@ UICollectionViewDelegateFlowLayout {
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.LinearGallerySliderCell.rawValue, for: indexPath) as? LinearGallerySliderCell
             
-            cell?.configure(data: carouselModel?.stories[indexPath.row],associatedMetaData:carouselModel?.associatedMetaData)
+            cell?.configure(data: carouselModel?.storyViewModel[indexPath.row],associatedMetaData:carouselModel?.associatedMetaData)
             
             return cell!
             
@@ -95,7 +95,7 @@ UICollectionViewDelegateFlowLayout {
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.ImageTextCell.rawValue, for: indexPath) as? ImageTextCell
             
-            cell?.configure(data: carouselModel?.stories[indexPath.row],associatedMetaData:carouselModel?.associatedMetaData)
+            cell?.configure(data: carouselModel?.storyViewModel[indexPath.row],associatedMetaData:carouselModel?.associatedMetaData)
             
             return cell!
             
@@ -152,14 +152,13 @@ extension LinerGalleryCarousalContainer {
         
         currentStoryIndex += 1
         
-        if currentStoryIndex <  carouselModel?.stories.count ?? 0 {
+        if currentStoryIndex <  carouselModel?.storyViewModel.count ?? 0 {
             scrollToPage(pageNumber: currentStoryIndex, animation: true)
             
         }else{
             
             currentStoryIndex = 0
             scrollToPage(pageNumber: currentStoryIndex, animation: false)
-            
             
         }
     }

@@ -25,10 +25,13 @@ class SectionLayout {
     var carouselModel:CarouselModel?
     var size:CGSize = .zero
     
+    var storyViewModel:StoryViewModel?
+    
     var collectionLayoutType:CollectionLayout?
     
     public init(homeCellType:HomeCellType){
         self.homeCellType = homeCellType
+        
     }
     
     public init(homeCellType:HomeCellType,data:Any){

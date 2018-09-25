@@ -10,6 +10,7 @@ import Foundation
 import Quintype
 
 class CollectionLayoutEngine {
+    static var targetWidth = UIScreen.main.bounds.width - 30
     
     private var parentCollection : CollectionModel?
     
@@ -41,7 +42,7 @@ class CollectionLayoutEngine {
         switch collectionTemplet {
             
         case .FourColGrid:
-            return  getFourColumGrid(collectionItem:collectionItem)
+            return getFourColumGrid(collectionItem:collectionItem)
             
             
         case .HalfImageSlider:
@@ -99,18 +100,21 @@ class CollectionLayoutEngine {
             
             let stories:[Story] = innerCollection.items.filter({$0.story != nil}).map({$0.story!})
             
-            for (index,story) in stories.enumerated(){
+            for (index,story) in stories.enumerated() {
+                
                 if index == 0{
-                    let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                    let size = calculateHeight(story: story)
-                    sectionLayout.size = size
+                    let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: story,associatedMetadata:collectionItem.associatedMetadata?.copy(with: nil) as? AssociatedMetadata)
+                    
+                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata!, cellType: HomeCellType.ImageTextCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    
+                    sectionLayout.storyViewModel = storyViewModel
                     sectionLayoutArray.append(contentsOf: [sectionLayout])
                     
                 }else{
                     let sectionLayout =  SectionLayout(homeCellType: HomeCellType.ImageStoryListCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                    let size = calculatedHeightForImageStoryListCell(story: story)
-                    let newHeight = size.height<95 ? 95 : size.height
-                    sectionLayout.size = CGSize(width: size.width, height: newHeight)
+                    let storyViewModel = createStoryViewModel(story: stories[index], associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageStoryListCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    sectionLayout.storyViewModel = storyViewModel
+                    
                     sectionLayout.associatedMetaData = collectionItem.associatedMetadata
                     sectionLayoutArray.append(sectionLayout)
                 }
@@ -134,7 +138,9 @@ class CollectionLayoutEngine {
             let stories:[Story] = innerCollection.items.filter({$0.story != nil}).map({$0.story!})
             let carousalStories = Array<Story>(stories.prefix(3))
             
-            let carouselModel = CarouselModel.init(layoutType: HomeCellType.ImageTextCell, stories: carousalStories, collectionName: innerCollection.name, estimatedInnerCellHeight: HomeCellType.ImageTextCell.innerCellHeight,associatedMetaData:collectionItem.associatedMetadata)
+            let storyViewModelArray = carousalStories.map({createStoryViewModel(story: $0, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageTextCell, targetWidth: CollectionLayoutEngine.targetWidth)})
+            
+            let carouselModel = CarouselModel(layoutType: HomeCellType.ImageTextCell,collectionName: innerCollection.name, estimatedInnerCellHeight: HomeCellType.ImageTextCell.innerCellHeight, associatedMetaData: collectionItem.associatedMetadata,storyViewModel:storyViewModelArray)
             
             let sectionLayout = [SectionLayout(homeCellType: HomeCellType.CarousalContainerCell, carouselModel: carouselModel, associatedMetadata: collectionItem.associatedMetadata)]
             
@@ -142,8 +148,9 @@ class CollectionLayoutEngine {
             
             for index in carousalStories.count..<stories.count {
                 let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: stories[index],associatedMetadata:collectionItem.associatedMetadata)
-                let size = calculateHeight(story: stories[index])
-                sectionLayout.size = size
+                
+                let storyViewModel = createStoryViewModel(story: stories[index], associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageTextCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                sectionLayout.storyViewModel = storyViewModel
                 sectionLayoutArray.append(sectionLayout)
             }
         }
@@ -165,16 +172,18 @@ class CollectionLayoutEngine {
             let stories:[Story] = innerCollection.items.filter({$0.story != nil}).map({$0.story!})
             
             for (index,story) in stories.enumerated(){
-                if index == 0{
+                if index == 0 {
                     let sectionLayout = SectionLayout(homeCellType: HomeCellType.FullImageSliderCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                    sectionLayout.size = CGSize(width: UIScreen.main.bounds.width-30, height: 300)
+                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.FullImageSliderCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    sectionLayout.storyViewModel = storyViewModel
                     sectionLayoutArray.append(contentsOf: [sectionLayout])
                     
                 }else {
                     
                     let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                    let size = calculateHeight(story: story)
-                    sectionLayout.size = size
+
+                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata!, cellType: HomeCellType.ImageTextCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    sectionLayout.storyViewModel = storyViewModel
                     sectionLayoutArray.append(contentsOf: [sectionLayout])
                     
                 }
@@ -199,9 +208,8 @@ class CollectionLayoutEngine {
             
             stories.forEach { (story) in
                 let sectionLayout =  SectionLayout(homeCellType: HomeCellType.ImageStoryListCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                let size = calculatedHeightForImageStoryListCell(story: story)
-                let newHeight = size.height<95 ? 95 : size.height
-                sectionLayout.size = CGSize(width: size.width, height: newHeight)
+                let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageStoryListCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                sectionLayout.storyViewModel = storyViewModel
                 sectionLayout.associatedMetaData = collectionItem.associatedMetadata
                 sectionLayoutArray.append(sectionLayout)
             }
@@ -221,18 +229,21 @@ class CollectionLayoutEngine {
             
             let stories:[Story] = innerCollection.items.filter({$0.story != nil}).map({$0.story!})
 
-            for (index,story) in stories.enumerated(){
-                if index == stories.count - 1 && index > 2{
-                    let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextDescriptionCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                    sectionLayout.size = calculateHeightForImageTextDescriptionCell(story: story)
+            for (index,story) in stories.enumerated() {
+                if index == stories.count - 1 && index > 2 {
+                    //ImageTextDescriptionCell
+                    let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
+                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageTextCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    sectionLayout.storyViewModel = storyViewModel
                     sectionLayoutArray.append(sectionLayout)
                 }else{
 
                     let sectionLayout =  SectionLayout(homeCellType: HomeCellType.ImageStoryListCardCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                    let size = calculatedHeightForImageStoryListCardCell(story: story)
-                    let newHeight = size.height<131 ? 131 : size.height
-                    sectionLayout.size = CGSize(width: size.width, height: newHeight)
+                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageStoryListCardCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    sectionLayout.storyViewModel = storyViewModel
+                    
                     sectionLayout.associatedMetaData = collectionItem.associatedMetadata
+                    
                     sectionLayoutArray.append(sectionLayout)
                 }
 
@@ -257,26 +268,31 @@ class CollectionLayoutEngine {
             for (index,story) in stories.enumerated(){
                 if index == 0{
                     let sectionLayout = SectionLayout(homeCellType: HomeCellType.FullImageSliderCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                    sectionLayout.size = CGSize(width: UIScreen.main.bounds.width-30, height: 450)
+                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.FullImageSliderCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    sectionLayout.storyViewModel = storyViewModel
                     sectionLayoutArray.append(contentsOf: [sectionLayout])
                     
                 }else if index == 1{
                     
                     let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                    let size = calculateHeight(story: story)
-                    sectionLayout.size = size
+
+                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata!, cellType: HomeCellType.ImageTextCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    
+                    sectionLayout.storyViewModel = storyViewModel
                     sectionLayoutArray.append(contentsOf: [sectionLayout])
                     
                 }else if index == 2{
                     
                     //TODO: needs to look like a card
                     let sectionLayout = SectionLayout(homeCellType: HomeCellType.StoryListCardCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                    sectionLayout.size = calculatedHeightForStoryListCell(story: story)
+                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.StoryListCardCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    sectionLayout.storyViewModel = storyViewModel
                     sectionLayoutArray.append(sectionLayout)
                     
                 }else{
                     let sectionLayout = SectionLayout(homeCellType: HomeCellType.StoryListCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                    sectionLayout.size = calculatedHeightForStoryListCell(story: story)
+                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.StoryListCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    sectionLayout.storyViewModel = storyViewModel
                     sectionLayoutArray.append(sectionLayout)
                 }
             }
@@ -299,7 +315,9 @@ class CollectionLayoutEngine {
             
             let stories:[Story] = innerCollection.items.filter({$0.story != nil}).map({$0.story!})
             
-            let carouselModel = CarouselModel.init(layoutType: innerLayoutType, stories: stories, collectionName: innerCollection.name, estimatedInnerCellHeight: innerLayoutType.innerCellHeight,associatedMetaData:collectionItem.associatedMetadata)
+            let storyViewModelArray = stories.map({createStoryViewModel(story: $0, associatedMetadata: collectionItem.associatedMetadata, cellType: innerLayoutType, targetWidth: CollectionLayoutEngine.targetWidth)})
+            let carouselModel = CarouselModel(layoutType: innerLayoutType, collectionName: innerCollection.name, estimatedInnerCellHeight: innerLayoutType.innerCellHeight, associatedMetaData: collectionItem.associatedMetadata,storyViewModel:storyViewModelArray)
+            
             let sectionLayout = [SectionLayout(homeCellType: HomeCellType.LinerGalleryCarousalContainer, carouselModel: carouselModel, associatedMetadata: collectionItem.associatedMetadata)]
             
             sectionLayoutArray.append(contentsOf: sectionLayout)
@@ -320,8 +338,9 @@ class CollectionLayoutEngine {
             }
             
             let stories:[Story] = innerCollection.items.filter({$0.story != nil}).map({$0.story!})
+            let storyViewModelArray = stories.map({createStoryViewModel(story: $0, associatedMetadata: collectionItem.associatedMetadata, cellType: innerLayoutType, targetWidth: CollectionLayoutEngine.targetWidth)})
             
-            let carouselModel = CarouselModel.init(layoutType: innerLayoutType, stories: stories, collectionName: innerCollection.name, estimatedInnerCellHeight: innerLayoutType.innerCellHeight,associatedMetaData:collectionItem.associatedMetadata)
+            let carouselModel = CarouselModel(layoutType: innerLayoutType, collectionName: innerCollection.name, estimatedInnerCellHeight: innerLayoutType.innerCellHeight, associatedMetaData: collectionItem.associatedMetadata,storyViewModel:storyViewModelArray)
             let sectionLayout = SectionLayout(homeCellType: HomeCellType.CarousalContainerCell, carouselModel: carouselModel, associatedMetadata: collectionItem.associatedMetadata)
             
             sectionLayoutArray.append(contentsOf: [sectionLayout])
@@ -369,9 +388,8 @@ class CollectionLayoutEngine {
                     
                 }else{
                     if let sectionLayout = makeStoryCellLayout(for: HomeCellType.ImageStoryListCardCell, collectionItem: innerCollectinItem){
-                        let size = calculatedHeightForImageStoryListCardCell(story: collectionItem.story!)
-                        let newHeight = size.height<131 ? 131 : size.height
-                        sectionLayout.size = CGSize(width: size.width, height: newHeight)
+                        let storyViewModel = createStoryViewModel(story: innerCollectinItem.story!, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageStoryListCardCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                        sectionLayout.storyViewModel = storyViewModel
                         sectionLayout.associatedMetaData = collectionItem.associatedMetadata
                         sectionedLayout.append(sectionLayout)
                     }
@@ -382,7 +400,8 @@ class CollectionLayoutEngine {
             
         }else if let story = collectionItem.story {
             let sectionLayout = SectionLayout(homeCellType: HomeCellType.StoryListCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-            sectionLayout.size = calculatedHeightForStoryListCell(story: story)
+            let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.StoryListCell, targetWidth: CollectionLayoutEngine.targetWidth)
+            sectionLayout.storyViewModel = storyViewModel
             sectionedLayout.append(sectionLayout)
         }
         
@@ -427,9 +446,10 @@ class CollectionLayoutEngine {
         }else if let story = collectionItem.story {
             
             let sectionLayout =  SectionLayout(homeCellType: HomeCellType.ImageStoryListCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-            let size = calculatedHeightForImageStoryListCell(story: story)
-            let newHeight = size.height<95 ? 95 : size.height
-            sectionLayout.size = CGSize(width: size.width, height: newHeight)
+
+            let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageStoryListCell, targetWidth: CollectionLayoutEngine.targetWidth)
+            sectionLayout.storyViewModel = storyViewModel
+            
             sectionLayout.associatedMetaData = collectionItem.associatedMetadata
             sectionedLayout.append(sectionLayout)
             
@@ -442,16 +462,12 @@ class CollectionLayoutEngine {
         if let innerCollectionItemStory = collectionItem.story {
             
             let sectionLayout = SectionLayout(homeCellType: type, story: innerCollectionItemStory,associatedMetadata:collectionItem.associatedMetadata)
-            let size = calculateHeight(story: innerCollectionItemStory)
-            sectionLayout.size = size
+
+            let storyViewModel = createStoryViewModel(story: innerCollectionItemStory, associatedMetadata: collectionItem.associatedMetadata ?? AssociatedMetadata(), cellType: type, targetWidth: CollectionLayoutEngine.targetWidth)
+            sectionLayout.storyViewModel = storyViewModel
             return sectionLayout
             
         }
-        //        else if let innerCollectionItemCollection = collectionItem.collection {
-        //
-        //            let sectionLayout = SectionLayout(homeCellType: HomeCellType.DefaultCollectionCell, collection: innerCollectionItemCollection)
-        //            return sectionLayout
-        //        }
         
         return nil
     }
@@ -460,123 +476,9 @@ class CollectionLayoutEngine {
     func makeSection(section:[SectionLayout]){
         self.sectionLayout.append(section)
     }
-    
-    func calculateHeight(story:Story) -> CGSize {
+   private func createStoryViewModel(story: Story, associatedMetadata: AssociatedMetadata?, cellType: HomeCellType, targetWidth: CGFloat) -> StoryViewModel {
         
-        let targetSize = CGSize(width: UIScreen.main.bounds.width-30, height: CGFloat.greatestFiniteMagnitude)
-        
-        let authorComponent = TextComponent(type: TextComponentType.AuthorName)
-        let sectionComponent = TextComponent(type: TextComponentType.SectionName)
-        let timeStampComponent = TextComponent(type: TextComponentType.TimeStamp)
-        let textComponent = TextComponent(type: TextComponentType.Headline)
-        
-        let insetCorrectedSize = CGSize(width: targetSize.width - 20, height: targetSize.height)
-        
-        let sectionComponentSize = sectionComponent.preferredViewSize(forDisplayingModel:story, containerSize: insetCorrectedSize)
-        let textComponentSize = textComponent.preferredViewSize(forDisplayingModel: story, containerSize: insetCorrectedSize)
-        let authorComponentSize = authorComponent.preferredViewSize(forDisplayingModel: story, containerSize: insetCorrectedSize)
-        let timeStampComponentSize = timeStampComponent.preferredViewSize(forDisplayingModel: story, containerSize: insetCorrectedSize)
-        
-        let maxSize = max(timeStampComponentSize.height, authorComponentSize.height)
-        let authorSize = CGSize(width: timeStampComponentSize.width, height: maxSize)
-        
-        let totalSize = sectionComponentSize + textComponentSize + authorSize
-        return CGSize(width: targetSize.width, height: totalSize.height + 40 + 200 + 4 + 5)
-        
-    }
-    
-    func calculateHeightForImageTextDescriptionCell(story:Story) -> CGSize {
-        
-        let targetSize = CGSize(width: UIScreen.main.bounds.width-30, height: CGFloat.greatestFiniteMagnitude)
-        
-        let authorComponent = TextComponent(type: TextComponentType.AuthorName)
-        let sectionComponent = TextComponent(type: TextComponentType.SectionName)
-        let timeStampComponent = TextComponent(type: TextComponentType.TimeStamp)
-        let textComponent = TextComponent(type: TextComponentType.Headline)
-        let subHeadlineComponent = TextComponent(type: TextComponentType.SubHeadline)
-        
-        let insetCorrectedSize = CGSize(width: targetSize.width - 20, height: targetSize.height)
-        
-        let sectionComponentSize = sectionComponent.preferredViewSize(forDisplayingModel:story, containerSize: insetCorrectedSize)
-        let textComponentSize = textComponent.preferredViewSize(forDisplayingModel: story, containerSize: insetCorrectedSize)
-        let authorComponentSize = authorComponent.preferredViewSize(forDisplayingModel: story, containerSize: insetCorrectedSize)
-        let timeStampComponentSize = timeStampComponent.preferredViewSize(forDisplayingModel: story, containerSize: insetCorrectedSize)
-        let subHeadlineComponentSize = subHeadlineComponent.preferredViewSize(forDisplayingModel: story, containerSize: insetCorrectedSize)
-        
-        let maxSize = max(timeStampComponentSize.height, authorComponentSize.height)
-        let authorSize = CGSize(width: timeStampComponentSize.width, height: maxSize)
-        
-        let totalSize = sectionComponentSize + textComponentSize + authorSize + subHeadlineComponentSize
-        return CGSize(width: targetSize.width, height: totalSize.height + 40 + 200 + 4 + 5 + 10)
-        
-    }
-    
-    func calculatedHeightForStoryListCell(story:Story) -> CGSize {
-        let targetSize = CGSize(width: UIScreen.main.bounds.width-30, height: CGFloat.greatestFiniteMagnitude)
-        
-        let authorComponent = TextComponent(type: TextComponentType.AuthorName)
-        let timeStampComponent = TextComponent(type: TextComponentType.TimeStamp)
-        let sectionComponent = TextComponent(type: TextComponentType.SectionName)
-        let textComponent = TextComponent(type: TextComponentType.Headline)
-        
-        let insetCorrectedSize = CGSize(width: targetSize.width - 20, height: targetSize.height)
-        
-        let sectionComponentSize = sectionComponent.preferredViewSize(forDisplayingModel:story, containerSize: insetCorrectedSize)
-        let textComponentSize = textComponent.preferredViewSize(forDisplayingModel: story, containerSize: insetCorrectedSize)
-        let authorComponentSize = authorComponent.preferredViewSize(forDisplayingModel: story, containerSize: insetCorrectedSize)
-        let timeStampComponentSize = timeStampComponent.preferredViewSize(forDisplayingModel: story, containerSize: insetCorrectedSize)
-        
-        let maxSize = max(timeStampComponentSize.height, authorComponentSize.height)
-        let authorSize = CGSize(width: timeStampComponentSize.width, height: maxSize)
-        let totalSize = sectionComponentSize + textComponentSize + authorSize
-        return CGSize(width: targetSize.width, height: totalSize.height + 40 + 4 + 5)
-        
-    }
-    
-    func calculatedHeightForImageStoryListCardCell(story:Story) -> CGSize {
-        let targetSize = CGSize(width: UIScreen.main.bounds.width-30-175, height: CGFloat.greatestFiniteMagnitude)
-        
-        let authorComponent = TextComponent(type: TextComponentType.AuthorName)
-        let timeStampComponent = TextComponent(type: TextComponentType.TimeStamp)
-        let sectionComponent = TextComponent(type: TextComponentType.SectionName)
-        let textComponent = TextComponent(type: TextComponentType.Headline)
-        
-        let insetCorrectedSize = CGSize(width: targetSize.width - 20, height: targetSize.height)
-        
-        let sectionComponentSize = sectionComponent.preferredViewSize(forDisplayingModel:story, containerSize: insetCorrectedSize)
-        let textComponentSize = textComponent.preferredViewSize(forDisplayingModel: story, containerSize: insetCorrectedSize)
-        let authorComponentSize = authorComponent.preferredViewSize(forDisplayingModel: story, containerSize: insetCorrectedSize)
-        let timeStampComponentSize = timeStampComponent.preferredViewSize(forDisplayingModel: story, containerSize: insetCorrectedSize)
-        
-        let maxSize = max(timeStampComponentSize.height, authorComponentSize.height)
-        let authorSize = CGSize(width: timeStampComponentSize.width, height: maxSize)
-        let totalSize = sectionComponentSize + textComponentSize + authorSize
-        return CGSize(width: targetSize.width+175, height: totalSize.height + 40 + 4 + 5)
-    }
-    
-    func calculatedHeightForImageStoryListCell(story:Story) -> CGSize {
-        let targetSize = CGSize(width: UIScreen.main.bounds.width-30-95, height: CGFloat.greatestFiniteMagnitude)
-        
-        let authorComponent = TextComponent(type: TextComponentType.AuthorName)
-        let timeStampComponent = TextComponent(type: TextComponentType.TimeStamp)
-        let sectionComponent = TextComponent(type: TextComponentType.SectionName)
-        let textComponent = TextComponent(type: TextComponentType.Headline)
-        
-        let insetCorrectedSize = CGSize(width: targetSize.width - 20, height: targetSize.height)
-        
-        let sectionComponentSize = sectionComponent.preferredViewSize(forDisplayingModel:story, containerSize: insetCorrectedSize)
-        let textComponentSize = textComponent.preferredViewSize(forDisplayingModel: story, containerSize: insetCorrectedSize)
-        let authorComponentSize = authorComponent.preferredViewSize(forDisplayingModel: story, containerSize: insetCorrectedSize)
-        let timeStampComponentSize = timeStampComponent.preferredViewSize(forDisplayingModel: story, containerSize: insetCorrectedSize)
-        
-        var reviewStarHeight:CGSize = .zero
-        
-        if story.story_template == StoryTemplet.Review{
-            reviewStarHeight = CGSize(width: targetSize.width, height: 20)
-        }
-        
-        let totalSize = sectionComponentSize + textComponentSize + authorComponentSize + timeStampComponentSize + reviewStarHeight
-        return CGSize(width: targetSize.width+95, height: totalSize.height + 40 + 4 + 5 + 5)
+        return  StoryViewModel(story: story, assocatedMetadata: associatedMetadata ?? AssociatedMetadata(), cellType: cellType, targetWidth: targetWidth)
     }
 }
 

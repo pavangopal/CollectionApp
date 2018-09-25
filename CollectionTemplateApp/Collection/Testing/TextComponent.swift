@@ -9,7 +9,7 @@
 import Foundation
 import Quintype
 
-class TextComponent : Component {
+class TextComponent {// : Component {
     
     var horizontalPagging:CGFloat = 10
     var verticalPagging:CGFloat = 10
@@ -55,7 +55,6 @@ class TextComponent : Component {
         case .AuthorName:
             
             text = forDisplayingModel.author_name ?? ""
-            constrainedWidth = getConstrainedWidth(type: TextComponentType.AuthorName, containerWidth: constrainedWidth)
             
         case .TimeStamp:
             text = forDisplayingModel.first_published_at?.convertTimeStampToDate ?? ""
@@ -64,20 +63,13 @@ class TextComponent : Component {
         
         let textSize = TTTAttributedLabel.sizeThatFitsAttributedString(NSAttributedString(string: text, attributes: [NSAttributedStringKey.font: type.font]), withConstraints: CGSize(width: constrainedWidth, height: CGFloat.greatestFiniteMagnitude), limitedToNumberOfLines: 3)
         
+        let height = text.getHeightOfString(width: constrainedWidth, font: type.font)
+       
         let size = CGSize(width: containerSize.width, height: textSize.height)
         
         return size
     }
-    
-    func getConstrainedWidth(type:TextComponentType,containerWidth:CGFloat) -> CGFloat {
-        switch type {
-        case .AuthorName:
-            return containerWidth//- 100 - horizontalPagging
-        default:
-            return CGFloat.greatestFiniteMagnitude
-        }
-    }
-  
+
 }
 
 enum TextComponentType {
@@ -93,16 +85,19 @@ enum TextComponentType {
             
         case .SectionName:
             return FontService.shared.homeSectionFont
+            
         case .Headline:
             return FontService.shared.homeHeadlineRegular
+            
         case .SubHeadline:
             return FontService.shared.homeSubHeadlineRegular
+            
         case .AuthorName:
             return FontService.shared.homeAuthorFont
+            
         case .TimeStamp:
             return FontService.shared.homeTimestampFont
-        default:
-            return UIFont.systemFont(ofSize: 17)
+        
         }
     }
     

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import Kingfisher
-//import KingfisherWebP
+import KingfisherWebP
 import Quintype
 
 enum imageType:String{
@@ -52,9 +52,11 @@ extension UIImageView {
                     break
                     
                 case imageType.webp.rawValue :
-                    //                self.kf.setImage(with: convertedUrl, options: [.processor(WebPProcessor.default), .cacheSerializer(WebPSerializer.default)], completionHandler: { (image, error, cache, url) in
-                    //                })
-                    
+                    self.kf.setImage(with: convertedUrl, options: [.processor(WebPProcessor.default), .cacheSerializer(WebPSerializer.default)], completionHandler: { (image, error, cache, url) in
+                        
+                        print(image)
+                        
+                    })
                     break
                     
                 default:
@@ -66,6 +68,54 @@ extension UIImageView {
                     }
                     break
                 }
+            }
+        }
+    }
+    
+    func loadImageFromUrl(url:URL?,animation:ImageTransition = ImageTransition.fade(0.2)){
+        
+        guard let url = url else{
+            self.image = nil
+            return
+        }
+        self.image = nil
+        let convertedUrl = url
+        
+        var componetns:URLComponents = URLComponents.init(url: convertedUrl, resolvingAgainstBaseURL: false)!
+        componetns.fragment = nil
+        componetns.query = nil
+        
+        if let mineType = componetns.url?.pathExtension.lowercased(){
+            
+            switch mineType{
+                
+            case imageType.gif.rawValue :
+                DispatchQueue.main.async {
+                    self.kf.setImage(with: convertedUrl, options: [.transition(animation)], completionHandler: { (image, error, cache, url) in
+                        
+                        
+                        
+                    })
+                }
+                
+                break
+                
+            case imageType.webp.rawValue :
+                self.kf.setImage(with: convertedUrl, options: [.processor(WebPProcessor.default), .cacheSerializer(WebPSerializer.default)], completionHandler: { (image, error, cache, url) in
+                    
+                    print(image)
+                    
+                })
+                break
+                
+            default:
+                DispatchQueue.main.async {
+                    
+                    self.kf.setImage(with: convertedUrl, placeholder: nil, options: [.transition(animation)], completionHandler: { (image, error, cache, url) in })
+                    
+                    self.kf.indicatorType = .none
+                }
+                break
             }
         }
     }

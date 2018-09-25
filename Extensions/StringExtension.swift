@@ -29,7 +29,20 @@ extension String {
             return LocalizationHelper.sharedHelper.localizedStringForKey(self)
         }
     }
+   
+    func getWidthOfString(with font: UIFont) -> CGFloat {
+        let attributes = [NSAttributedStringKey.font : font]
+        
+        return NSAttributedString(string: self.capitalized, attributes: attributes).size().width
+    }
     
+    func getHeightOfString(width: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        
+        let boundingBox = self.boundingRect(with: constraintRect, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
+        
+        return boundingBox.height
+    }
 }
 
 

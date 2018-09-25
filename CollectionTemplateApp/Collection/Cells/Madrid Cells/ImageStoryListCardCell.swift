@@ -31,8 +31,6 @@ class ImageStoryListCardCell: BaseCollectionCell {
         contentView.clipsToBounds = true
         
         stackView = MDStackView()
-//        stackView.sectionNameLabel.isHidden = true
-//        stackView.sectionUnderLineView.isHidden = true
 
         contentView.addSubview(containerView)
         containerView.addSubview(stackView)
@@ -51,33 +49,13 @@ class ImageStoryListCardCell: BaseCollectionCell {
     }
     
     override func configure(data:Any?,associatedMetaData:AssociatedMetadata?){
-        
-        guard let story = data as? Story else{
+        guard let storyViewModel = data as? StoryViewModel else{
             return
         }
-        self.stackView.updateViewFor(associatedMetaData: associatedMetaData)
         
-        if story.story_template == StoryTemplet.Review {
-            stackView.ratingView.isHidden = false
-            stackView.ratingView.rating = story.storyMetadata?.review_rating?.value ?? 0.0
-        }else{
-            stackView.ratingView.isHidden = true
-        }
+        imageView.loadImageFromUrl(url: storyViewModel.imageURl)
         
-        if let heroImageS3Key = story.hero_image_s3_key {
-            
-            let imageSize = CGSize(width: 175, height: 131)
-            imageView.loadImage(imageMetaData: story.hero_image_metadata, imageS3Key: heroImageS3Key, targetSize: imageSize, placeholder: nil)
-        }
-        
-        stackView.headlineLabel.text = story.headline?.trim()
-    
-        
-        stackView.sectionNameLabel.text = story.sections.first?.display_name ?? story.sections.first?.name ?? ""
-        
-        stackView.authorNameLabel.text = story.author_name ?? ""
-        
-        stackView.publishTimeLabel.text = (story.first_published_at?.convertTimeStampToDate ?? "" ).trim()
+        stackView.config(storyViewModel: storyViewModel)
         
     }
 }

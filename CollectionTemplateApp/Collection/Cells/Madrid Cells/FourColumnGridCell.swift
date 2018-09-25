@@ -118,7 +118,6 @@ class FourColumnGridCell: BaseCollectionCell {
             ratingView.isHidden = true
         }
         
-//        headlineLabel.text = story.headline ?? ""
         sectionNameLabel.text = story.sections.first?.display_name ?? story.sections.first?.name ?? ""
         
         styleUIFor(metaData: associatedMetaData,story:story)
@@ -133,12 +132,10 @@ class FourColumnGridCell: BaseCollectionCell {
             let attributes = [NSAttributedStringKey.foregroundColor : UIColor.white,NSAttributedStringKey.font:FontService.shared.homeHeadlineRegular]
             let healineString = NSAttributedString(string: story.headline ?? "", attributes: attributes)
             headlineLabel.attributedText = healineString
-//            headlineLabel.textColor = .white
         }else{
             contentView.backgroundColor = .white
             headlineLabel.backgroundColor = .white
             storyTitleContainerView.backgroundColor = .white
-//            headlineLabel.textColor = .black
             let attributes = [NSAttributedStringKey.foregroundColor : UIColor.black,NSAttributedStringKey.font:FontService.shared.homeHeadlineRegular]
             let healineString = NSAttributedString(string: story.headline ?? "", attributes: attributes)
             headlineLabel.attributedText = healineString

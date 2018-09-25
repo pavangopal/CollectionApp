@@ -12,13 +12,12 @@ import Quintype
 class ImageTextCell: BaseCollectionCell {
     
     var containerView:UIView = {
-       let view = UIView()
+        let view = UIView()
         return view
     }()
     
     var imageView:UIImageView = {
         let imageView = UIImageView()
-//        imageView.backgroundColor = .red
         return imageView
     }()
     
@@ -26,7 +25,7 @@ class ImageTextCell: BaseCollectionCell {
     
     override func setupViews() {
         super.setupViews()
-
+        
         contentView.addSubview(containerView)
         containerView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 2, leftConstant: 2, bottomConstant: 2, rightConstant: 2, widthConstant: 0, heightConstant: 0)
         
@@ -34,56 +33,31 @@ class ImageTextCell: BaseCollectionCell {
         
         containerView.addSubview(imageView)
         containerView.addSubview(stackView)
-        
-        imageView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 200)
+        let imageHeight = (bounds.width*imageAspectRatio)
+        imageView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: imageHeight)
         
         stackView.anchor(imageView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 0)
         
         let bottomConstraint = NSLayoutConstraint.init(item: containerView, attribute: .bottom, relatedBy: NSLayoutRelation.greaterThanOrEqual, toItem: stackView, attribute: .bottom, multiplier: 1, constant: -10)
         contentView.addConstraint(bottomConstraint)
     }
-
+    
     override func configure(data:Any?,associatedMetaData:AssociatedMetadata?){
-        
-        guard let story = data as? Story else{
+        guard let storyViewModel = data as? StoryViewModel else{
             return
         }
         
-        self.stackView.updateViewFor(associatedMetaData: associatedMetaData)
+        imageView.loadImageFromUrl(url: storyViewModel.imageURl)
         
-        if let heroImageS3Key = story.hero_image_s3_key {
-            
-            let imageSize = CGSize(width: UIScreen.main.bounds.width-30, height: 200)
-            imageView.loadImage(imageMetaData: story.hero_image_metadata, imageS3Key: heroImageS3Key, targetSize: imageSize, placeholder: nil)
-        }
-        
-        stackView.headlineLabel.text = story.headline ?? ""
-        //        stackView.subHeadlineLabel.text = story.subheadline?.trim()
-        
-        if story.story_template == StoryTemplet.Review {
-            stackView.ratingView.isHidden = false
-            stackView.ratingView.rating = story.storyMetadata?.review_rating?.value ?? 0.0
-        }else{
-            stackView.ratingView.isHidden = true
-        }
-        
-        stackView.sectionNameLabel.text = story.sections.first?.display_name ?? story.sections.first?.name ?? ""
-        
-        stackView.authorNameLabel.text = story.author_name ?? ""
-        
-        if let imageString = story.authors.first?.avatar_url?.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed),let imageURL = URL(string:"\(imageString)"){
-            
-            self.stackView.authorImageView.kf.setImage(with: imageURL, completionHandler: { [weak self] (image, error, cachetype, url) in
-                guard let selfD = self else{return}
-                
-                selfD.stackView.authorImageView.image = image
-            })
-        }
-        
-        self.stackView.publishTimeLabel.text = (story.first_published_at?.convertTimeStampToDate ?? "" ).trim()
-        
-        
+        stackView.config(storyViewModel: storyViewModel)
+
     }
+  
     
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//        //diff on associatedmetadata and reset to ui to default
+//
+//    }
     
 }

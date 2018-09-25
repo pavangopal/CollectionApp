@@ -25,8 +25,8 @@ class ImageStoryListCardCell: BaseCollectionCell {
     var stackView : MDStackView!
     
     
-    override func setupViews() {
-        super.setupViews()
+    override func setUpViews(){ 
+        super.setUpViews()
         
         contentView.clipsToBounds = true
         

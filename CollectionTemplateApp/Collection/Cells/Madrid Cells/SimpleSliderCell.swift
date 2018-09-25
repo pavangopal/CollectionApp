@@ -58,8 +58,8 @@ class SimpleSliderCell: BaseCollectionCell {
         return view
     }()
     
-    override func setupViews() {
-        super.setupViews()
+    override func setUpViews(){ 
+        super.setUpViews()
         readStoryButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
         readStoryButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         let stackView = UIStackView(arrangedSubviews: [collectionTitleLabel,storyHeadlineLabel,readStoryButton])

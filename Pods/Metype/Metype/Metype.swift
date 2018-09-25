@@ -24,21 +24,27 @@ open class Metype:UIViewController,WKUIDelegate{
     private var url : URL!
     private var publisherHost:String!
     
-    init(publisherHost:String) {
-        super.init(nibName: nil, bundle: nil)
+    
+    public init(accountId:Int,metypeHost:String,publisherHost:String,slug:String,color:UIColor) {
+        
+        let base64String = Data((publisherHost + "/" + slug).utf8).base64EncodedString()
+        
+        let url = URL(string: metypeHost + "iframe?account_id=\(accountId)&primary_color=IzRkMDg2YQ==&page_url=\(base64String)")
+        self.url = url
         self.publisherHost = publisherHost
+        super.init(nibName: nil, bundle: nil)
     }
+
     
     
-    
-    class open func getMetypeController(accountId:Int,metypeHost:String,publisherHost:String,slug:String,color:UIColor) -> Metype{
-        
-        let url = URL(string: metypeHost + "iframe?account_id=\(accountId)&primary_color=IzRkMDg2YQ==&page_url=\(publisherHost + "/" + slug)")
-        let view = Metype(publisherHost: publisherHost)
-        view.url = url
-        return view
-        
-    }
+//    class open func getMetypeController(accountId:Int,metypeHost:String,publisherHost:String,slug:String,color:UIColor) -> Metype{
+//
+//        let url = URL(string: metypeHost + "iframe?account_id=\(accountId)&primary_color=IzRkMDg2YQ==&page_url=\(publisherHost + "/" + slug)")
+//        let view = Metype(publisherHost: publisherHost)
+//        view.url = url
+//        return view
+//
+//    }
     
     override open func viewDidLoad() {
         

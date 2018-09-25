@@ -20,8 +20,8 @@ class FullImageSliderCell: BaseCollectionCell {
     
     var stackView:MDStackView!
     
-    override func setupViews() {
-        super.setupViews()
+    override func setUpViews(){ 
+        super.setUpViews()
         
         contentView.clipsToBounds = true
         contentView.backgroundColor = .white

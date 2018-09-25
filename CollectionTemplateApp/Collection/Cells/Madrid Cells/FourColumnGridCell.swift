@@ -65,8 +65,8 @@ class FourColumnGridCell: BaseCollectionCell {
     
     var ratingViewHeightConstraint:NSLayoutConstraint?
     
-    override func setupViews() {
-        super.setupViews()
+    override func setUpViews(){ 
+        super.setUpViews()
         
         contentView.backgroundColor = .white
         contentView.addSubview(containerView)

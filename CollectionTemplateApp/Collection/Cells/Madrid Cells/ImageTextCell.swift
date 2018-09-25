@@ -23,8 +23,8 @@ class ImageTextCell: BaseCollectionCell {
     
     var stackView:MDStackView!
     
-    override func setupViews() {
-        super.setupViews()
+    override func setUpViews(){ 
+        super.setUpViews()
         
         contentView.addSubview(containerView)
         containerView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 2, leftConstant: 2, bottomConstant: 2, rightConstant: 2, widthConstant: 0, heightConstant: 0)

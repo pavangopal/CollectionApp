@@ -24,7 +24,6 @@ class CollectionViewModel {
         
         apiManager = CollectionApiManager(slug: slug, limit: 5, delegate: self)
         
-        
         self.delegate = delegate
     }
     

@@ -3,7 +3,7 @@
 target 'CollectionTemplateApp' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
-    quintypeSdkVersion = ‘3.0.4’
+    quintypeSdkVersion = ‘3.0.5’
     # Pods for MediaOne
     pod 'JWPlayer-SDK'
     pod 'Quintype', git: 'https://github.com/quintype/quintype-ios-sdk', :tag => quintypeSdkVersion
@@ -27,8 +27,21 @@ target 'CollectionTemplateApp' do
     pod 'Crashlytics'
     
     pod 'Google/Analytics'
-    pod 'Metype', git: 'https://github.com/quintype/metype-ios.git', :tag => '1.0.1'
+    pod 'Metype', git: 'https://github.com/quintype/metype-ios.git', :tag => '1.0.2'
     pod 'Firebase/Core'
     pod 'Firebase/RemoteConfig'
 pod "WatchdogInspector"
+pod 'DTCoreText'
+pod 'TwitterKit'
+pod 'YouTubePlayer'
+
+
+#taken from quint
+pod 'FacebookShare'
+pod 'CHCSVParser'
+pod 'FBAudienceNetwork'
+pod 'Firebase/RemoteConfig'
+pod 'GoogleAnalytics'
+pod 'Google-Mobile-Ads-SDK'
+
 end

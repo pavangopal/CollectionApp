@@ -20,3 +20,21 @@ extension UINavigationBar {
 }
 
 
+extension UIViewController {
+    func addViewController (anyController: AnyObject) {
+        if let viewController = anyController as? UIViewController {
+            addChildViewController(viewController)
+            view.addSubview(viewController.view)
+            viewController.view.fillSuperview()
+            viewController.didMove(toParentViewController: self)
+        }
+    }
+    
+    func removeViewController (anyController: AnyObject) {
+        if let viewController = anyController as? UIViewController {
+            viewController.willMove(toParentViewController: nil)
+            viewController.view.removeFromSuperview()
+            viewController.removeFromParentViewController()
+        }
+    }
+}

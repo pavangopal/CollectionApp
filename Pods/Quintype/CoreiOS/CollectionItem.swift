@@ -68,7 +68,7 @@ open class CollectionItem:SafeJsonObject, NSCopying{
     }
 }
 
-public class AssociatedMetadata:SafeJsonObject,NSCopying {
+public class AssociatedMetadata:SafeJsonObject {
     
     public var layout: String?
     public var show_arrows:Bool = false
@@ -77,8 +77,8 @@ public class AssociatedMetadata:SafeJsonObject,NSCopying {
     public var show_author_name : Bool = true
     public var number_of_slides_to_show : Int = 0
     public var number_of_slides_to_scroll : Int = 0
-    public var show_section_tag : Bool = false
-    public var show_time_of_publish : Bool = false
+    public var show_section_tag : Bool = true
+    public var show_time_of_publish : Bool = true
     public var set_scroll_speed : Int = 0
     
     public var show_collection_name : Bool = true
@@ -87,11 +87,11 @@ public class AssociatedMetadata:SafeJsonObject,NSCopying {
     public var full_width_container : Bool = false
     public var number_of_stories_to_show : Int = 0
     
-    public var theme:Theme = Theme.Unknown
+    public var theme:Theme = Theme.Dark
     
     public enum Theme:String{
         case Dark = "dark"
-        case Unknown 
+        case Unknown
         
         init(value:Any?){
             
@@ -127,26 +127,6 @@ public class AssociatedMetadata:SafeJsonObject,NSCopying {
         }
     }
     
-    public func copy(with zone: NSZone? = nil) -> Any {
-     let associatedMetadata = AssociatedMetadata()
-        associatedMetadata.layout = self.layout
-        associatedMetadata.show_arrows = self.show_arrows
-        associatedMetadata.slider_type_dots = self.slider_type_dots
-        associatedMetadata.show_author_name = self.show_author_name
-        associatedMetadata.number_of_slides_to_show = self.number_of_slides_to_show
-        associatedMetadata.number_of_slides_to_scroll = self.number_of_slides_to_scroll
-        associatedMetadata.show_section_tag = self.show_section_tag
-        associatedMetadata.show_time_of_publish = self.show_time_of_publish
-        associatedMetadata.set_scroll_speed = self.set_scroll_speed
-        associatedMetadata.show_collection_name = self.show_collection_name
-        
-        associatedMetadata.slider_type_dashes = self.slider_type_dashes
-        associatedMetadata.enable_auto_play = self.enable_auto_play
-        associatedMetadata.full_width_container = self.full_width_container
-        associatedMetadata.number_of_stories_to_show = self.number_of_stories_to_show
-        associatedMetadata.theme = self.theme
-        return associatedMetadata
-    }
     
 }
 

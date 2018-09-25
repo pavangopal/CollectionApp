@@ -62,7 +62,7 @@ final class HomeController: UIViewController {
         
     }
     
-    func setUpViews() {
+    func setUpViews(){ 
         
         self.view.addSubview(collectionView)
         collectionView.fillSuperview()
@@ -238,7 +238,6 @@ extension HomeController: UICollectionViewDataSource,UICollectionViewDelegate,UI
     }
     
     
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         //LoadMore
         let currentOffset = scrollView.contentOffset.y
@@ -252,6 +251,18 @@ extension HomeController: UICollectionViewDataSource,UICollectionViewDelegate,UI
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let layout = self.sectionLayoutArray[indexPath.section][indexPath.row]
+        navigateToStory(story: layout.story!, indexPath: indexPath)
+    }
+    
+    func navigateToStory(story:Story,indexPath:IndexPath){
+        
+        let storyDetailPager = StoryDetailPager(slugArray: [story.slug ?? ""], currentIndex: 0)
+        
+        self.navigationController?.pushViewController(storyDetailPager, animated: true)
+        
+    }
 }
 
 

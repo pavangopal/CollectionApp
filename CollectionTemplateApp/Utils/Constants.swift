@@ -74,6 +74,7 @@ struct Environment{
             static var AppName = "MediaOne Staging"
         }
     }
+    
 }
 
 //Change .Development to .Production while Archive

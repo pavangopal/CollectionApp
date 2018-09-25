@@ -103,7 +103,7 @@ class CollectionLayoutEngine {
             for (index,story) in stories.enumerated() {
                 
                 if index == 0{
-                    let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: story,associatedMetadata:collectionItem.associatedMetadata?.copy(with: nil) as? AssociatedMetadata)
+                    let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
                     
                     let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata!, cellType: HomeCellType.ImageTextCell, targetWidth: CollectionLayoutEngine.targetWidth)
                     

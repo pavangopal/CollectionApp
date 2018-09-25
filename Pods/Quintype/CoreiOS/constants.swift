@@ -5,9 +5,11 @@
 //  Created by Albin CR on 11/11/16.
 //  Copyright © 2016 Albin CR. All rights reserved.
 //
+
 import Foundation
 
 //TODO: - Changed this to get from SDK init
+
 
 /**
  
@@ -68,11 +70,11 @@ public struct Constants{
                 return ""
             }
             
-            
+
         }
-        
+
     }
-    
+
     
     public struct analyticConfig{
         
@@ -153,8 +155,6 @@ public struct Constants{
         static let storyGroup = "story-group"
         static let storyOrder = "story-order"
         static let storyAttribute = "story-attributes"
-        static let sectionID = "section-id"
-        
         
     }
     public struct payment{
@@ -169,11 +169,15 @@ public struct Constants{
         
     }
     
-    public struct HttpError{
+   public struct HttpError{
         
-        public static let pageNotFound = "Unable to retrive data. Please try again after sometime"
-        public static let noInternetConnection = "No internet connection. Please try again after sometime"
+       public static let pageNotFound = "Unable to retrive data. Please try again after sometime"
+       public static let noInternetConnection = "No internet connection. Please try again after sometime"
         
     }
     
 }
+
+
+
+

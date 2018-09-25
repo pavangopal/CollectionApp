@@ -43,10 +43,54 @@ extension String {
         
         return boundingBox.height
     }
+ 
+    var url : URL{
+        get{
+            return URL(string:self)!
+        }
+    }
+    
+    func wordsCount() -> Int {
+        let startIndex = self.startIndex
+        let endIndex = self.endIndex
+        var words = [String]()
+        
+        if endIndex > startIndex{
+            
+            let range = startIndex..<endIndex
+            self.enumerateSubstrings(in: range, options: .byWords) { (substring, _, _, _) in
+                if let substringD = substring{
+                    words.append(substringD)
+                }
+            }
+        }
+        
+        return words.count
+    }
+    
+    func width(font:UIFont,maximumNumberOfLines:Int = 0) -> CGFloat{
+        let size = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+        
+        let attributes = [NSAttributedStringKey.font: font]
+        let rect = self.boundingRect(with: size, options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: attributes, context: nil)
+        let size1 = snap(rect).size
+        return size1.width
+    }
+    
+    func height(fits width: CGFloat, font: UIFont, maximumNumberOfLines: Int = 0) -> CGFloat{
+        
+        let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        
+        let attributes = [NSAttributedStringKey.font: font]
+        let rect = self.boundingRect(with: size, options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: attributes, context: nil)
+        var size1 = snap(rect).size
+        if maximumNumberOfLines > 0 {
+            size1.height = min(size1.height, CGFloat(maximumNumberOfLines) * font.lineHeight)
+        }
+        
+        return size1.height
+    }
 }
-
-
-
 
 extension NSAttributedString{
     
@@ -82,4 +126,20 @@ extension UITextView{
         return 0
     }
     
+}
+func snap(_ x: CGFloat) -> CGFloat {
+    let scale = UIScreen.main.scale
+    return ceil(x * scale) / scale
+}
+
+func snap(_ point: CGPoint) -> CGPoint {
+    return CGPoint(x: snap(point.x), y: snap(point.y))
+}
+
+func snap(_ size: CGSize) -> CGSize {
+    return CGSize(width: snap(size.width), height: snap(size.height))
+}
+
+func snap(_ rect: CGRect) -> CGRect {
+    return CGRect(origin: snap(rect.origin), size: snap(rect.size))
 }

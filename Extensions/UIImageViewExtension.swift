@@ -21,7 +21,7 @@ enum imageType:String{
 
 extension UIImageView {
     
-    public func loadImage(imageMetaData:ImageMetaData? = nil,imageS3Key:String,targetSize:CGSize? = nil ,placeholder:UIImage? = nil,animation:ImageTransition = ImageTransition.fade(0.2)){
+    public func loadImage(imageMetaData:ImageMetaData? = nil,imageS3Key:String,targetSize:CGSize? = nil ,placeholder:UIImage? = nil,animation:ImageTransition = ImageTransition.fade(0.2),success:(()->())? = nil ){
         
         self.image = nil//reset Before setting
         

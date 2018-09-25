@@ -55,7 +55,7 @@ class CarousalContainerCell: BaseCollectionCell {
         }
     }
     
-    override func setupViews() {
+    override func setUpViews(){
         contentView.addSubview(collectionView)
         contentView.addSubview(pageControl)
         collectionView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: nil, right: contentView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)

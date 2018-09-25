@@ -30,7 +30,7 @@ class LinearGallerySliderCell: BaseCollectionCell {
         return label
     }()
     
-    override func setupViews() {
+    override func setUpViews(){ 
         contentView.addSubview(containerView)
         containerView.addSubview(imageView)
         containerView.addSubview(headlineLabel)

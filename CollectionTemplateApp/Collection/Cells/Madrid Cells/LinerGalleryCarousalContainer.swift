@@ -42,7 +42,7 @@ class LinerGalleryCarousalContainer: BaseCollectionCell {
         return 175
     }
     
-    override func setupViews() {
+    override func setUpViews(){
         contentView.addSubview(collectionView)
         collectionView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         

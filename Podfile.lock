@@ -1,4 +1,11 @@
 PODS:
+  - Bolts (1.9.0):
+    - Bolts/AppLinks (= 1.9.0)
+    - Bolts/Tasks (= 1.9.0)
+  - Bolts/AppLinks (1.9.0):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.9.0)
+  - CHCSVParser (2.1.0)
   - Crashlytics (3.10.2):
     - Fabric (~> 1.7.7)
   - DTCoreText (1.6.21):
@@ -19,6 +26,19 @@ PODS:
   - DTFoundation/UIKit (1.7.13):
     - DTFoundation/Core
   - Fabric (1.7.7)
+  - FacebookCore (0.3.3):
+    - Bolts (~> 1.9)
+    - FBSDKCoreKit (~> 4.36)
+  - FacebookShare (0.3.3):
+    - Bolts (~> 1.9)
+    - FacebookCore (~> 0.3.3)
+    - FBSDKCoreKit (~> 4.36)
+    - FBSDKShareKit (~> 4.36)
+  - FBAudienceNetwork (5.0.0)
+  - FBSDKCoreKit (4.36.0):
+    - Bolts (~> 1.7)
+  - FBSDKShareKit (4.36.0):
+    - FBSDKCoreKit (~> 4.36.0)
   - Firebase/Core (3.17.0):
     - FirebaseAnalytics (= 3.9.0)
     - FirebaseCore (= 3.6.0)
@@ -38,6 +58,7 @@ PODS:
     - FirebaseInstanceID (~> 1.0)
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - Protobuf (~> 3.1)
+  - Google-Mobile-Ads-SDK (7.33.1)
   - Google/Analytics (3.1.0):
     - Google/Core
     - GoogleAnalytics (~> 3.12)
@@ -87,36 +108,51 @@ PODS:
   - Unbox (2.4.0)
   - WatchdogInspector (1.3.0)
   - XLPagerTabStrip (8.0.1)
+  - YouTubePlayer (0.4.0)
 
 DEPENDENCIES:
+  - CHCSVParser
   - Crashlytics
   - DTCoreText
   - Fabric
+  - FacebookShare
+  - FBAudienceNetwork
   - Firebase/Core
   - Firebase/RemoteConfig
+  - Google-Mobile-Ads-SDK
   - Google/Analytics
+  - GoogleAnalytics
   - JWPlayer-SDK
   - Kingfisher (~> 4.0)
   - KingfisherWebP
-  - Metype (from `https://github.com/quintype/metype-ios.git`, tag `1.0.1`)
+  - Metype (from `https://github.com/quintype/metype-ios.git`, tag `1.0.2`)
   - OneSignal
-  - Quintype (from `https://github.com/quintype/quintype-ios-sdk`, tag `3.0.4`)
+  - Quintype (from `https://github.com/quintype/quintype-ios-sdk`, tag `3.0.5`)
   - TwitterKit
   - WatchdogInspector
   - XLPagerTabStrip (~> 8.0)
+  - YouTubePlayer
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Bolts
+    - CHCSVParser
     - Crashlytics
     - DTCoreText
     - DTFoundation
     - Fabric
+    - FacebookCore
+    - FacebookShare
+    - FBAudienceNetwork
+    - FBSDKCoreKit
+    - FBSDKShareKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
     - FirebaseInstanceID
     - FirebaseRemoteConfig
     - Google
+    - Google-Mobile-Ads-SDK
     - GoogleAnalytics
     - GoogleToolboxForMac
     - JWPlayer-SDK
@@ -130,34 +166,43 @@ SPEC REPOS:
     - Unbox
     - WatchdogInspector
     - XLPagerTabStrip
+    - YouTubePlayer
 
 EXTERNAL SOURCES:
   Metype:
     :git: https://github.com/quintype/metype-ios.git
-    :tag: 1.0.1
+    :tag: 1.0.2
   Quintype:
     :git: https://github.com/quintype/quintype-ios-sdk
-    :tag: 3.0.4
+    :tag: 3.0.5
 
 CHECKOUT OPTIONS:
   Metype:
     :git: https://github.com/quintype/metype-ios.git
-    :tag: 1.0.1
+    :tag: 1.0.2
   Quintype:
     :git: https://github.com/quintype/quintype-ios-sdk
-    :tag: 3.0.4
+    :tag: 3.0.5
 
 SPEC CHECKSUMS:
+  Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  CHCSVParser: 3bcc7bdb72111a31222e95d57eacceefe4e537e8
   Crashlytics: 0360624eea1c978a743feddb2fb1ef8b37fb7a0d
   DTCoreText: e5d688cffc9f6a61eddd1a4f94e2046851230de3
   DTFoundation: f03be9fd786f11e505bb8fc44e2a3732bf0917df
   Fabric: bda89e242bce1b7b8ab264248cf3407774ce0095
+  FacebookCore: 9ecbe48cfd37c91a93add7f8cec2b4a2c50a1eec
+  FacebookShare: 14e88f2dcc3a03376304d2a1e10254296076ce88
+  FBAudienceNetwork: 34b5ff6fa69ac7306aff6c25e8c3891adc88d446
+  FBSDKCoreKit: 3b8e6570eedb443f9fc4af196a7bf39f18e3a3d8
+  FBSDKShareKit: 7090fdd55c39b03941efddb64c83a64ff6b3949f
   Firebase: 4b66b5b59c43edac745b87f0c87e42cdd0279c13
   FirebaseAnalytics: e5fe8486efc01bec33f6bf82e2fa9fce4b124052
   FirebaseCore: 9691ee2ade70c098d7cf92440f4303f16d83ca75
   FirebaseInstanceID: b9eedd6846fb5e1f0f7279e1deaa7a7e4cf8392e
   FirebaseRemoteConfig: af3003f4e8daa2bd1d5cf90d3cccc1fe224f8ed9
   Google: 98da4b1a60ed0beb80a290387a28333406a1eb90
+  Google-Mobile-Ads-SDK: 71c6d3e8d8f52673fa5a83fc0d027623b11fde16
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   JWPlayer-SDK: 012bfec60f937e68e070fe6c09fe652e9c4c0a91
@@ -173,7 +218,8 @@ SPEC CHECKSUMS:
   Unbox: c8b2ab69d3337597b4a3f47a0538807dc12db670
   WatchdogInspector: 439a73b047028a6048a59e56b70fcf11045a6e13
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
+  YouTubePlayer: 028451f6772f372d4759866db99824c676ac1473
 
-PODFILE CHECKSUM: c51424f1192186e7f0460c67dcac17428af995e6
+PODFILE CHECKSUM: 37bcde5816f51edc204fce3a3229a157f521a762
 
 COCOAPODS: 1.5.3

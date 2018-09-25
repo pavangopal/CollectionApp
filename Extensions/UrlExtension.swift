@@ -30,4 +30,10 @@ extension URL {
         
         return dict
     }
+    func getVideoIDFromYouTubeURL() -> String? {
+        if self.pathComponents.count > 1 && (self.host?.hasSuffix("youtu.be"))! {
+            return self.pathComponents[1]
+        }
+        return self.queryStringComponents()["v"] as? String
+    }
 }

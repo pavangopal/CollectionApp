@@ -18,8 +18,8 @@ class StoryListCell: BaseCollectionCell {
         return view
     }()
     
-    override func setupViews() {
-//        super.setupViews()
+    override func setUpViews(){ 
+//        super.setUpViews()
         self.contentView.backgroundColor = UIColor(hexString: "#F5F5F5")
         stackView = MDStackView()
         contentView.addSubview(stackView)

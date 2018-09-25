@@ -13,8 +13,8 @@ class StoryListCardCell: BaseCollectionCell {
     
     var stackView:MDStackView!
     
-    override func setupViews() {
-                super.setupViews()
+    override func setUpViews(){ 
+                super.setUpViews()
         self.contentView.backgroundColor = .white
         stackView = MDStackView()
         contentView.addSubview(stackView)

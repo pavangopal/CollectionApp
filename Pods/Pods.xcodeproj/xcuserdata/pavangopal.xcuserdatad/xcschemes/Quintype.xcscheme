@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A75C88EC850C9D75ADF19A11D2D5A199"
+               BlueprintIdentifier = "16E7993CC689E5CA6B5795E479DA1684"
                BlueprintName = "Quintype"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "Quintype.framework">

@@ -36,8 +36,8 @@ class CollectionTitleCell: BaseCollectionCell {
     }()
     
     
-    override func setupViews() {
-        super.setupViews()
+    override func setUpViews(){ 
+        super.setUpViews()
 
         contentView.addSubview(containerView)
         

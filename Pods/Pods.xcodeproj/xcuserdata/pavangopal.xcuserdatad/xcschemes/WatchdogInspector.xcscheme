@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "130374347ABA0F977FC7ED3C0CD896F2"
+               BlueprintIdentifier = "DCF4A9E19433E7616EA64CE0F65DBAB7"
                BlueprintName = "WatchdogInspector"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "WatchdogInspector.framework">

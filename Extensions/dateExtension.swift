@@ -21,6 +21,23 @@ extension NSNumber{
         let result = dateFormatter.string(from: dateTimeStamp)
         return result
     }
+    
+    var convertTimeStampToTime:String?{
+        let dateTimeStamp = NSDate(timeIntervalSince1970:Double(truncating: self)/1000)
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = NSTimeZone.local
+        dateFormatter.dateStyle = DateFormatter.Style.full
+        dateFormatter.dateFormat =  "hh:mm a"
+        let result = dateFormatter.string(from: dateTimeStamp as Date)
+        return result
+    }
+    
+    var convertToDate:Date?{
+        
+        let dateTimeStamp = Date(timeIntervalSince1970: Double(truncating: self)/1000)
+        
+        return dateTimeStamp
+    }
 }
 
 

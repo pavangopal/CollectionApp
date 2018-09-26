@@ -59,7 +59,7 @@ final class HomeController: UIViewController {
         self.view.backgroundColor = .white
         setUpViews()
         collectionViewModel?.startFetch()
-        
+        setupNavgationbar()
     }
     
     func setUpViews(){ 

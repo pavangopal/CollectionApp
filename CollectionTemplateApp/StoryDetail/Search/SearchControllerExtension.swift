@@ -25,9 +25,7 @@ extension SearchController:UICollectionViewDataSource,UICollectionViewDelegate,U
         default:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: searchLayoutType.searchCell.rawValue, for: indexPath)
             let currentCell = cell as? SearchCell
-            
-            currentCell?.completion(MarginD(templet: .Default))
-            
+                        
             currentCell?.configure(data: self.storiesArray[indexPath.row])
             return cell!
         }

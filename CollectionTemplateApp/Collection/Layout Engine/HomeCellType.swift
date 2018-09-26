@@ -50,6 +50,7 @@ extension HomeCellType{
         
         case .ImageStoryListCardCell:
             return 175
+            
         case .ImageStoryListCell:
             return 95
             

@@ -300,13 +300,13 @@ class StoryModifier{
                     if let dataArray = (cardStoryElement.tableData!.content as NSString).csvComponents as? Array<Array<String>>{
                         
                         cardStoryElement.tableData!.parsedData = dataArray
-                        let firstItemRemoved = cardStoryElement.tableData!.parsedData.removeFirst()
-                        
-                        cardStoryElement.tableData!.parsedData = dataArray.sorted(by: { (first, second) -> Bool in
-                            return first.first!.compare(second.first!, options: String.CompareOptions.numeric) == .orderedAscending
-                            
-                        })
-                        cardStoryElement.tableData!.parsedData.insert(firstItemRemoved, at: 0)
+//                        let firstItemRemoved = cardStoryElement.tableData!.parsedData.removeFirst()
+//                        
+//                        cardStoryElement.tableData!.parsedData = cardStoryElement.tableData!.parsedData.sorted(by: { (first, second) -> Bool in
+//                            return first.first!.compare(second.first!, options: [String.CompareOptions.numeric,String.CompareOptions.forcedOrdering]) == .orderedAscending
+//                            
+//                        })
+//                        cardStoryElement.tableData!.parsedData.insert(firstItemRemoved, at: 0)
                     }
                 }
                 

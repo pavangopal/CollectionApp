@@ -91,7 +91,6 @@ extension GalleryCell:UICollectionViewDataSource,UICollectionViewDelegate,UIColl
         let imageCell = collectionView.dequeueReusableCell(ofType: GalleryImageCell.self, for: indexPath)
         
         if indexPath.row < imageArray.count{
-            imageCell.completion(self.margin)
             imageCell.configure(data: imageArray[indexPath.row])
         }
         

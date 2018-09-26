@@ -77,28 +77,11 @@ class BaseCollectionCell: UICollectionViewCell {
         return view
     }()
     
-    lazy var completion = { [weak self](margin:MarginD) in
-        guard let selfD = self else {
-            return
-        }
-        
-        //early exit
-        if let marD = selfD.margin{
-            selfD.margin = margin
-            return
-        }
-        
-        selfD.margin = margin
-//        selfD.setUpWithMargin(margin: margin)
-    }
+
     
     func setUpViews(){
         contentView.backgroundColor = .white
         
-//        if margin.storyTemplet == .LiveBlog{
-//            contentView.addSubview(dottedLineView)
-//            dottedLineView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 5, bottomConstant: 0, rightConstant: 0, widthConstant: 1, heightConstant: 0)
-//        }
     }
     
     override init(frame: CGRect) {

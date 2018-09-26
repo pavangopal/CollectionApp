@@ -72,7 +72,7 @@ class TableStoryElement: BaseCollectionCell {
     }
  
     
-    func computeData(datap:TableData){
+    func computeData(datap:TableData) {
         let data = datap.copy() as! TableData
         data.parsedData.insert(contentsOf: self.headerTableData.parsedData, at: 0)
         for i in 0..<data.parsedData.count{
@@ -138,6 +138,7 @@ class TableStoryElement: BaseCollectionCell {
     
     func prepareHoldingData(){
         kickNext()
+        
         if offset + limit < tableData.parsedData.count{
             holdingTableData.parsedData = Array(tableData.parsedData[offset..<offset + limit])
         }
@@ -149,6 +150,11 @@ class TableStoryElement: BaseCollectionCell {
     }
     
     func kickNext(){
+        if offset < 0 {
+            offset = 0
+            return
+        }
+        
         if offset >= tableData.parsedData.count{
             return
         }
@@ -173,7 +179,8 @@ class TableStoryElement: BaseCollectionCell {
     
   @objc func goNext(){
         kickNext()
-        
+    
+    
         if offset >= tableData.parsedData.count{
             return
         }

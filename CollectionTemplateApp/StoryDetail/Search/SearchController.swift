@@ -158,7 +158,6 @@ class SearchController: BaseController {
         
         collectionView.register(cellClass: SearchCountCell.self)
         let searchCell = SearchCell.init(frame: CGRect.zero)
-        searchCell.completion(MarginD(templet: .Default))
         sizingCells[searchLayoutType.searchCell.rawValue] = searchCell
         
  

@@ -90,7 +90,6 @@ class      StoryDetailPrefetchDatasource:NSObject,UICollectionViewDataSource,UIC
         cells.forEach { (cell) in
             collectionView.register(cellClass: cell)
             let cellD = cell.self.init()
-            cellD.completion(self.margin)
             self.sizingCells[cell.reuseIdentifier] = cellD
         }
         

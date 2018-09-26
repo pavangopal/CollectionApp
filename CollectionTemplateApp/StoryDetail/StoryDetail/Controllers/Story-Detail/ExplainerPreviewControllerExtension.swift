@@ -24,7 +24,6 @@ extension ExplainerPreviewController:UICollectionViewDelegate,UICollectionViewDa
         
         if collectionView == indexCollectionView{
             let cell = collectionView.dequeueReusableCell(ofType: ExplainerCardIndexCell.self, for: indexPath)
-            cell.completion(self.margin)
             cell.configure(index: indexPath.row, ishighlighted: currentCardIndex == indexPath.row,layout:self.layoutArray[indexPath.row], story:story)
             
             cell.indexButtonAction = {[weak self](index) -> () in
@@ -37,7 +36,6 @@ extension ExplainerPreviewController:UICollectionViewDelegate,UICollectionViewDa
             
             let cell = collectionView.dequeueReusableCell(ofType: ExplainerPreviewCell.self, for: indexPath)
             cell.explainerCellDelegate = self
-            cell.completion(self.margin)
             
             if #available(iOS 10.0, *) {
                 cell.configure(dataSource: .none, animated: false)

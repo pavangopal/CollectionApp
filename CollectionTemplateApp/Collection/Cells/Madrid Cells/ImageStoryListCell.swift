@@ -45,12 +45,6 @@ class ImageStoryListCell: BaseCollectionCell {
         containerView.addSubview(imageView)
         containerView.addSubview(timestampLabel)
         
-        stackView.publishTimeLabel.isHidden = true
-        stackView.sectionNameLabel.textColor = .black
-        stackView.sectionNameLabel.backgroundColor = .clear
-        stackView.sectionUnderLineView.isHidden = false
-        stackView.sectionUnderLineView.backgroundColor = .black
-        
         containerView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 2, leftConstant: 2, bottomConstant: 2, rightConstant: 2, widthConstant: 0, heightConstant: 0)
         
         imageView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 95, heightConstant: 95)

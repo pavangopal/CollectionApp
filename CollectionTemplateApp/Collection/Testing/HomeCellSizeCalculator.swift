@@ -56,9 +56,10 @@ class HomeCellSizeCalculator {
             componentsHeight += reviewViewHeight
         }
         
-        let authorHeight = TTTAttributedLabel.sizeThatFitsAttributedString(storyViewModel.authorName, withConstraints: targetSize, limitedToNumberOfLines: maxNumberOfLines).height
-        
-        let timestampHeight = TTTAttributedLabel.sizeThatFitsAttributedString(storyViewModel.timeStamp, withConstraints: targetSize, limitedToNumberOfLines: maxNumberOfLines).height
+        let authorsize = TTTAttributedLabel.sizeThatFitsAttributedString(storyViewModel.authorName, withConstraints: targetSize, limitedToNumberOfLines: maxNumberOfLines)
+        let authorHeight = authorsize.height
+        let newTargetSize = CGSize(width: targetSize.width-authorsize.width-5, height: CGFloat.greatestFiniteMagnitude)
+        let timestampHeight = TTTAttributedLabel.sizeThatFitsAttributedString(storyViewModel.timeStamp, withConstraints: newTargetSize, limitedToNumberOfLines: maxNumberOfLines).height
         
         //- assumption : timestamp and author are horizontally aligned
         let authorTimeStampMaxHeight = max(timestampHeight, authorHeight)
@@ -84,7 +85,7 @@ class HomeCellSizeCalculator {
         var totalVerticalPadding:CGFloat = 2*verticalPadding // top and bottom padding
         
         if let _ = storyViewModel.sectionName {
-            totalVerticalPadding += verticalPadding
+            totalVerticalPadding += 2*verticalPadding
         }
         
         if let _ = storyViewModel.reviewRating{

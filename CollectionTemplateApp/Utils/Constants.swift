@@ -15,6 +15,7 @@ struct Environment{
         
         static var baseURL = "https://madrid.quintype.io"//"https://www.samachara.com" //"https://www.mediaonetv.in"//
         static var imageBaseURL = "https://" + (Quintype.publisherConfig?.cdn_image)! + "/"
+        static var appStoreLink = "https://itunes.apple.com/in/app/thequint/id1066244587?mt=8"
         
         struct RemoteConfig{
             static var forceUpdateVersionKey = "mediaone_ios_force_update_from_version"
@@ -47,6 +48,7 @@ struct Environment{
         
         static var baseURL = "https://ace-web.qtstage.io"
         static var imageBaseURL = "https://" + (Quintype.publisherConfig?.cdn_image)! + "/"
+        static var appStoreLink = "https://itunes.apple.com/in/app/thequint/id1066244587?mt=8"
 
         struct RemoteConfig{
             static var forceUpdateVersionKey = "mediaone_ios_force_update_from_version"

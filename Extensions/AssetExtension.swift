@@ -55,7 +55,7 @@ public enum AssetImage : String{
     case LeftArrowIcon = "leftArrow"
     case RightArrowIcon = "rightArrow"
     
-    case BrandLogo = "logo quint-1"
+    case BrandLogo = "logo"
     case AuthorIcon = "defaultAuthor"
     
     case InfoIcon = "info"

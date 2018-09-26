@@ -50,7 +50,6 @@ class ExplainerPreviewCell: BaseCollectionCell {
         storyDetailCells.forEach { (cell) in
             collectionView.register(cellClass: cell)
             let cellD = cell.self.init()
-            cellD.completion(self.margin)
             self.sizingCells[cell.reuseIdentifier] = cellD
         }
     }

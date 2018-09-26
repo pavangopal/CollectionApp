@@ -1,8 +1,8 @@
 //
-//  SettingDataSource.swift
-//  MediaOne
+//  SettingsDataSource.swift
+//  TheQuint-Staging
 //
-//  Created by Pavan Gopal on 7/3/18.
+//  Created by Pavan Gopal on 3/13/18.
 //  Copyright © 2018 Pavan Gopal. All rights reserved.
 //
 
@@ -26,7 +26,7 @@ enum SettingsSectionType:String{
             return [.High,.Medium,.Low]
             
         case .Support:
-            return [.ReportAProblem]
+            return [.RateUs,.ReportAProblem]
             
         case .Social:
             return [.Facebook,.Twitter,.Instagram,.Youtube]
@@ -71,7 +71,7 @@ enum SettingsItem{
         case .Cache:
             return "Cache"
             
-        //Image
+            //Image
         case .High:
             return "High"
         case .Medium:
@@ -79,13 +79,13 @@ enum SettingsItem{
         case .Low:
             return "Low"
             
-        //Support
+            //Support
         case .RateUs:
             return "Rate Us"
         case .ReportAProblem:
             return "Report A Problem"
             
-        //social
+            //social
         case .Facebook:
             return "Facebook"
         case .Twitter:
@@ -95,7 +95,7 @@ enum SettingsItem{
         case .Youtube:
             return "Youtube"
             
-        //info
+            //info
         case .AboutUs:
             return "About Us"
         case .TermsAndCondition:
@@ -153,13 +153,13 @@ enum SettingsItem{
             return "https://www.instagram.com/thequint"
             
         case .AboutUs:
-            return "https://www.mediaonetv.in/about-us"
+            return "https://www.thequint.com/about-us"
             
         case .TermsAndCondition:
-            return "https://www.mediaonetv.in/terms-and-conditions"
+            return "https://www.thequint.com/terms-and-conditions"
             
         case .PrivacyPolicy:
-            return "https://www.mediaonetv.in/privacy-policy"
+            return "https://www.thequint.com/privacy-policy"
             
         case .Youtube:
             return "https://youtube.com/thequint"
@@ -173,7 +173,7 @@ enum SettingsItem{
         let dictionary = Bundle.main.infoDictionary!
         let appVersion = dictionary["CFBundleShortVersionString"] as! String
         let buildNum = dictionary["CFBundleVersion"] as! String
-        let versionInfo = "\(appConfig.App.AppName) v\(appVersion) (\(buildNum))"
+         let versionInfo = "TheQuint v\(appVersion) (\(buildNum))"
         return versionInfo
     }
 }

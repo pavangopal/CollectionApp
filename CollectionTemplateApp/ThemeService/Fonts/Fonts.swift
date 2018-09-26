@@ -181,7 +181,7 @@ extension Fonts{
     
     var storySummaryElementFont: UIFont {
         get {
-            return self.getCorrectedFont(fontName: FontFamilyName.MerriweatherBold.rawValue, size: 16.0)
+            return self.getCorrectedFont(fontName: FontFamilyName.MerriweatherRegular.rawValue, size: 16.0)
             
         }
     }

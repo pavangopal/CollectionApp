@@ -14,22 +14,24 @@ class StorySummaryCell: BaseCollectionCell {
     
     var snapShotHeaderView:UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(hexString: "#FDBE2D")
+        view.backgroundColor = ThemeService.shared.theme.primaryColor
         return view
     }()
     
     var snapShotTitleLabel:UILabel = {
         let label = UILabel()
-        label.text = "Snapshot"
+        label.text = "Summary"
+        label.textColor = .white
         return label
     }()
     
     var dropDownButton:UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor(hexString: "#333333")
-        button.setImage(AssetImage.crossIcon.image, for: .normal)
-        
-
+        let upImage = AssetImage.upArrow.image.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        let downImage = AssetImage.downArrow.image.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        button.setImage(upImage, for: .normal)
+        button.setImage(downImage, for: .selected)
+        button.tintColor = .white
         return button
     }()
     
@@ -38,28 +40,38 @@ class StorySummaryCell: BaseCollectionCell {
         view.setBasicProperties()
         return view
     }()
-
+    
+    var containerView:UIView = {
+       let view = UIView()
+        view.backgroundColor = UIColor(hexString: "#F5F5F5")
+        return view
+    }()
+    
     var indexPath:IndexPath?
    
     override func setUpViews(){
         super.setUpViews()
         
         contentView.backgroundColor = .white
-        textView.backgroundColor = contentView.backgroundColor
+//        textView.backgroundColor = contentView.backgroundColor
         
-        contentView.addSubview(snapShotHeaderView)
+        contentView.addSubview(containerView)
+        
+        containerView.addSubview(snapShotHeaderView)
         snapShotHeaderView.addSubview(snapShotTitleLabel)
         
-        contentView.addSubview(dropDownButton)
-        contentView.addSubview(textView)
+        containerView.addSubview(dropDownButton)
+        containerView.addSubview(textView)
         
-        snapShotHeaderView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: nil, right: contentView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 34)
+        containerView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 10, rightConstant: 10, widthConstant: 0, heightConstant: 0)
         
-        snapShotTitleLabel.anchor(contentView.topAnchor, left: snapShotHeaderView.leftAnchor, bottom: snapShotHeaderView.bottomAnchor, right: snapShotHeaderView.rightAnchor, topConstant: 0, leftConstant: 35, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        snapShotHeaderView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 34)
         
-        dropDownButton.anchor(snapShotHeaderView.topAnchor, left: snapShotHeaderView.leftAnchor, bottom: nil, right: nil, topConstant: 2, leftConstant: -5, bottomConstant: 0, rightConstant: 0, widthConstant: 30, heightConstant: 30)
+        snapShotTitleLabel.anchor(containerView.topAnchor, left: snapShotHeaderView.leftAnchor, bottom: snapShotHeaderView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 15, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
-        textView.anchor(snapShotHeaderView.bottomAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 10, leftConstant: self.margin.Left, bottomConstant: self.margin.Bottom, rightConstant: self.margin.Right, widthConstant: 0, heightConstant: 0)
+        dropDownButton.anchor(snapShotHeaderView.topAnchor, left: snapShotTitleLabel.rightAnchor, bottom: nil, right: snapShotHeaderView.rightAnchor, topConstant: 2, leftConstant: 0, bottomConstant: 0, rightConstant: 15, widthConstant: 30, heightConstant: 30)
+        
+        textView.anchor(snapShotHeaderView.bottomAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, topConstant: 10, leftConstant: self.margin.Left, bottomConstant: 10, rightConstant: self.margin.Right, widthConstant: 0, heightConstant: 0)
         textView.delegate = self
     }
     
@@ -72,6 +84,8 @@ class StorySummaryCell: BaseCollectionCell {
         guard let storyElement = data as? CardStoryElement else{
             return
         }
+        
+        
         
         textView.setText(storyElement.displayText)
     }

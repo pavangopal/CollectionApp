@@ -533,7 +533,7 @@ class StoryDetailDataSourceAndDelegate:NSObject,UICollectionViewDataSource,UICol
                 
             }else{
                 
-                return CGSize(width: targetSize.width, height: 54)
+                return CGSize(width: targetSize.width, height: 74)
             } 
             
         case .YoutubeCell:

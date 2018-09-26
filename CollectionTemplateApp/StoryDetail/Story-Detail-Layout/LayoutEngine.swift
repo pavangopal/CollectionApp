@@ -263,7 +263,7 @@ struct LayoutEngine{
     
     private mutating func makeLayoutForExplainerSection(story:Story){
         
-        let topconstantCellArray:[storyDetailLayoutType] = [.ExplainerHeaderImageCell,.StoryHeadlineCell,.AuthorElementCell,.SocialShareCell]
+        let topconstantCellArray:[storyDetailLayoutType] = [.ExplainerHeaderImageCell,.StoryHeadlineCell]//,.AuthorElementCell,.SocialShareCell]
         let bottomStaticCellArray:[storyDetailLayoutType] = (story.story_template?.staticCells[.Bottom])!
         
         var layoutArray:[StoryDetailLayout] = []
@@ -582,10 +582,10 @@ extension StoryTemplet{
             return [StaticCellPosition.Top:StaticCells.topStoryDetailsCells,StaticCellPosition.Bottom:StaticCells.bottomStoryDetailsCells]
             
         case .Review:
-            return [StaticCellPosition.Top:[.StoryDetailHeaderImageCell,.StoryHeadlineCell,.RatingCell,.AuthorElementCell,.SocialShareCell,],StaticCellPosition.Bottom:StaticCells.bottomStoryDetailsCells]
+            return [StaticCellPosition.Top:[.StoryDetailHeaderImageCell,.StoryHeadlineCell,.RatingCell],StaticCellPosition.Bottom:StaticCells.bottomStoryDetailsCells]
         case .Video:
             
-            return [StaticCellPosition.Top:[.StoryHeadlineCell,.AuthorElementCell,.SocialShareCell],StaticCellPosition.Bottom:StaticCells.bottomStoryDetailsCells]
+            return [StaticCellPosition.Top:[.StoryHeadlineCell],StaticCellPosition.Bottom:StaticCells.bottomStoryDetailsCells]
             
         case .Default:
             
@@ -605,7 +605,7 @@ enum StaticCellPosition{
 
 public struct StaticCells{
     
-    static var topStoryDetailsCells:[storyDetailLayoutType] = [.StoryDetailHeaderImageCell,.StoryHeadlineCell,.AuthorElementCell,.SocialShareCell,]
+    static var topStoryDetailsCells:[storyDetailLayoutType] = [.StoryDetailHeaderImageCell,.StoryHeadlineCell]//,.AuthorElementCell]//,.SocialShareCell
     static var bottomStoryDetailsCells:[storyDetailLayoutType] = [.CommentCell]
     
 }

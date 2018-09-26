@@ -393,7 +393,7 @@ extension StoryDetailController:APIManagerDelegate{
             self.margin = MarginD(templet: self.story?.story_template ?? .Default)
         }
         
-        collectionView.backgroundColor = (self.margin.storyTemplet == .Video || self.margin.storyTemplet == .Explainer) ?  UIColor(hexString:"#333333") : UIColor(hexString:"F4F4F4")
+        collectionView.backgroundColor = UIColor(hexString:"F4F4F4")//(self.margin.storyTemplet == .Video || self.margin.storyTemplet == .Explainer) ?  UIColor(hexString:"#333333") : UIColor(hexString:"F4F4F4")
         
         self.updateSegmenetViews()
         

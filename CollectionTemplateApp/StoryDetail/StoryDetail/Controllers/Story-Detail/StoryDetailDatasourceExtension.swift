@@ -43,21 +43,21 @@ extension StoryDetailDataSourceAndDelegate{
             self.collapsedIndexPath[indexPath] = sender.isSelected
             self.collectionView.performBatchUpdates(nil, completion: nil)
             
-            let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
-            rotationAnimation.fromValue = 0.0
-            rotationAnimation.duration = 0.5
-            rotationAnimation.isRemovedOnCompletion = false
-            rotationAnimation.fillMode = kCAFillModeForwards
-
-            if sender.isSelected {
-                rotationAnimation.toValue = (Double.pi * 2) + (Double.pi/4)
-            }else{
-                rotationAnimation.toValue = -(Double.pi * 2)
-            }
-            
-            UIView.animate(withDuration: 0, animations: {
-                sender.imageView?.layer.add(rotationAnimation, forKey: nil)
-            })
+//            let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
+//            rotationAnimation.fromValue = 0.0
+//            rotationAnimation.duration = 0.5
+//            rotationAnimation.isRemovedOnCompletion = false
+//            rotationAnimation.fillMode = kCAFillModeForwards
+//
+//            if sender.isSelected {
+//                rotationAnimation.toValue = (Double.pi * 2) + (Double.pi/4)
+//            }else{
+//                rotationAnimation.toValue = -(Double.pi * 2)
+//            }
+//
+//            UIView.animate(withDuration: 0, animations: {
+//                sender.imageView?.layer.add(rotationAnimation, forKey: nil)
+//            })
             
             
         }

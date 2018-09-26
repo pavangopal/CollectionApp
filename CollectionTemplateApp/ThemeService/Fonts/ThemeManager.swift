@@ -11,6 +11,8 @@ import UIKit
 
 public protocol Theme {
     
+     var primaryColor:UIColor {get}
+
     var backgroundColor: UIColor { get }
     var tintColor: UIColor { get }
     
@@ -40,7 +42,8 @@ public protocol Theme {
 }
 
 extension Theme{
-    
+    public var primaryColor:UIColor { return UIColor(hexString: "#2F73E4") }
+
     public var backgroundColor: UIColor { return UIColor(hexString: "#ffffff") }
     public var tintColor: UIColor { return UIColor(hexString : "#007aff") }
     
@@ -57,7 +60,7 @@ extension Theme{
     
     public var primaryLinkHighlightColor:UIColor{return UIColor(hexString:"#222222")}
     
-    public var primarySectionColor:UIColor{return UIColor(hexString: "#36184E")}
+    public var primarySectionColor:UIColor{return UIColor(hexString: "#2F73E4")}
     
     public var primaryQuintColor:UIColor{return UIColor(hexString: "#ffcf00")}
     

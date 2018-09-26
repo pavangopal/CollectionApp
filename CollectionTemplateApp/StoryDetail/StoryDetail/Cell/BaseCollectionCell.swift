@@ -96,7 +96,7 @@ class BaseCollectionCell: UICollectionViewCell {
     func getTextColorForTemplet() -> UIColor{
         var textColor = ThemeService.shared.theme.primaryTextColor
         
-        if self.margin.storyTemplet == .Video{
+        if self.margin.storyTemplet == .Video {
             textColor = .white
         }
         

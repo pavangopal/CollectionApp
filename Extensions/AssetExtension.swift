@@ -73,5 +73,8 @@ public enum AssetImage : String{
     case Trending = "trending"
     case MyReportBanner = "myreport"
     
+    case upArrow = "arrowup"
+    case downArrow = "arrowdown"
+    
     
 }

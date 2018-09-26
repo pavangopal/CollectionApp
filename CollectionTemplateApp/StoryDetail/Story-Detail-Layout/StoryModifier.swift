@@ -17,9 +17,9 @@ class StoryModifier{
         let parentSectionColor = ThemeService.shared.theme.primarySectionColor
         var primaryTextColor = ThemeService.shared.theme.primaryTextColor
         
-        if story.story_template == .Video{
-            primaryTextColor = .white
-        }
+//        if story.story_template == .Video{
+//            primaryTextColor = .white
+//        }
         
         let sectionColor = ThemeService.shared.theme.primarySectionColor
         
@@ -301,10 +301,10 @@ class StoryModifier{
                         
                         cardStoryElement.tableData!.parsedData = dataArray
 //                        let firstItemRemoved = cardStoryElement.tableData!.parsedData.removeFirst()
-//                        
+//
 //                        cardStoryElement.tableData!.parsedData = cardStoryElement.tableData!.parsedData.sorted(by: { (first, second) -> Bool in
 //                            return first.first!.compare(second.first!, options: [String.CompareOptions.numeric,String.CompareOptions.forcedOrdering]) == .orderedAscending
-//                            
+//
 //                        })
 //                        cardStoryElement.tableData!.parsedData.insert(firstItemRemoved, at: 0)
                     }

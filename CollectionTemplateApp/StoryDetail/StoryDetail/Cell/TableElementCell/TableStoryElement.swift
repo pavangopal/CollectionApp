@@ -145,8 +145,6 @@ class TableStoryElement: BaseCollectionCell {
         else{
             holdingTableData.parsedData = Array(tableData.parsedData[offset..<tableData.parsedData.count])
         }
-        
-      //  holdingTableData.parsedData.insert(headerTableData.parsedData.first!, at: 0)
     }
     
     func kickNext(){

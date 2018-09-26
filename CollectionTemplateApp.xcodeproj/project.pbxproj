@@ -168,6 +168,10 @@
 		1D341EC0212ECBC100925125 /* StoryListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D341EBF212ECBC100925125 /* StoryListCell.swift */; };
 		1D341EC2212ED1DF00925125 /* SimpleSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D341EC1212ED1DF00925125 /* SimpleSliderCell.swift */; };
 		1D341EC4212EE20E00925125 /* ImageStoryListCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D341EC3212EE20E00925125 /* ImageStoryListCardCell.swift */; };
+		1D344ABF215B8EBD00F13353 /* StoryHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D344ABE215B8EBD00F13353 /* StoryHeader.swift */; };
+		1D344AC1215BA4CD00F13353 /* HeadlineSubHealineStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D344AC0215BA4CD00F13353 /* HeadlineSubHealineStackView.swift */; };
+		1D344AC3215BA4E900F13353 /* AuthorStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D344AC2215BA4E900F13353 /* AuthorStackView.swift */; };
+		1D344AC5215BA4FE00F13353 /* SectionStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D344AC4215BA4FE00F13353 /* SectionStackView.swift */; };
 		1D406312212D5E4400228FC8 /* FloatRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D406311212D5E4400228FC8 /* FloatRatingView.swift */; };
 		1D406314212D7A0100228FC8 /* FullImageSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D406313212D7A0100228FC8 /* FullImageSliderCell.swift */; };
 		1D597667213C2BC30017D569 /* ImageStoryListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D597666213C2BC30017D569 /* ImageStoryListCell.swift */; };
@@ -381,6 +385,10 @@
 		1D341EBF212ECBC100925125 /* StoryListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListCell.swift; sourceTree = "<group>"; };
 		1D341EC1212ED1DF00925125 /* SimpleSliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSliderCell.swift; sourceTree = "<group>"; };
 		1D341EC3212EE20E00925125 /* ImageStoryListCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStoryListCardCell.swift; sourceTree = "<group>"; };
+		1D344ABE215B8EBD00F13353 /* StoryHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryHeader.swift; sourceTree = "<group>"; };
+		1D344AC0215BA4CD00F13353 /* HeadlineSubHealineStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineSubHealineStackView.swift; sourceTree = "<group>"; };
+		1D344AC2215BA4E900F13353 /* AuthorStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorStackView.swift; sourceTree = "<group>"; };
+		1D344AC4215BA4FE00F13353 /* SectionStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionStackView.swift; sourceTree = "<group>"; };
 		1D406311212D5E4400228FC8 /* FloatRatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatRatingView.swift; sourceTree = "<group>"; };
 		1D406313212D7A0100228FC8 /* FullImageSliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageSliderCell.swift; sourceTree = "<group>"; };
 		1D597666213C2BC30017D569 /* ImageStoryListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStoryListCell.swift; sourceTree = "<group>"; };
@@ -574,6 +582,7 @@
 				1D07FDAA215A560900FE8D48 /* StoryDetailHeaderImageCell.swift */,
 				1D07FDAB215A560900FE8D48 /* ExplainerCardIndexCell.swift */,
 				1D07FDAC215A560900FE8D48 /* GalleryCell.swift */,
+				1D344ABE215B8EBD00F13353 /* StoryHeader.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -649,6 +658,9 @@
 				1D15FA1B2121B6E5004297B2 /* TTTAttributedLabel.h */,
 				1D15FA1C2121B6E5004297B2 /* TTTAttributedLabel.m */,
 				1D406311212D5E4400228FC8 /* FloatRatingView.swift */,
+				1D344AC0215BA4CD00F13353 /* HeadlineSubHealineStackView.swift */,
+				1D344AC2215BA4E900F13353 /* AuthorStackView.swift */,
+				1D344AC4215BA4FE00F13353 /* SectionStackView.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -1239,6 +1251,7 @@
 				1D07FE34215A71D800FE8D48 /* AutherHeaderCell.swift in Sources */,
 				1D15FA7A2121B952004297B2 /* QuintypeUtility.swift in Sources */,
 				1D07FE02215A560900FE8D48 /* BrightCoveController.swift in Sources */,
+				1D344ABF215B8EBD00F13353 /* StoryHeader.swift in Sources */,
 				1D0497772133C7C800B26715 /* CarousalContainerCell.swift in Sources */,
 				1D07FDE6215A560900FE8D48 /* KeyEventCell.swift in Sources */,
 				1D07FDF2215A560900FE8D48 /* UrlEmbedCell.swift in Sources */,
@@ -1246,6 +1259,7 @@
 				1D07FDD3215A560900FE8D48 /* TableStoryElementTopHeaderCell.swift in Sources */,
 				1D15FA5F2121B87B004297B2 /* UIViewControllerExtension.swift in Sources */,
 				1D15FA242121B6E5004297B2 /* CollectionApiManager.swift in Sources */,
+				1D344AC3215BA4E900F13353 /* AuthorStackView.swift in Sources */,
 				1D07FDE1215A560900FE8D48 /* ExplainerPreviewLayout.swift in Sources */,
 				1DB9253A214057DA005943CC /* FontService.swift in Sources */,
 				1D07FE00215A560900FE8D48 /* StoryDetailPrefetchDatasource.swift in Sources */,
@@ -1280,6 +1294,7 @@
 				1D15FA5D2121B87B004297B2 /* UILabelExtension.swift in Sources */,
 				1D07FDF1215A560900FE8D48 /* commentCell.swift in Sources */,
 				1D15FA5E2121B87B004297B2 /* UITextViewExtension.swift in Sources */,
+				1D344AC5215BA4FE00F13353 /* SectionStackView.swift in Sources */,
 				1D2176B32152724300F6B956 /* HomeCellSizeCalculator.swift in Sources */,
 				1D15FA532121B87B004297B2 /* AssetExtension.swift in Sources */,
 				1D15FA762121B952004297B2 /* HtmlRender.swift in Sources */,
@@ -1330,6 +1345,7 @@
 				1D07FDE2215A560900FE8D48 /* CenterSnapFlowLayout.swift in Sources */,
 				1D07FDEB215A560900FE8D48 /* AuthorElementCell.swift in Sources */,
 				1D07FDD9215A560900FE8D48 /* BlurbElementCell.swift in Sources */,
+				1D344AC1215BA4CD00F13353 /* HeadlineSubHealineStackView.swift in Sources */,
 				1D15FA3C2121B6E5004297B2 /* CollectionViewModel.swift in Sources */,
 				1D07FDCB215A560900FE8D48 /* JWPlayerController.swift in Sources */,
 				1D15FA2B2121B6E5004297B2 /* HomeCellType.swift in Sources */,

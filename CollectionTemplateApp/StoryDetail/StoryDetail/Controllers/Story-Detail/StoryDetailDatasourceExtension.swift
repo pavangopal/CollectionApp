@@ -25,7 +25,7 @@ extension StoryDetailDataSourceAndDelegate{
         
         let bounds = collectionView.bounds
         
-        if let heroImageCell = collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? StoryDetailHeaderImageCell{
+        if let heroImageCell = collectionView.supplementaryView(forElementKind: UICollectionElementKindSectionHeader, at: IndexPath(item: 0, section: 0))  as? StoryDetailHeaderImageCell{
             heroImageCell.updateParallaxOffet(collectionViewBounds: bounds)
         }
         

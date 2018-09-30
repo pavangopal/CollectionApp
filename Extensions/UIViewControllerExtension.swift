@@ -18,5 +18,4 @@ extension UIViewController{
         ImageCache.default.cleanExpiredDiskCache()
         
     }
-    
 }

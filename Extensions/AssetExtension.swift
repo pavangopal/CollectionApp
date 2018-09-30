@@ -75,6 +75,7 @@ public enum AssetImage : String{
     
     case upArrow = "arrowup"
     case downArrow = "arrowdown"
+    case ErrorImage = "errorImage"
     
     
 }

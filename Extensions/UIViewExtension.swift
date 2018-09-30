@@ -159,6 +159,15 @@ extension Bluring where Self: UIView {
         //        self.insertSubview(blurView, at: 0)
         self.addSubview(blurView)
     }
+    
+    static func getBlurView(style:UIBlurEffectStyle) -> UIVisualEffectView {
+        let blurEffect = UIBlurEffect(style: style)
+        
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        return blurView
+    }
 }
 
 // Conformance

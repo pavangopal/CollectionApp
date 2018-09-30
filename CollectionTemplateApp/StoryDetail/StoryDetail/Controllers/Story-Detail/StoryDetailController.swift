@@ -31,29 +31,34 @@ class StoryDetailController: BaseController {
     }()
     
     var collectionView:UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionHeadersPinToVisibleBounds = true
-        layout.scrollDirection = .vertical
+        let layout = StickyHeadersCollectionViewFlowLayout()
+
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.interactive
+        collectionView.alwaysBounceVertical = true
+        collectionView.backgroundColor = UIColor(hexString: "#F4F4F4")
         
-        let view = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        view.keyboardDismissMode = UIScrollViewKeyboardDismissMode.interactive
-        view.alwaysBounceVertical = true
-        view.backgroundColor = UIColor(hexString: "#F4F4F4")
+        collectionView.contentInsetAdjustmentBehavior = .never
+
         
-        return view
+        return collectionView
         
     }()
     
     var refreshControl : UIRefreshControl = {
         let refreshControl = UIRefreshControl()
+        refreshControl.layer.zPosition = 999
         let attributes = [NSAttributedStringKey.foregroundColor : UIColor.gray]
         
         refreshControl.attributedTitle = NSAttributedString(string: "Please wait ...", attributes: attributes)
+        
         return refreshControl
 
     }()
     
-    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     override var state: ViewState<Any>?{
         didSet{
@@ -183,7 +188,7 @@ class StoryDetailController: BaseController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        setupNavgationbar()
         if self.story == .none{
 //            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500), execute: {
                 APIManager.shared.getStoryBySlug(controller: self, storySlug: self.storySlug)
@@ -191,22 +196,10 @@ class StoryDetailController: BaseController {
 //            })
         }
     }
-   /*
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-         registerKeyboardNotifications()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        deRegisterKeyboardNotifications()
-    }
-    */
     
     func setupRefreshControl(){
         if #available(iOS 10.0, *) {
-            
+
             self.collectionView.refreshControl = refreshControl
             
         } else {
@@ -429,40 +422,4 @@ extension StoryDetailController:APIManagerDelegate{
         self.story = nil
     }
 }
-
-//MARK:- Keyboard handling for comment wiget to work
-/*
-extension StoryDetailController{
-    
-    fileprivate func registerKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(StoryDetailController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(StoryDetailController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-    }
-    
-    @objc fileprivate func deRegisterKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardDidHide, object: nil)
-    }
-    
-    @objc fileprivate func keyboardWillShow(notification: NSNotification) {
-        
-            let info: NSDictionary = notification.userInfo! as NSDictionary
-            let value: NSValue = info.value(forKey: UIKeyboardFrameBeginUserInfoKey) as! NSValue
-            let keyboardSize: CGSize = value.cgRectValue.size
-            let contentInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height + 250, 0.0)
-            self.collectionView.contentInset = contentInsets
-            self.collectionView.scrollIndicatorInsets = contentInsets
-        self.collectionView.scrollRectToVisible(CGRect(x: 0, y: self.collectionView.contentSize.height-250, width: UIScreen.main.bounds.width, height: 1), animated: true)
-        
-    }
-    
-   @objc func keyboardWillHide(notification: NSNotification) {
-        let contentInsets: UIEdgeInsets = .zero
-        self.collectionView.contentInset = contentInsets
-        self.collectionView.scrollIndicatorInsets = contentInsets
-    }
-    
-}
- */
-
 

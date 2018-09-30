@@ -24,6 +24,7 @@ public struct PrimaryTheme:Theme{
     
     public var darkPurpleColor:UIColor{return UIColor(hexString:"#36154f")}
     
+    public var defaultLightGreyColor:UIColor{return UIColor(hexString: "#D4D4D4")}
     
     //MARK:- Initializers
     public init() {}

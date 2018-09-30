@@ -87,6 +87,8 @@ class StoryDetailDataSourceAndDelegate:NSObject,UICollectionViewDataSource,UICol
         //TODO: should be removed
         collectionView.register(BaseCollectionCell.self, forCellWithReuseIdentifier: String(describing:BaseCollectionCell.self))
         
+        collectionView.register(StoryDetailHeaderImageCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: StoryDetailHeaderImageCell.reuseIdentifier)
+        
         let storyTypeArray = Set(self.layout.flatMap({$0}).map({$0.layoutType}))
         
         var cells:[BaseCollectionCell.Type] = []
@@ -748,10 +750,44 @@ class StoryDetailDataSourceAndDelegate:NSObject,UICollectionViewDataSource,UICol
         return 0
     }
     
+    
     deinit {
         if let _ = tableCollectionView{
             self.tableCollectionView?.removeObserver(self, forKeyPath: "contentSize", context: &StoryDetailDataSourceAndDelegate.COLLECTIONVIEW_OBS_CONTEXT)
         }
         print("DataSource deinit Called")
+    }
+}
+
+
+
+extension StoryDetailDataSourceAndDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        // Dequeue Reusable Supplementary View
+        
+        if let storyHeaderImageCell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: StoryDetailHeaderImageCell.reuseIdentifier, for: indexPath) as? StoryDetailHeaderImageCell {
+            // Configure Supplementary View
+            
+            storyHeaderImageCell.delegate = self
+            
+            storyHeaderImageCell.configure(data:self.story)
+            
+            storyHeaderImageCell.updateParallaxOffet(collectionViewBounds: collectionView.bounds)
+            
+            return storyHeaderImageCell
+        }
+        
+        fatalError("Unable to Dequeue Reusable Supplementary View")
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        
+        if section == 0{
+            return CGSize(width: collectionView.bounds.width, height: 250)
+        }
+        
+        return .zero
+        
     }
 }

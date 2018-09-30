@@ -37,7 +37,7 @@ public protocol Theme {
     
     var defaultDarkBackGroundColor:UIColor{get}
     var darkPurpleColor:UIColor{get}
-    
+     var defaultLightGreyColor:UIColor{get}
     
 }
 
@@ -69,5 +69,5 @@ extension Theme{
     public var defaultDarkBackGroundColor:UIColor{return UIColor(hexString: "#333333")}
     public var darkPurpleColor:UIColor{return UIColor(hexString:"#36154f")}
     
-    
+    public var defaultLightGreyColor:UIColor{return UIColor(hexString: "#D4D4D4")}
 }

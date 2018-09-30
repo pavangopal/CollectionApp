@@ -84,34 +84,26 @@ extension UIViewController:SideMenuControllerDelegate,UIPopoverPresentationContr
     @objc func setupNavgationbar(){
         rightSearchBarButtonItem.accessibilityLabel = "section"
         self.navigationItem.setRightBarButtonItems([rightMenuButtonItem,rightSearchBarButtonItem], animated: true)
-        let brandImage = AssetImage.BrandLogo.image
-        let logoItem = UIBarButtonItem(image: brandImage, style: .done, target: nil, action: #selector(self.goToHomeTab(sender:)))
+        
+        let image = UIImage.from(color: UIColor.black.withAlphaComponent(0.1))
+        
+        self.navigationController?.navigationBar.setBackgroundImage(image, for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.backgroundColor = .clear
+        self.navigationController?.navigationBar.barTintColor = .clear
+        self.navigationController?.navigationBar.isTranslucent = true
         
         
-        self.navigationController?.navigationBar.barTintColor = ThemeService.shared.theme.primarySectionColor
-        self.navigationController?.navigationBar.tintColor = .white
-        self.navigationController?.navigationBar.isTranslucent = false
-        
-//        if let controllerCount =  self.navigationController?.viewControllers.count{
-//            if controllerCount <= 1{
-//                self.navigationItem.leftBarButtonItem = logoItem
-//            }
-//        }
     }
     
     @objc func setupNavgationbarForHome(){
         rightSearchBarButtonItem.accessibilityLabel = "home"
         
-        self.navigationItem.setRightBarButtonItems([rightMenuButtonItem,rightSearchBarButtonItem,trendingNewsButtonItem], animated: true)
-        let brandImage = AssetImage.BrandLogo.image.withRenderingMode(.alwaysTemplate)
-        let logoItem = UIBarButtonItem(image: brandImage, style: .done, target: nil, action: nil)
-        logoItem.tintColor = ThemeService.shared.theme.primaryQuintColor
-        
-        if let controllerCount =  self.navigationController?.viewControllers.count{
-            if controllerCount <= 1{
-                self.navigationItem.leftBarButtonItem = logoItem
-            }
-        }
+        self.navigationItem.setRightBarButtonItems([rightMenuButtonItem,rightSearchBarButtonItem], animated: true)
+        self.navigationController?.navigationBar.barTintColor = ThemeService.shared.theme.primarySectionColor
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.isTranslucent = false
+       
     }
     
     @objc func goToHomeTab(sender:UIBarButtonItem){
@@ -180,4 +172,18 @@ extension UIViewController:SideMenuControllerDelegate,UIPopoverPresentationContr
 
 class BadgeBarItem:UIBarButtonItem{
     
+}
+
+extension UIImage {
+    static func from(color: UIColor) -> UIImage {
+        let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
+        UIGraphicsBeginImageContext(rect.size)
+        let context = UIGraphicsGetCurrentContext()
+        context!.setFillColor(color.cgColor)
+        context!.fill(rect)
+        let img = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return img!
+    }
 }

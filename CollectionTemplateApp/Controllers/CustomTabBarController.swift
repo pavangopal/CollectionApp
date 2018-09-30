@@ -29,6 +29,7 @@ class CustomTabBarController: UITabBarController {
                 let homeController = HomeController(slug: "home")
                 let homeNavigationController = UINavigationController(rootViewController: homeController)
                 homeController.tabBarItem = UITabBarItem(title: item.rawValue, image: item.icon, tag: item.hashValue)
+                
                 navigationControllerContainer.append(homeNavigationController)
                 
             case .Settings:

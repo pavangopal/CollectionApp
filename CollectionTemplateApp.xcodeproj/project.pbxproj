@@ -214,6 +214,8 @@
 		1DB9256B214059E3005943CC /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB92560214059E3005943CC /* Lato-Regular.ttf */; };
 		1DB9256D2140623B005943CC /* StoryListCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB9256C2140623B005943CC /* StoryListCardCell.swift */; };
 		1DBFFC93213D69120080AB2C /* ImageTextDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBFFC92213D69120080AB2C /* ImageTextDescriptionCell.swift */; };
+		1DE74102215CAD630072309C /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE74101215CAD630072309C /* CustomNavigationBar.swift */; };
+		1DE74104215CE2860072309C /* StickyHeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE74103215CE2860072309C /* StickyHeaderLayout.swift */; };
 		1DF728BB213917C50027EA93 /* LinearGallerySliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF728BA213917C50027EA93 /* LinearGallerySliderCell.swift */; };
 		2396A5C30F0B3D9E67A1AD1A /* Pods_CollectionTemplateApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7E3E72581AF9F22F572142 /* Pods_CollectionTemplateApp.framework */; };
 /* End PBXBuildFile section */
@@ -431,6 +433,8 @@
 		1DB92560214059E3005943CC /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
 		1DB9256C2140623B005943CC /* StoryListCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListCardCell.swift; sourceTree = "<group>"; };
 		1DBFFC92213D69120080AB2C /* ImageTextDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTextDescriptionCell.swift; sourceTree = "<group>"; };
+		1DE74101215CAD630072309C /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
+		1DE74103215CE2860072309C /* StickyHeaderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyHeaderLayout.swift; sourceTree = "<group>"; };
 		1DF728BA213917C50027EA93 /* LinearGallerySliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearGallerySliderCell.swift; sourceTree = "<group>"; };
 		2FB49CA0CE8CB7926CE04042 /* Pods-CollectionTemplateApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollectionTemplateApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-CollectionTemplateApp/Pods-CollectionTemplateApp.release.xcconfig"; sourceTree = "<group>"; };
 		4D7E3E72581AF9F22F572142 /* Pods_CollectionTemplateApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CollectionTemplateApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -661,6 +665,8 @@
 				1D344AC0215BA4CD00F13353 /* HeadlineSubHealineStackView.swift */,
 				1D344AC2215BA4E900F13353 /* AuthorStackView.swift */,
 				1D344AC4215BA4FE00F13353 /* SectionStackView.swift */,
+				1DE74101215CAD630072309C /* CustomNavigationBar.swift */,
+				1DE74103215CE2860072309C /* StickyHeaderLayout.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -1235,6 +1241,7 @@
 				1D07FDCF215A560900FE8D48 /* ExplainerPreviewCell.swift in Sources */,
 				1DB92538214057DA005943CC /* UserDefaultKeys.swift in Sources */,
 				1D15FA732121B952004297B2 /* Ancher.swift in Sources */,
+				1DE74104215CE2860072309C /* StickyHeaderLayout.swift in Sources */,
 				1D07FE0B215A642900FE8D48 /* BaseController.swift in Sources */,
 				1D07FDE4215A560900FE8D48 /* GalleryImageCell.swift in Sources */,
 				1D07FDC4215A560900FE8D48 /* SocialShare.swift in Sources */,
@@ -1305,6 +1312,7 @@
 				1D15FA3E2121B7A5004297B2 /* CustomTabBarController.swift in Sources */,
 				1D07FDD8215A560900FE8D48 /* BaseCollectionCell.swift in Sources */,
 				1D15FA822121BA25004297B2 /* UICollectionViewExtension.swift in Sources */,
+				1DE74102215CAD630072309C /* CustomNavigationBar.swift in Sources */,
 				1D07FE05215A560900FE8D48 /* DataLoadOperation.swift in Sources */,
 				1D341EC0212ECBC100925125 /* StoryListCell.swift in Sources */,
 				1DB9253D214057DA005943CC /* Fonts.swift in Sources */,

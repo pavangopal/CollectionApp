@@ -582,7 +582,7 @@ extension StoryTemplet{
             return [StaticCellPosition.Top:StaticCells.topStoryDetailsCells,StaticCellPosition.Bottom:StaticCells.bottomStoryDetailsCells]
             
         case .Review:
-            return [StaticCellPosition.Top:[.StoryDetailHeaderImageCell,.StoryHeadlineCell,.RatingCell],StaticCellPosition.Bottom:StaticCells.bottomStoryDetailsCells]
+            return [StaticCellPosition.Top:[.StoryHeadlineCell,.RatingCell],StaticCellPosition.Bottom:StaticCells.bottomStoryDetailsCells]
         case .Video:
             
             return [StaticCellPosition.Top:[.StoryHeadlineCell],StaticCellPosition.Bottom:StaticCells.bottomStoryDetailsCells]
@@ -605,7 +605,7 @@ enum StaticCellPosition{
 
 public struct StaticCells{
     
-    static var topStoryDetailsCells:[storyDetailLayoutType] = [.StoryDetailHeaderImageCell,.StoryHeadlineCell]//,.AuthorElementCell]//,.SocialShareCell
+    static var topStoryDetailsCells:[storyDetailLayoutType] = [.StoryHeadlineCell]//,.AuthorElementCell]//,.SocialShareCell
     static var bottomStoryDetailsCells:[storyDetailLayoutType] = [.CommentCell]
     
 }

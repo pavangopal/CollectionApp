@@ -32,7 +32,12 @@ class StoryDetailPager: BaseController {
     }()
     
     override var prefersStatusBarHidden: Bool {
+
         return UIApplication.shared.statusBarOrientation.isLandscape
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     convenience init(slugArray:[String],currentIndex:Int) {
@@ -57,6 +62,7 @@ class StoryDetailPager: BaseController {
         self.view.backgroundColor = .white
         
         NotificationCenter.default.addObserver(self, selector: #selector(videoDidRotate), name: .UIDeviceOrientationDidChange, object: nil)
+        setupNavgationbar()
     }
     
    @objc func videoDidRotate() {
@@ -103,7 +109,7 @@ class StoryDetailPager: BaseController {
             self.view.addSubview(self.pageController.view)
             
             self.pageController.didMove(toParentViewController: self)
-            self.edgesForExtendedLayout = []
+//            self.edgesForExtendedLayout = []
         }
     }
 

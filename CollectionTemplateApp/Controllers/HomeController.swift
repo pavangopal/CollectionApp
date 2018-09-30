@@ -59,7 +59,16 @@ final class HomeController: UIViewController {
         self.view.backgroundColor = .white
         setUpViews()
         collectionViewModel?.startFetch()
-        setupNavgationbar()
+        setupNavgationbarForHome()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     func setUpViews(){ 

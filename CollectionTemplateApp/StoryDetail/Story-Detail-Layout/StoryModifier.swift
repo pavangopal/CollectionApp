@@ -36,7 +36,7 @@ class StoryModifier{
                     let titleAttributtedString = Helper.getAttributtedString(for: story.hero_image_caption, textOption: titleAttributtes)
                     let attributtionString = Helper.getAttributtedString(for: story.hero_image_attribution, textOption: attributionAttributes)
                     
-                    let finalAttributtedString = Helper.combineAttributedStrings(str1: titleAttributtedString, str2: attributtionString, seperator: "<br>",alignment: .right)
+                    let finalAttributtedString = Helper.combineAttributedStrings(str1: titleAttributtedString, str2: attributtionString, seperator: "<br>",alignment: .left)
                     
                     story.imageAttributtedCaptionText = finalAttributtedString
                     

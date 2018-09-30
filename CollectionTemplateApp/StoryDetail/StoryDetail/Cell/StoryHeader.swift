@@ -16,12 +16,19 @@ class StoryHeadlineCell: BaseCollectionCell {
     lazy var authorStackView = AuthorStackView(frame: .zero)
     lazy var containerView = UIView(frame: .zero)
     
+    var lineView:UIView = {
+        let view = UIView()
+        view.backgroundColor = ThemeService.shared.theme.defaultLightGreyColor
+        return view
+    }()
+    
     override func setUpViews() {
         contentView.backgroundColor = .white
         contentView.addSubview(containerView)
         containerView.addSubview(sectionStackView)
         containerView.addSubview(headlineSubHealineStackView)
         containerView.addSubview(authorStackView)
+//        containerView.addSubview(lineView)
         
         containerView.fillSuperview()
         
@@ -31,6 +38,7 @@ class StoryHeadlineCell: BaseCollectionCell {
         
         authorStackView.anchor(headlineSubHealineStackView.bottomAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 10, rightConstant: 10, widthConstant: 0, heightConstant: 0)
 
+//        lineView.anchor(nil, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 1)
     }
     
     override func configure(data: Any?) {

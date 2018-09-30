@@ -44,32 +44,32 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <key>UIAppFonts</key>
-    <array>
-        <string>Merriweather-Regular.ttf</string>
-        <string>Merriweather-LightItalic.ttf</string>
-        <string>Merriweather-Light.ttf</string>
-        <string>Merriweather-Italic.ttf</string>
-        <string>Merriweather-BoldItalic.ttf</string>
-        <string>Merriweather-Bold.ttf</string>
-        <string>Merriweather-Sans-regular.ttf</string>
-        <string>OpenSans-Bold.ttf</string>
-        <string>OpenSans-Regular.ttf</string>
-        <string>OpenSans-Semibold.ttf</string>
-        <string>Oswald-Bold.ttf</string>
-        <string>Oswald-ExtraLight.ttf</string>
-        <string>Oswald-Light.ttf</string>
-        <string>Oswald-Medium.ttf</string>
-        <string>Oswald-Regular.ttf</string>
-        <string>Oswald-SemiBold.ttf</string>
-        <string>LibelSuit-Regular.ttf</string>
-        <string>CooperHewitt-Bold.otf</string>
-        <string>CooperHewitt-Light.otf</string>
-        <string>CooperHewitt-Semibold.otf</string>
-        <string>Lato-Bold.ttf</string>
-        <string>Lato-Regular.ttf</string>
-        <string>Lato-Semibold.ttf</string>
-        <string>Lato-Light.ttf</string>
-    </array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Merriweather-Regular.ttf</string>
+		<string>Merriweather-LightItalic.ttf</string>
+		<string>Merriweather-Light.ttf</string>
+		<string>Merriweather-Italic.ttf</string>
+		<string>Merriweather-BoldItalic.ttf</string>
+		<string>Merriweather-Bold.ttf</string>
+		<string>Merriweather-Sans-regular.ttf</string>
+		<string>OpenSans-Bold.ttf</string>
+		<string>OpenSans-Regular.ttf</string>
+		<string>OpenSans-Semibold.ttf</string>
+		<string>Oswald-Bold.ttf</string>
+		<string>Oswald-ExtraLight.ttf</string>
+		<string>Oswald-Light.ttf</string>
+		<string>Oswald-Medium.ttf</string>
+		<string>Oswald-Regular.ttf</string>
+		<string>Oswald-SemiBold.ttf</string>
+		<string>LibelSuit-Regular.ttf</string>
+		<string>CooperHewitt-Bold.otf</string>
+		<string>CooperHewitt-Light.otf</string>
+		<string>CooperHewitt-Semibold.otf</string>
+		<string>Lato-Bold.ttf</string>
+		<string>Lato-Regular.ttf</string>
+		<string>Lato-Semibold.ttf</string>
+		<string>Lato-Light.ttf</string>
+	</array>
 </dict>
 </plist>

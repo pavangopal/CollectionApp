@@ -62,7 +62,7 @@ class StoryDetailPager: BaseController {
         self.view.backgroundColor = .white
         
         NotificationCenter.default.addObserver(self, selector: #selector(videoDidRotate), name: .UIDeviceOrientationDidChange, object: nil)
-        setupNavgationbar()
+        
     }
     
    @objc func videoDidRotate() {

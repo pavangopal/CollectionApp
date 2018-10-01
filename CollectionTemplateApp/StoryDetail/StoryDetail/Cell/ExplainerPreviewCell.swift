@@ -55,8 +55,8 @@ class ExplainerPreviewCell: BaseCollectionCell {
     }
     
     func configureCell(layout:[[StoryDetailLayout]],story:Story,controller:BaseController){
-        
-        self.dataSource = StoryDetailDataSourceAndDelegate(layout: layout, story: story, collectionview: self.collectionView, controller: controller, sizingCell: self.sizingCells)
+        let layoutWrapper:StoryLayoutWrapper = StoryLayoutWrapper(story: story, storyDetailLayout: layout, supplementaryView: nil)
+        self.dataSource = StoryDetailDataSourceAndDelegate(layoutWrapper:layoutWrapper, collectionview: self.collectionView, controller: controller, sizingCell: self.sizingCells)
         
         self.collectionView.delegate = self.dataSource
         self.collectionView.dataSource = self.dataSource

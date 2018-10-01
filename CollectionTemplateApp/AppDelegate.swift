@@ -18,8 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-//        TWWatchdogInspector.start()
-//        TWWatchdogInspector.setEnableMainthreadStallingException(false)
+        TWWatchdogInspector.start()
+        TWWatchdogInspector.setEnableMainthreadStallingException(false)
 
         Quintype.initWithBaseUrl(baseURL: appConfig.baseURL)
 

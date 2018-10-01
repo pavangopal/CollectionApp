@@ -65,7 +65,6 @@ class StickyHeadersCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
         
         layoutAttributes.frame = newRect
-        layoutAttributes.zIndex = -2
         return layoutAttributes
     }
 }

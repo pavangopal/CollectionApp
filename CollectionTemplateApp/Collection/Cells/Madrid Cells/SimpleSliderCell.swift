@@ -94,7 +94,7 @@ class SimpleSliderCell: BaseCollectionCell {
         
         collectionTitleLabel.text = collectionName
         
-        imageView.loadImageFromUrl(url: story.imageURl)
+        imageView.loadImageFromUrl(url: story.heroImageURl)
         storyHeadlineLabel.attributedText = story.headline
         
         

@@ -62,8 +62,8 @@ struct Environment{
         }
         
         struct Metype{
-            static var id = 2
-            static var host = "https://www.metype.com/"
+            static var id = 1000218
+            static var host = "https://staging.metype.com/"
         }
         
         
@@ -73,7 +73,7 @@ struct Environment{
         }
         
         struct App {
-            static var AppName = "MediaOne Staging"
+            static var AppName = "Ace Staging"
         }
     }
     

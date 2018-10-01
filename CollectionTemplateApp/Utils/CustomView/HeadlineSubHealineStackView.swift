@@ -37,7 +37,7 @@ class HeadlineSubHealineStackView:UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configData(headline:NSAttributedString,subheadline:NSAttributedString){
+    func configData(headline:NSAttributedString?,subheadline:NSAttributedString?){
         headlineLabel.attributedText = headline
         subheadlinelLabel.attributedText = subheadline
     }

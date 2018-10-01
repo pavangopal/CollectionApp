@@ -201,7 +201,7 @@ extension StoryDetailDataSourceAndDelegate{
         
         layoutEngine.updateLiveBlogLayout(forSortingOrder: order, story: unwrappedStory, completion: { (layoutArray) in
             
-            let storyLayoutWrapper = StoryLayoutWrapper(story: unwrappedStory, storyDetailLayout: layoutArray)
+            let storyLayoutWrapper = StoryLayoutWrapper(story: unwrappedStory, storyDetailLayout: layoutArray, supplementaryView: self.supplimentaryView)
             
             self.layout = storyLayoutWrapper.storyDetailLayout
             self.story = storyLayoutWrapper.story

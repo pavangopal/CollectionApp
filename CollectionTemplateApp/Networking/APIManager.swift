@@ -143,9 +143,9 @@ class APIManager{
         let operation2 = BlockOperation(block: {
             var layoutEngine = LayoutEngine()
             
-            layoutEngine.makeLayouts(for: unwrappedStory.story_template, story: unwrappedStory, completion: { (storyDetailLayout) in
+            layoutEngine.makeLayouts(for: unwrappedStory.story_template, story: unwrappedStory, completion: { (storyDetailLayout,supplementaryView) in
                 
-                layout =  StoryLayoutWrapper(story: unwrappedStory, storyDetailLayout: storyDetailLayout)
+                layout =  StoryLayoutWrapper(story: unwrappedStory, storyDetailLayout: storyDetailLayout,supplementaryView:supplementaryView)
                 
                 let flatLayout = layout!.storyDetailLayout.flatMap({$0})
                 
@@ -165,7 +165,6 @@ class APIManager{
         })
         
         operation2.completionBlock = {
-            print("completed")
             
             OperationQueue.main.addOperation({
                 
@@ -196,4 +195,5 @@ class APIManager{
 struct StoryLayoutWrapper {
     let story:Story
     let storyDetailLayout : [[StoryDetailLayout]]
+    let supplementaryView: StoryDetailLayout?
 }

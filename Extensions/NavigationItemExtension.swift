@@ -92,6 +92,34 @@ extension UIViewController:SideMenuControllerDelegate,UIPopoverPresentationContr
         self.navigationController?.navigationBar.backgroundColor = .clear
         self.navigationController?.navigationBar.barTintColor = .clear
         self.navigationController?.navigationBar.isTranslucent = true
+    }
+    
+    func setClearNavigationBar(){
+        let image = UIImage.from(color: UIColor.black.withAlphaComponent(0.1))
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.backgroundColor = .clear
+        self.navigationController?.navigationBar.barTintColor = .clear
+        
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = .clear
+    }
+    
+    func setSolidNavigationBar(){
+
+        self.navigationController?.navigationBar.barTintColor = ThemeService.shared.theme.primarySectionColor
+        self.navigationController?.navigationBar.tintColor = .white
+        
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = nil
+        self.navigationController?.navigationBar.backgroundColor = nil
+        self.navigationController?.navigationBar.barTintColor = nil
+        
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = nil
         
         
     }
@@ -103,6 +131,7 @@ extension UIViewController:SideMenuControllerDelegate,UIPopoverPresentationContr
         self.navigationController?.navigationBar.barTintColor = ThemeService.shared.theme.primarySectionColor
         self.navigationController?.navigationBar.tintColor = .white
         self.navigationController?.navigationBar.isTranslucent = false
+        
        
     }
     

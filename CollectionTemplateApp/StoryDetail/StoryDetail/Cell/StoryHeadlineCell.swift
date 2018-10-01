@@ -1,156 +1,60 @@
 //
-//  StoryHeadlineCell.swift
-//  TheQuint-Staging
+//  StoryHeader.swift
+//  CollectionTemplateApp
 //
-//  Created by Pavan Gopal on 10/28/17.
-//  Copyright © 2017 Pavan Gopal. All rights reserved.
+//  Created by Pavan Gopal on 9/26/18.
+//  Copyright © 2018 Pavan Gopal. All rights reserved.
 //
 
+import Foundation
 import UIKit
 import Quintype
-import Kingfisher
 
-//class StoryHeadlineCell: BaseCollectionCell {
-//    var gradianView:UIView = {
-//        let view = UIView()
-//        return view
-//    }()
-//    
-//    var headlineTextView:UITextView = {
-//        let textView = UITextView()
-//        textView.font = FontService.shared.storyHeadlineFont
-//        textView.textColor = ThemeService.shared.theme.primaryTextColor
-//        textView.setBasicProperties()
-//        
-//        return textView
-//    }()
-//    
-//    var iconImageView:UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.contentMode = .scaleAspectFit
-//        imageView.backgroundColor = .red
-//        return imageView
-//    }()
-//    
-//    let imageView = UIImageView(frame: CGRect(x: 0, y: 4, width: 20, height: 20))
-//    
-//    public override func setUpViews(){
-//        
-//        //layout views
-//        contentView.backgroundColor = (margin.storyTemplet == .LiveBlog || margin.storyTemplet == .Video || margin.storyTemplet == .Explainer) ?  UIColor(hexString:"#333333") : .white
-//        
-//        headlineTextView.backgroundColor = .clear
-//        
-//        contentView.addSubview(headlineTextView)
-//        
-//        headlineTextView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: margin.Top, leftConstant: margin.Left, bottomConstant: margin.Bottom, rightConstant: padding, widthConstant: 0, heightConstant: 0)
-//        
-//        self.headlineTextView.addSubview(imageView)
-//    }
-//    
-//    override func configure(data: Any?) {
-//        
-//        guard let story = data as? Story else{
-//            return
-//        }
-//        
-//        imageView.image = nil
-//        
-//        var textColor = ThemeService.shared.theme.primarySectionColor
-//        
-//        
-////        if (self.margin.storyTemplet == .LiveBlog) || (self.margin.storyTemplet == .Video){
-////            textColor = .white
-////        }else if (self.margin.storyTemplet == .Explainer){
-////            textColor = ParentSectionColor.videos.primaryColor
-////        }else if self.margin.storySectionColor == ParentSectionColor.UNKNOWN{
-////            textColor = ThemeService.shared.theme.darkPurpleColor
-////        }
-//        
-//        
-//        
-//        var storyHeadline = story.headline
-//        
-//        if story.story_template == StoryTemplet.Review,let storyHeadlineD = storyHeadline{
-//            storyHeadline = "Review: " + storyHeadlineD
-//        }
-//        
-//        let disPlayString = Helper.getAttributtedString(for: storyHeadline, textOption: textOption.headline(color: textColor).textAttributtes)
-//        
-////        if (self.margin.storyTemplet == .Video){
-////            contentView.applyGradient(colors: [ThemeService.shared.theme.primarySectionColor,ThemeService.shared.theme.primarySectionColor,self.margin.storySectionColor.lightColor], locations: nil, startPoint: CGPoint(x: 0, y: 1), endPoint: CGPoint(x: 1, y: 1))
-////        }
-//        
-//        if (self.margin.storyTemplet == .LiveBlog && !(story.storyMetadata?.is_closed ?? false)){
-//            //if live blog is closed dont show the gif image 
-//            headlineTextView.attributedText = attachImageToTextView(attributtedString: disPlayString)
-//            imageView.isHidden = false
-//        }else if (self.margin.storyTemplet == .Photo){
-//            headlineTextView.attributedText = prefixPhotoIcon(attributtedString: disPlayString)
-//            imageView.isHidden = false
-//        }else{
-//            headlineTextView.attributedText = disPlayString
-//            imageView.isHidden = true
-//        }
-//  
-//    }
-//    
-//    private func attachImageToTextView(attributtedString:NSAttributedString?)->NSMutableAttributedString?{
-//        
-//        guard let unwrappedAttributtedString = attributtedString else {
-//            return nil
-//        }
-//        
-//        let displayString = NSMutableAttributedString(attributedString:unwrappedAttributtedString)
-//        let textAttachment = NSTextAttachment()
-//        
-//        textAttachment.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
-//        
-//        
-//        imageView.image?.withRenderingMode(.alwaysTemplate)
-//
-//        
-//        imageView.kf.setImage(with: Bundle.main.url(forResource: "liveblog", withExtension: "gif")!)
-//        
-//        let imageAttrachmentString =  NSAttributedString(attachment: textAttachment)
-//        let finalAttributtedStringWithImage = NSMutableAttributedString(attributedString:imageAttrachmentString)
-//        
-//        let staticString = " LIVE "
-//        
-//        let separatorAttributtes = Helper.getPlainAttributtedString(string: staticString, font: FontService.shared.primaryBoldFont, textColor: UIColor(hexString:"#23e8bc"))
-//        
-//        finalAttributtedStringWithImage.append(separatorAttributtes)
-//        finalAttributtedStringWithImage.append(displayString)
-//        
-//        return finalAttributtedStringWithImage
-//        
-//    }
-//    
-//    private func prefixPhotoIcon(attributtedString:NSAttributedString?)->NSMutableAttributedString?{
-//        
-//        guard let unwrappedAttributtedString = attributtedString else {
-//            return nil
-//        }
-//        
-//        let displayString = NSMutableAttributedString(attributedString:unwrappedAttributtedString)
-//        let textAttachment = NSTextAttachment()
-//        
-//        textAttachment.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
-//        
-//        imageView.image = AssetImage.PhotoWhite.image
-//        
-//        let imageAttrachmentString =  NSAttributedString(attachment: textAttachment)
-//        let finalAttributtedStringWithImage = NSMutableAttributedString(attributedString:imageAttrachmentString)
-//        
-//        let staticString = " "
-//        
-//        let separatorAttributtes = Helper.getPlainAttributtedString(string: staticString, font: FontService.shared.primaryBoldFont, textColor: UIColor(hexString:"#23e8bc"))
-//        
-//        finalAttributtedStringWithImage.append(separatorAttributtes)
-//        finalAttributtedStringWithImage.append(displayString)
-//        
-//        return finalAttributtedStringWithImage
-//        
-//    }
-//    
-//}
+class StoryHeadlineCell: BaseCollectionCell {
+    lazy var sectionStackView = SectionStackView(frame: .zero)
+    lazy var headlineSubHealineStackView = HeadlineSubHealineStackView(frame: .zero)
+    lazy var authorStackView = AuthorStackView(frame: .zero)
+    lazy var containerView = UIView(frame: .zero)
+    
+    var lineView:UIView = {
+        let view = UIView()
+        view.backgroundColor = ThemeService.shared.theme.defaultLightGreyColor
+        return view
+    }()
+    
+    override func setUpViews() {
+        contentView.backgroundColor = .white
+        contentView.addSubview(containerView)
+        containerView.addSubview(sectionStackView)
+        containerView.addSubview(headlineSubHealineStackView)
+        containerView.addSubview(authorStackView)
+//        containerView.addSubview(lineView)
+        
+        containerView.fillSuperview()
+        
+        sectionStackView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: nil, topConstant: 10, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 0)
+        
+        headlineSubHealineStackView.anchor(sectionStackView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 0)
+        
+        authorStackView.anchor(headlineSubHealineStackView.bottomAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 10, rightConstant: 10, widthConstant: 0, heightConstant: 0)
+
+//        lineView.anchor(nil, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 1)
+    }
+    
+    override func configure(data: Any?) {
+        
+        guard let story = data as? Story else{return}
+        let titleElementAttributtes = textOption.headline(color: ThemeService.shared.theme.primaryTextColor)
+        let titleElementAttributtedString = Helper.getAttributtedString(for: story.headline, textOption: titleElementAttributtes.textAttributtes)
+        let subtitleElementAttributtes = textOption.subHeadline(color: ThemeService.shared.theme.primaryTextColor)
+        let subtitleElementAttributtedString = Helper.getAttributtedString(for: story.subheadline, textOption: subtitleElementAttributtes.textAttributtes)
+        
+        headlineSubHealineStackView.configData(headline: titleElementAttributtedString, subheadline: subtitleElementAttributtedString)
+        
+        sectionStackView.sectionNameLabel.attributedText = NSAttributedString(string: story.sections.first?.display_name ?? "", attributes: [NSAttributedStringKey.font : FontService.shared.homeSectionFont,NSAttributedStringKey.foregroundColor:ThemeService.shared.theme.primaryTextColor])
+        
+        authorStackView.authorNameLabel.text = story.author_name
+        authorStackView.publishTimeLabel.text = story.published_at?.convertTimeStampToDate
+    }
+    
+}

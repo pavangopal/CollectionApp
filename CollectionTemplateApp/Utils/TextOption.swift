@@ -14,6 +14,7 @@ import DTFoundation
 public enum textOption {
     
     case headline(color:UIColor)
+    case subHeadline(color:UIColor)
     case titleElement(color:UIColor)
     
     case summaryElement(color:UIColor)
@@ -63,6 +64,10 @@ public enum textOption {
         case .headline(let color):
             
             return self.storyElementStyle(font: FontService.shared.storyHeadlineFont, color: color,textAlignment: CTTextAlignment.natural.rawValue)
+            
+        case .subHeadline(let color):
+            
+            return self.storyElementStyle(font: FontService.shared.homeSubHeadlineRegular, color: color,textAlignment: CTTextAlignment.natural.rawValue)
             
         case .titleElement(let color):
             return self.storyElementStyle(font: FontService.shared.storyTitleElementFont, color: color,textAlignment: CTTextAlignment.natural.rawValue)

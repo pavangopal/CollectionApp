@@ -9,12 +9,13 @@
 import Foundation
 import Quintype
 
-struct LayoutEngine{
+struct LayoutEngine {
     
     var layoutEngineArray:[[StoryDetailLayout]] = []
+    var supplementaryView:StoryDetailLayout? = StoryDetailLayout(layoutType: storyDetailLayoutType.StoryDetailHeaderImageCell)
     
     
-    public mutating func makeLayouts(`for`templet:StoryTemplet? = StoryTemplet.Default,story:Story,completion:@escaping (_ layouts:[[StoryDetailLayout]]) -> Void){
+    public mutating func makeLayouts(`for`templet:StoryTemplet? = StoryTemplet.Default,story:Story,completion:@escaping (_ layouts:[[StoryDetailLayout]],_ supplementaryView:StoryDetailLayout?) -> Void){
         
         switch templet ?? .Default{
             
@@ -35,7 +36,7 @@ struct LayoutEngine{
         }
         
         
-        completion(layoutEngineArray)
+        completion(layoutEngineArray,supplementaryView)
         
     }
     
@@ -150,12 +151,12 @@ struct LayoutEngine{
         // dynamic cells
         var didMoveFirstSummaryElementToTop = false
         
-        for (cardIndex,card) in story.cards.enumerated(){
+        for (_,card) in story.cards.enumerated(){
             var sectionArray:[StoryDetailLayout] = []
             
-            if cardIndex == 0{
-                sectionArray.append(StoryDetailLayout(layoutType: .StoryCardsSorterCell))
-            }
+//            if cardIndex == 0{
+//                sectionArray.append(StoryDetailLayout(layoutType: .StoryCardsSorterCell))
+//            }
             
             // only one card can be pinned
             if !didMoveFirstSummaryElementToTop && (card.metadata?.metaAttributes?.is_pinned ?? false){
@@ -349,7 +350,7 @@ struct LayoutEngine{
                     didMoveVideoElementToTop = true
                     
                     if let videoLayout =  self.moveFirstVideoElement(storyElement: storyElement){
-                        
+                        supplementaryView = nil
                         layoutEngineArray[0].insert(videoLayout, at: 0)
                         
                     }

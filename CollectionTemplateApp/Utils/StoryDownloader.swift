@@ -47,7 +47,7 @@ open class StoryDownloader{
     func calculateImageSize() -> CGSize{
         let imageInsets = UIEdgeInsetsMake(0, 15, 0, 15)
         let widthDimension2 = UIScreen.main.bounds.size.width - imageInsets.left - imageInsets.right
-        return CGSize.init(width: widthDimension2, height: widthDimension2 * imageAspectRatio)
+        return CGSize.init(width: widthDimension2, height: widthDimension2 * (16/9))
     }
     
     func calculateImageSize(metadata:ImageMetaData?) -> CGSize{

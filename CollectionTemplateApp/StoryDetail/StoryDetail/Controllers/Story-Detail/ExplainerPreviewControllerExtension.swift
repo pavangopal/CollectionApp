@@ -113,8 +113,8 @@ extension ExplainerPreviewController:UICollectionViewDataSourcePrefetching{
                     dataLoader.loadingCompleteHandler = updateCellClouse
                 }
             }else{
-                
-                let dataSource = StoryDetailDataSourceAndDelegate(layout: [self.layoutArray[indexPath.row]], story: self.story,controller:self)
+                let layoutWrapper:StoryLayoutWrapper = StoryLayoutWrapper(story: story, storyDetailLayout: [self.layoutArray[indexPath.row]], supplementaryView: nil)
+                let dataSource = StoryDetailDataSourceAndDelegate(layoutWrapper:layoutWrapper,controller:self)
                 let dataLoader = DataLoadOperation(dataSource)
                 
                 dataLoader.loadingCompleteHandler = updateCellClouse
@@ -142,8 +142,8 @@ extension ExplainerPreviewController:UICollectionViewDataSourcePrefetching{
             if let _ = loadingOperations[indexPath]{
                 return
             }
-            
-            let dataSource = StoryDetailDataSourceAndDelegate(layout: [self.layoutArray[indexPath.row]], story: self.story,controller:self)
+            let layoutWrapper:StoryLayoutWrapper = StoryLayoutWrapper(story: story, storyDetailLayout: [self.layoutArray[indexPath.row]], supplementaryView: nil)
+            let dataSource = StoryDetailDataSourceAndDelegate(layoutWrapper:layoutWrapper,controller:self)
             let dataLoader = DataLoadOperation(dataSource)
             
             loadingQueue.addOperation(dataLoader)

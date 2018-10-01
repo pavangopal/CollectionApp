@@ -10,21 +10,16 @@ import Foundation
 import Quintype
 import TwitterKit
 
-class StoryModifier{
+class StoryModifier {
     
     class func getDisplayText(storyDetailLayout:[[StoryDetailLayout]],story:Story){
         
-        let parentSectionColor = ThemeService.shared.theme.primarySectionColor
-        var primaryTextColor = ThemeService.shared.theme.primaryTextColor
-        
-//        if story.story_template == .Video{
-//            primaryTextColor = .white
-//        }
+        let primaryTextColor = ThemeService.shared.theme.primaryTextColor
         
         let sectionColor = ThemeService.shared.theme.primarySectionColor
         
-        for sectionLayout in storyDetailLayout{
-            for itemLayout in sectionLayout{
+        for sectionLayout in storyDetailLayout {
+            for itemLayout in sectionLayout {
                 
                 switch itemLayout.layoutType{
                     
@@ -135,6 +130,7 @@ class StoryModifier{
                     
                     
                 case .StorySummaryCell:
+                    
                     guard let storyElement = itemLayout.storyElement else{
                         continue
                     }
@@ -268,8 +264,6 @@ class StoryModifier{
         }
     }
     
-    
-    
     class func updateStoryTempletBasedOnMetaData(story:Story){
         if ((story.storyMetadata?.viewType == .CounterView) ) || ((story.storyMetadata?.viewType) == .View){
             story.story_template = .ViewCounterView
@@ -300,13 +294,6 @@ class StoryModifier{
                     if let dataArray = (cardStoryElement.tableData!.content as NSString).csvComponents as? Array<Array<String>>{
                         
                         cardStoryElement.tableData!.parsedData = dataArray
-//                        let firstItemRemoved = cardStoryElement.tableData!.parsedData.removeFirst()
-//
-//                        cardStoryElement.tableData!.parsedData = cardStoryElement.tableData!.parsedData.sorted(by: { (first, second) -> Bool in
-//                            return first.first!.compare(second.first!, options: [String.CompareOptions.numeric,String.CompareOptions.forcedOrdering]) == .orderedAscending
-//
-//                        })
-//                        cardStoryElement.tableData!.parsedData.insert(firstItemRemoved, at: 0)
                     }
                 }
                 
@@ -341,9 +328,6 @@ class StoryModifier{
                     let tweetId = tweet.tweetID
                     
                     if let tweetIndex = twitterElements.index(where: {$0.storyElement?.metadata?.tweet_id == tweetId}){
-                        
-//                        let viewModel = StoryViewModel()
-//                        viewModel.tweet = tweet
                         twitterElements[tweetIndex].tweet = tweet
                     }
                 }

@@ -50,7 +50,7 @@ class LinearGallerySliderCell: BaseCollectionCell {
             return
         }
         
-        imageView.loadImageFromUrl(url: storyViewModel.imageURl)
+        imageView.loadImageFromUrl(url: storyViewModel.heroImageURl)
         headlineLabel.attributedText = storyViewModel.headline
     }
     

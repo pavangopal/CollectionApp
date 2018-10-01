@@ -9,15 +9,35 @@
 import Foundation
 import Quintype
 
+protocol StoryViewModelling {
+    
+    var sectionName:NSAttributedString? {get set}
+    
+    var headline:NSAttributedString? {get set}
+    var subHeadline:NSAttributedString?{get set}
+    
+    var authorImageUrl:URL?{get set}
+    var timeStamp:NSAttributedString?{get set}
+    var authorName:NSAttributedString?{get set}
+    
+    var heroImageURl:URL?{get set}
+    var backgroundColor:UIColor?{get set}
+    
+    var reviewRating:Double?{get set}
+    var storyTemplate:StoryTemplet {get set}
+    
+    var preferredSize:CGSize {get set}
+    
+    init(story:Story,assocatedMetadata:AssociatedMetadata,cellType:HomeCellType)
+}
+
 enum ImageTextAlignment{
     case Vertical
     case Horizontal
     case Cover
 }
 
-let imageAspectRatio:CGFloat = 9/16
-
-class StoryViewModel {
+class StoryViewModel: StoryViewModelling {
     
     var sectionName:NSAttributedString?
     
@@ -28,18 +48,20 @@ class StoryViewModel {
     var timeStamp:NSAttributedString?
     var authorName:NSAttributedString?
     
-    var imageURl:URL?
+    var heroImageURl:URL?
     var backgroundColor:UIColor?
     
     var reviewRating:Double?
     var storyTemplate:StoryTemplet = StoryTemplet.Unknown
     
-    public private(set) var preferredSize:CGSize = .zero
+    public internal(set) var preferredSize:CGSize = .zero
     
-    init(story:Story,assocatedMetadata:AssociatedMetadata,cellType:HomeCellType,targetWidth:CGFloat) {
+    required init(story:Story,
+                  assocatedMetadata:AssociatedMetadata,
+                  cellType:HomeCellType) {
         
         generateStoryViewProperties(associatedMetaData: assocatedMetadata, story: story, cellType: cellType)
-        preferredSize =  HomeCellSizeCalculator.calculatedHeightForImageStoryListCardCell(storyViewModel: self, targetWidth: targetWidth, cellType: cellType)
+        preferredSize =  HomeCellSizeCalculator.calculatedHeightForImageStoryListCardCell(storyViewModel: self, targetWidth: CollectionLayoutEngine.targetWidth, cellType: cellType)
     }
     
 }
@@ -56,7 +78,7 @@ extension StoryViewModel {
         
         self.headline = getAttributtedString(text: story.headline, font: cellType.headlineFont,textColor: cellType.headlineColor)
         
-        self.imageURl = getImageUrl(story: story, cellType: cellType)
+        self.heroImageURl = getImageUrl(story: story, cellType: cellType)
         
         //based on associatedMetadata
         if associatedMetaData.show_author_name {
@@ -111,14 +133,13 @@ extension StoryViewModel {
     }
     
     private func getImageSize(cellType:HomeCellType)->CGSize{
-        let height:CGFloat = (cellType.imageWidth * imageAspectRatio)
+        let height:CGFloat = (cellType.imageWidth * cellType.aspectRatio)
         
         let imageSize = CGSize(width: cellType.imageWidth, height: height)
         return imageSize
     }
     
     private func generateAttributes(font:UIFont,textColor:UIColor) -> [NSAttributedStringKey:NSObject] {
-//        let textColor = getTextColor(theme: associatedMetaData.theme)
        
         return [NSAttributedStringKey.font: font,NSAttributedStringKey.foregroundColor: textColor]
     }

@@ -179,6 +179,7 @@ extension StoryDetailHeaderImageCell{
             
             heroImageView.transform = CGAffineTransform(scaleX: scalingFactor, y: scalingFactor)
         }
+        
         blurView.alpha = min(1, abs(yOffset)/bounds.height)//100
         heroImageCaptionContainerView.alpha = 1 - (abs(yOffset)/(bounds.height))
     }

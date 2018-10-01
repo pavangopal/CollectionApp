@@ -66,7 +66,7 @@ class ImageStoryListCell: BaseCollectionCell {
             return
         }
         
-        imageView.loadImageFromUrl(url: storyViewModel.imageURl)
+        imageView.loadImageFromUrl(url: storyViewModel.heroImageURl)
         
         stackView.config(storyViewModel: storyViewModel)
 

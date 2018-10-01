@@ -105,14 +105,14 @@ class CollectionLayoutEngine {
                 if index == 0{
                     let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
                     
-                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata!, cellType: HomeCellType.ImageTextCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata!, cellType: HomeCellType.ImageTextCell)
                     
                     sectionLayout.storyViewModel = storyViewModel
                     sectionLayoutArray.append(contentsOf: [sectionLayout])
                     
                 }else{
                     let sectionLayout =  SectionLayout(homeCellType: HomeCellType.ImageStoryListCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                    let storyViewModel = createStoryViewModel(story: stories[index], associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageStoryListCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    let storyViewModel = createStoryViewModel(story: stories[index], associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageStoryListCell)
                     sectionLayout.storyViewModel = storyViewModel
                     
                     sectionLayout.associatedMetaData = collectionItem.associatedMetadata
@@ -138,7 +138,7 @@ class CollectionLayoutEngine {
             let stories:[Story] = innerCollection.items.filter({$0.story != nil}).map({$0.story!})
             let carousalStories = Array<Story>(stories.prefix(3))
             
-            let storyViewModelArray = carousalStories.map({createStoryViewModel(story: $0, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageTextCell, targetWidth: CollectionLayoutEngine.targetWidth)})
+            let storyViewModelArray = carousalStories.map({createStoryViewModel(story: $0, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageTextCell)})
             
             let cellHeight = storyViewModelArray.map({$0.preferredSize}).max(by: {$1.height>$0.height})
             
@@ -151,7 +151,7 @@ class CollectionLayoutEngine {
             for index in carousalStories.count..<stories.count {
                 let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: stories[index],associatedMetadata:collectionItem.associatedMetadata)
                 
-                let storyViewModel = createStoryViewModel(story: stories[index], associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageTextCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                let storyViewModel = createStoryViewModel(story: stories[index], associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageTextCell)
                 sectionLayout.storyViewModel = storyViewModel
                 sectionLayoutArray.append(sectionLayout)
             }
@@ -176,7 +176,7 @@ class CollectionLayoutEngine {
             for (index,story) in stories.enumerated(){
                 if index == 0 {
                     let sectionLayout = SectionLayout(homeCellType: HomeCellType.FullImageSliderCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.FullImageSliderCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.FullImageSliderCell)
                     sectionLayout.storyViewModel = storyViewModel
                     sectionLayoutArray.append(contentsOf: [sectionLayout])
                     
@@ -184,7 +184,7 @@ class CollectionLayoutEngine {
                     
                     let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
 
-                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata!, cellType: HomeCellType.ImageTextCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata!, cellType: HomeCellType.ImageTextCell)
                     sectionLayout.storyViewModel = storyViewModel
                     sectionLayoutArray.append(contentsOf: [sectionLayout])
                     
@@ -210,7 +210,7 @@ class CollectionLayoutEngine {
             
             stories.forEach { (story) in
                 let sectionLayout =  SectionLayout(homeCellType: HomeCellType.ImageStoryListCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageStoryListCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageStoryListCell)
                 sectionLayout.storyViewModel = storyViewModel
                 sectionLayout.associatedMetaData = collectionItem.associatedMetadata
                 sectionLayoutArray.append(sectionLayout)
@@ -235,13 +235,13 @@ class CollectionLayoutEngine {
                 if index == stories.count - 1 && index > 2 {
                     //ImageTextDescriptionCell
                     let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageTextCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageTextCell)
                     sectionLayout.storyViewModel = storyViewModel
                     sectionLayoutArray.append(sectionLayout)
                 }else{
 
                     let sectionLayout =  SectionLayout(homeCellType: HomeCellType.ImageStoryListCardCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageStoryListCardCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageStoryListCardCell)
                     sectionLayout.storyViewModel = storyViewModel
                     
                     sectionLayout.associatedMetaData = collectionItem.associatedMetadata
@@ -270,7 +270,7 @@ class CollectionLayoutEngine {
             for (index,story) in stories.enumerated(){
                 if index == 0{
                     let sectionLayout = SectionLayout(homeCellType: HomeCellType.FullImageSliderCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.FullImageSliderCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.FullImageSliderCell)
                     sectionLayout.storyViewModel = storyViewModel
                     sectionLayoutArray.append(contentsOf: [sectionLayout])
                     
@@ -278,7 +278,7 @@ class CollectionLayoutEngine {
                     
                     let sectionLayout = SectionLayout(homeCellType: HomeCellType.ImageTextCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
 
-                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata!, cellType: HomeCellType.ImageTextCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata!, cellType: HomeCellType.ImageTextCell)
                     
                     sectionLayout.storyViewModel = storyViewModel
                     sectionLayoutArray.append(contentsOf: [sectionLayout])
@@ -287,13 +287,13 @@ class CollectionLayoutEngine {
                     
                     //TODO: needs to look like a card
                     let sectionLayout = SectionLayout(homeCellType: HomeCellType.StoryListCardCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.StoryListCardCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.StoryListCardCell)
                     sectionLayout.storyViewModel = storyViewModel
                     sectionLayoutArray.append(sectionLayout)
                     
                 }else{
                     let sectionLayout = SectionLayout(homeCellType: HomeCellType.StoryListCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.StoryListCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                    let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.StoryListCell)
                     sectionLayout.storyViewModel = storyViewModel
                     sectionLayoutArray.append(sectionLayout)
                 }
@@ -317,7 +317,7 @@ class CollectionLayoutEngine {
             
             let stories:[Story] = innerCollection.items.filter({$0.story != nil}).map({$0.story!})
             
-            let storyViewModelArray = stories.map({createStoryViewModel(story: $0, associatedMetadata: collectionItem.associatedMetadata, cellType: innerLayoutType, targetWidth: CollectionLayoutEngine.targetWidth)})
+            let storyViewModelArray = stories.map({createStoryViewModel(story: $0, associatedMetadata: collectionItem.associatedMetadata, cellType: innerLayoutType)})
             
 let cellHeight = storyViewModelArray.map({$0.preferredSize}).max(by: {$1.height>$0.height})
             let carouselModel = CarouselModel(layoutType: innerLayoutType, collectionName: innerCollection.name, estimatedInnerCellHeight: cellHeight?.height ?? 0, associatedMetaData: collectionItem.associatedMetadata,storyViewModel:storyViewModelArray)
@@ -342,7 +342,7 @@ let cellHeight = storyViewModelArray.map({$0.preferredSize}).max(by: {$1.height>
             }
             
             let stories:[Story] = innerCollection.items.filter({$0.story != nil}).map({$0.story!})
-            let storyViewModelArray = stories.map({createStoryViewModel(story: $0, associatedMetadata: collectionItem.associatedMetadata, cellType: innerLayoutType, targetWidth: CollectionLayoutEngine.targetWidth)})
+            let storyViewModelArray = stories.map({createStoryViewModel(story: $0, associatedMetadata: collectionItem.associatedMetadata, cellType: innerLayoutType)})
             
             let cellHeight = storyViewModelArray.map({$0.preferredSize}).max(by: {$1.height>$0.height})
 
@@ -395,7 +395,7 @@ let cellHeight = storyViewModelArray.map({$0.preferredSize}).max(by: {$1.height>
                     
                 }else{
                     if let sectionLayout = makeStoryCellLayout(for: HomeCellType.ImageStoryListCardCell, collectionItem: innerCollectinItem){
-                        let storyViewModel = createStoryViewModel(story: innerCollectinItem.story!, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageStoryListCardCell, targetWidth: CollectionLayoutEngine.targetWidth)
+                        let storyViewModel = createStoryViewModel(story: innerCollectinItem.story!, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageStoryListCardCell)
                         sectionLayout.storyViewModel = storyViewModel
                         sectionLayout.associatedMetaData = collectionItem.associatedMetadata
                         sectionedLayout.append(sectionLayout)
@@ -407,7 +407,7 @@ let cellHeight = storyViewModelArray.map({$0.preferredSize}).max(by: {$1.height>
             
         }else if let story = collectionItem.story {
             let sectionLayout = SectionLayout(homeCellType: HomeCellType.StoryListCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
-            let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.StoryListCell, targetWidth: CollectionLayoutEngine.targetWidth)
+            let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.StoryListCell)
             sectionLayout.storyViewModel = storyViewModel
             sectionedLayout.append(sectionLayout)
         }
@@ -454,7 +454,7 @@ let cellHeight = storyViewModelArray.map({$0.preferredSize}).max(by: {$1.height>
             
             let sectionLayout =  SectionLayout(homeCellType: HomeCellType.ImageStoryListCell, story: story,associatedMetadata:collectionItem.associatedMetadata)
 
-            let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageStoryListCell, targetWidth: CollectionLayoutEngine.targetWidth)
+            let storyViewModel = createStoryViewModel(story: story, associatedMetadata: collectionItem.associatedMetadata, cellType: HomeCellType.ImageStoryListCell)
             sectionLayout.storyViewModel = storyViewModel
             
             sectionLayout.associatedMetaData = collectionItem.associatedMetadata
@@ -470,7 +470,7 @@ let cellHeight = storyViewModelArray.map({$0.preferredSize}).max(by: {$1.height>
             
             let sectionLayout = SectionLayout(homeCellType: type, story: innerCollectionItemStory,associatedMetadata:collectionItem.associatedMetadata)
 
-            let storyViewModel = createStoryViewModel(story: innerCollectionItemStory, associatedMetadata: collectionItem.associatedMetadata ?? AssociatedMetadata(), cellType: type, targetWidth: CollectionLayoutEngine.targetWidth)
+            let storyViewModel = createStoryViewModel(story: innerCollectionItemStory, associatedMetadata: collectionItem.associatedMetadata ?? AssociatedMetadata(), cellType: type)
             sectionLayout.storyViewModel = storyViewModel
             return sectionLayout
             
@@ -483,9 +483,9 @@ let cellHeight = storyViewModelArray.map({$0.preferredSize}).max(by: {$1.height>
     func makeSection(section:[SectionLayout]){
         self.sectionLayout.append(section)
     }
-   private func createStoryViewModel(story: Story, associatedMetadata: AssociatedMetadata?, cellType: HomeCellType, targetWidth: CGFloat) -> StoryViewModel {
+   private func createStoryViewModel(story: Story, associatedMetadata: AssociatedMetadata?, cellType: HomeCellType) -> StoryViewModel {
         
-        return  StoryViewModel(story: story, assocatedMetadata: associatedMetadata ?? AssociatedMetadata(), cellType: cellType, targetWidth: targetWidth)
+        return  StoryViewModel(story: story, assocatedMetadata: associatedMetadata ?? AssociatedMetadata(), cellType: cellType)
     }
 }
 

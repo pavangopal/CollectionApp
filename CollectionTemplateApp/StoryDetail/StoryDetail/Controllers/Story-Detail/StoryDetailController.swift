@@ -32,14 +32,13 @@ class StoryDetailController: BaseController {
     
     var collectionView:UICollectionView = {
         let layout = StickyHeadersCollectionViewFlowLayout()
-
+        
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.interactive
         collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = UIColor(hexString: "#F4F4F4")
         
         collectionView.contentInsetAdjustmentBehavior = .never
-
         
         return collectionView
         
@@ -47,13 +46,14 @@ class StoryDetailController: BaseController {
     
     var refreshControl : UIRefreshControl = {
         let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .white
         refreshControl.layer.zPosition = 999
-        let attributes = [NSAttributedStringKey.foregroundColor : UIColor.gray]
+        let attributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
         
         refreshControl.attributedTitle = NSAttributedString(string: "Please wait ...", attributes: attributes)
         
         return refreshControl
-
+        
     }()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -71,14 +71,14 @@ class StoryDetailController: BaseController {
                 guard let unwrappedLayout = storyLayoutWrapper as? StoryLayoutWrapper else{
                     return
                 }
-
+                
                 self.story = unwrappedLayout.story
                 
                 self.storyDetailLayout = unwrappedLayout.storyDetailLayout
                 
                 GoogleAnalytics.Track(with: AnalyticKeys.category.storyDetailScreen, value:story?.headline ?? AnalyticKeys.events.unknown.rawValue)
                 
-                 MoengageAnalytics.TrackMoengageEvent(eventName: AnalyticKeys.MoengageEventName.storyViewed(story: self.story))
+                MoengageAnalytics.TrackMoengageEvent(eventName: AnalyticKeys.MoengageEventName.storyViewed(story: self.story))
                 
                 //store-StoryForViewCounterView
                 self.getViewCounterView(layoutObject:unwrappedLayout)
@@ -89,11 +89,14 @@ class StoryDetailController: BaseController {
                     self.margin = MarginD(templet: self.story?.story_template ?? .Default)
                 }
                 
+                adjustCollectionViewContentOffset(storyLayoutWrapper: unwrappedLayout)
+                
                 if self.refreshControl.isRefreshing{
                     self.refreshControl.endRefreshing()
                 }else{
                     self.createViews()
                 }
+                
                 
                 collectionView.backgroundColor = (self.margin.storyTemplet == .Video || self.margin.storyTemplet == .Explainer) ?  UIColor(hexString:"#333333") : UIColor(hexString:"F4F4F4")
                 
@@ -110,9 +113,9 @@ class StoryDetailController: BaseController {
                 }
                 
                 if story == nil{
-                 errorView.displayErrorMessage(message: message)
+                    errorView.displayErrorMessage(message: message)
                 }else{
-                 errorView.isHidden = true
+                    errorView.isHidden = true
                 }
                 
                 
@@ -148,7 +151,7 @@ class StoryDetailController: BaseController {
                     viewCounterViewStoryDict[.CounterView] = layoutObject
                     
                 case .Unknown:
-//                    viewCounterViewStoryDict[.Unknown] = layoutObject
+                    //                    viewCounterViewStoryDict[.Unknown] = layoutObject
                     break
                 }
             }else{
@@ -181,6 +184,8 @@ class StoryDetailController: BaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         self.view.backgroundColor = .white
         self.addStateHandlingView(in: self.view)
         
@@ -188,18 +193,16 @@ class StoryDetailController: BaseController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setupNavgationbar()
         if self.story == .none{
-//            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500), execute: {
-                APIManager.shared.getStoryBySlug(controller: self, storySlug: self.storySlug)
-                APIManager.shared.apiDelegate = self
-//            })
+            APIManager.shared.getStoryBySlug(controller: self, storySlug: self.storySlug)
+            APIManager.shared.apiDelegate = self
+            
         }
     }
     
     func setupRefreshControl(){
         if #available(iOS 10.0, *) {
-
+            
             self.collectionView.refreshControl = refreshControl
             
         } else {
@@ -235,9 +238,9 @@ class StoryDetailController: BaseController {
             if let externalStoryUrl = story?.storyMetadata?.reference_url{
                 if let externalUrl = URL(string: externalStoryUrl){
                     let externalUrlRequest = URLRequest(url: externalUrl)
-                        let externalStoryController = PopupController(customWebview: externalWebView(url:externalUrlRequest ))
+                    let externalStoryController = PopupController(customWebview: externalWebView(url:externalUrlRequest ))
                     self.addViewController(anyController: externalStoryController)
-                        return
+                    return
                     
                 }
             }
@@ -263,6 +266,19 @@ class StoryDetailController: BaseController {
         segmentContainerView.isUserInteractionEnabled = true
         
         self.setupRefreshControl()
+        
+    }
+    
+    private func adjustCollectionViewContentOffset(storyLayoutWrapper:StoryLayoutWrapper){
+        
+        if let _ = storyLayoutWrapper.supplementaryView {
+            collectionView.contentInsetAdjustmentBehavior = .never
+            
+            self.setClearNavigationBar()
+        }else{
+            collectionView.contentInsetAdjustmentBehavior = .automatic
+            self.setSolidNavigationBar()
+        }
     }
     
     func setupCollectionViewDataSource(storyLayoutWrapper:StoryLayoutWrapper){
@@ -273,7 +289,7 @@ class StoryDetailController: BaseController {
             
             if (viewCounterViewDataSource[(self.story?.storyMetadata?.viewType)!] == nil){
                 
-                viewCounterViewDataSource[(self.story?.storyMetadata?.viewType)!] = StoryDetailDataSourceAndDelegate(layout: storyLayoutWrapper.storyDetailLayout, story: storyLayoutWrapper.story, collectionview: collectionView, controller: self)
+                viewCounterViewDataSource[(self.story?.storyMetadata?.viewType)!] = StoryDetailDataSourceAndDelegate(layoutWrapper: storyLayoutWrapper, collectionview: collectionView, controller: self)
             }
             
             collectionView.delegate = viewCounterViewDataSource[(self.story?.storyMetadata?.viewType)!]
@@ -281,8 +297,7 @@ class StoryDetailController: BaseController {
             
             
         }else{
-            
-            dataSource = StoryDetailDataSourceAndDelegate(layout: storyLayoutWrapper.storyDetailLayout, story: storyLayoutWrapper.story, collectionview: collectionView, controller: self)
+            dataSource = StoryDetailDataSourceAndDelegate(layoutWrapper:storyLayoutWrapper, collectionview: collectionView, controller: self)
             collectionView.delegate = dataSource
             collectionView.dataSource = dataSource
             
@@ -290,7 +305,7 @@ class StoryDetailController: BaseController {
         
     }
     
-
+    
     
     func updateSegmenetViews(){
         segmentContainerView.tintColor = ThemeService.shared.theme.primarySectionColor
@@ -358,7 +373,18 @@ class StoryDetailController: BaseController {
         self.collectionView.collectionViewLayout.invalidateLayout()
         self.collectionView.reloadData()
     }
-
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setSolidNavigationBar()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+//        setClearNavigationBar()
+        setSolidNavigationBar()
+    }
+    
 }
 
 extension StoryDetailController:APIManagerDelegate{
@@ -367,32 +393,6 @@ extension StoryDetailController:APIManagerDelegate{
         print(error)
     }
     
-    func reloadWithLayout(layoutWrapper: StoryLayoutWrapper) {
-        
-        self.refreshControl.endRefreshing()
-        
-        guard let unwrappedLayout = layoutWrapper as? StoryLayoutWrapper else{
-            return
-        }
-        
-        self.createViews()
-        
-        self.story = unwrappedLayout.story
-        
-        
-        if (self.story?.sections.count ?? -1) > 0{
-            self.margin = MarginD(templet: self.story?.story_template ?? .Default)
-        }else{
-            self.margin = MarginD(templet: self.story?.story_template ?? .Default)
-        }
-        
-        collectionView.backgroundColor = UIColor(hexString:"F4F4F4")//(self.margin.storyTemplet == .Video || self.margin.storyTemplet == .Explainer) ?  UIColor(hexString:"#333333") : UIColor(hexString:"F4F4F4")
-        
-        self.updateSegmenetViews()
-        
-        self.setupCollectionViewDataSource(storyLayoutWrapper:unwrappedLayout)
-        
-    }
     
     func engagmentLoaded() {
         if self.collectionView.numberOfSections > 0{
@@ -406,8 +406,8 @@ extension StoryDetailController:APIManagerDelegate{
                     let socialShareCell = self.collectionView.cellForItem(at: IndexPath(item: socialShareIndex, section: 0)) as? SocialShareCell{
                     socialShareCell.configure(data: self.story)
                 }
-                    
-//                self.collectionView.reloadItems(at: [IndexPath(item: items - 1, section: 0)])
+                
+                //                self.collectionView.reloadItems(at: [IndexPath(item: items - 1, section: 0)])
             }
         }
     }

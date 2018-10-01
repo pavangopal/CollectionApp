@@ -10,6 +10,7 @@ import Foundation
 import Quintype
 import DTCoreText
 import TwitterKit
+
 public enum storyDetailLayoutType : String{
     
     case StoryDetailHeaderImageCell = "StoryDetailHeaderImageCell"
@@ -48,17 +49,17 @@ public enum storyDetailLayoutType : String{
     
     case BrightCoveCell = "BrightCoveCell"
     case CommentCell = "CommentCell"
+
 }
 
 
-class StoryDetailLayout{
+class StoryDetailLayout {
     
     var layoutType:storyDetailLayoutType
-    var storyElement:CardStoryElement?
     
+    var storyElement:CardStoryElement?
     var card:Card?
     
-//    var storyViewModel: StoryViewModel?
     var isPinned:Bool = false
     var tweet:TWTRTweet?
     
@@ -78,7 +79,3 @@ class StoryDetailLayout{
         self.card = card
     }
 }
-
-//class StoryViewModel{
-//    var tweet: TWTRTweet?
-//}

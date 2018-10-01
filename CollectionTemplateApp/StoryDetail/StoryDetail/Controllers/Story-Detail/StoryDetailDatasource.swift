@@ -23,6 +23,8 @@ class StoryDetailDataSourceAndDelegate:NSObject,UICollectionViewDataSource,UICol
     weak var controller:BaseController!
     var layout : [[StoryDetailLayout]] = []
     
+    var supplimentaryView:StoryDetailLayout?
+    
     //caching variables
     var advCounter:Int = 0
     var advReuseableIdentifiers:[String] = []
@@ -53,15 +55,20 @@ class StoryDetailDataSourceAndDelegate:NSObject,UICollectionViewDataSource,UICol
     
     var margin: MarginD! = MarginD(templet: StoryTemplet.Default)
     
-    required init (layout:[[StoryDetailLayout]],story:Story,collectionview:UICollectionView,controller:BaseController,sizingCell:[String:BaseCollectionCell]? = nil){
+    required init (layoutWrapper:StoryLayoutWrapper,
+                   collectionview:UICollectionView,
+                   controller:BaseController,
+                   sizingCell:[String:BaseCollectionCell]? = nil){
+        
         super.init()
         
         
         self.heightCache = [:]
-        self.story = story
+        self.story = layoutWrapper.story
         self.collectionView = collectionview
         self.controller = controller
-        self.layout = layout
+        self.layout = layoutWrapper.storyDetailLayout
+        self.supplimentaryView = layoutWrapper.supplementaryView
         
         if let sizingCells = sizingCell{
             self.sizingCells = sizingCells
@@ -70,16 +77,15 @@ class StoryDetailDataSourceAndDelegate:NSObject,UICollectionViewDataSource,UICol
         }
         
         //for Liveblog
-        self.selectedOrder = (story.storyMetadata?.is_closed ?? false) ? SortingOrder.Old : SortingOrder.New
+        self.selectedOrder = (story?.storyMetadata?.is_closed ?? false) ? SortingOrder.Old : SortingOrder.New
         
     }
     
-    required init(layout:[[StoryDetailLayout]],story:Story,controller:BaseController) {
-//        self.margin = margin
-        self.story = story
+    required init(layoutWrapper:StoryLayoutWrapper,controller:BaseController) {
+        self.story = layoutWrapper.story
         
-        self.layout = layout
-        
+        self.layout = layoutWrapper.storyDetailLayout
+        self.supplimentaryView = layoutWrapper.supplementaryView
         self.controller = controller
     }
     
@@ -87,8 +93,8 @@ class StoryDetailDataSourceAndDelegate:NSObject,UICollectionViewDataSource,UICol
         //TODO: should be removed
         collectionView.register(BaseCollectionCell.self, forCellWithReuseIdentifier: String(describing:BaseCollectionCell.self))
         
-        collectionView.register(StoryDetailHeaderImageCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: StoryDetailHeaderImageCell.reuseIdentifier)
-        
+        registerSuplimentaryViews()
+       
         let storyTypeArray = Set(self.layout.flatMap({$0}).map({$0.layoutType}))
         
         var cells:[BaseCollectionCell.Type] = []
@@ -107,6 +113,14 @@ class StoryDetailDataSourceAndDelegate:NSObject,UICollectionViewDataSource,UICol
         }
         
         collectionView.register(cellClass: TableStoryElement.self)
+    }
+    
+    private func registerSuplimentaryViews(){
+        collectionView.register(StoryDetailHeaderImageCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: StoryDetailHeaderImageCell.reuseIdentifier)
+        collectionView.register(YoutubeCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: YoutubeCell.reuseIdentifier)
+        collectionView.register(BrightCoveCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: BrightCoveCell.reuseIdentifier)
+        collectionView.register(BitGravityCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: BitGravityCell.reuseIdentifier)
+        
     }
     
     //MARK: CollectionView's DataSource Methods
@@ -764,30 +778,53 @@ class StoryDetailDataSourceAndDelegate:NSObject,UICollectionViewDataSource,UICol
 extension StoryDetailDataSourceAndDelegate {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        // Dequeue Reusable Supplementary View
         
-        if let storyHeaderImageCell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: StoryDetailHeaderImageCell.reuseIdentifier, for: indexPath) as? StoryDetailHeaderImageCell {
-            // Configure Supplementary View
-            
-            storyHeaderImageCell.delegate = self
-            
-            storyHeaderImageCell.configure(data:self.story)
-            
-            storyHeaderImageCell.updateParallaxOffet(collectionViewBounds: collectionView.bounds)
-            
-            return storyHeaderImageCell
+        // Dequeue Reusable Supplementary View
+        guard let layout = supplimentaryView else{
+            fatalError("Unable to Dequeue Reusable Supplementary View")
         }
         
-        fatalError("Unable to Dequeue Reusable Supplementary View")
+        var cell : BaseCollectionCell?
+        
+        let cellType = layout.layoutType
+
+        switch cellType{
+            
+        default:
+            
+            if let storyHeaderImageCell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: StoryDetailHeaderImageCell.reuseIdentifier, for: indexPath) as? StoryDetailHeaderImageCell {
+                // Configure Supplementary View
+                
+                storyHeaderImageCell.delegate = self
+                
+                storyHeaderImageCell.configure(data:self.story)
+                
+                storyHeaderImageCell.updateParallaxOffet(collectionViewBounds: collectionView.bounds)
+                
+                cell = storyHeaderImageCell
+            }
+            
+        }
+        
+        return cell!
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        
-        if section == 0{
-            return CGSize(width: collectionView.bounds.width, height: 250)
+        guard let layout = supplimentaryView, section == 0 else{
+            return .zero
         }
         
-        return .zero
+        let cellType = layout.layoutType
+        
+        switch cellType{
+        case .StoryDetailHeaderImageCell:
+            return CGSize(width: collectionView.bounds.width, height: 250)
+        
+        default:
+            return .zero
+            
+        }
         
     }
 }

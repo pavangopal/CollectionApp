@@ -9,7 +9,7 @@
 import UIKit
 import Quintype
 
-class BaseController: UIViewController ,DataLoading,ErrorViewDelegate{
+class BaseController: UIViewController , DataLoading,ErrorViewDelegate{
         
     let loadingView = LoadingView()
     let errorView = ErrorView()
@@ -39,7 +39,8 @@ class BaseController: UIViewController ,DataLoading,ErrorViewDelegate{
         self.view.addSubview(loadingView)
         self.view.addSubview(errorView)
         loadingView.fillSuperview()
-        errorView.fillSuperview()
+        errorView.anchor(nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+//        errorView.fillSuperview()
         hideViewsInitially()
         errorView.delegate = self
     }
@@ -93,7 +94,6 @@ extension DataLoading where Self:UIViewController {
             loadingView.activityIndicator.startAnimating()
             self.view.bringSubview(toFront: loadingView)
             
-            
         case .error(_):
             
             loadingView.isHidden = true
@@ -103,13 +103,8 @@ extension DataLoading where Self:UIViewController {
             
         case .loaded:
             
-//            loadingView.activityIndicator.stopAnimating()
-            
             loadingView.isHidden = true
             errorView.isHidden = true
-            
-//            self.view.bringSubview(toFront: errorView)
-//            self.view.bringSubview(toFront: loadingView)
             
         default:
             break

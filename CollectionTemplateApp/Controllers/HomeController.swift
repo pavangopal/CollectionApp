@@ -16,16 +16,16 @@ final class HomeController: UIViewController {
         case Header = "headerCollectionCell"
         case Default = "defaultStoryCell"
         case CollectionTitleCell = "collectionTitleCell"
-        case ImageTextCell = "ImageTextCell"
-        case FourColumnGridCell = "FourColumnGridCell"
-        case StoryListCell = "StoryListCell"
-        case ImageStoryListCardCell = "ImageStoryListCardCell"
-        case CarousalContainerCell = "CarousalContainerCell"
-        case FullImageSliderCell = "FullImageSliderCell"
-        case LinerGalleryCarousalContainer = "LinerGalleryCarousalContainer"
-        case ImageStoryListCell = "ImageStoryListCell"
-        case ImageTextDescriptionCell = "ImageTextDescriptionCell"
-        case StoryListCardCell = "StoryListCardCell"
+        case imageTextCell = "ImageTextCell"
+        case fourColumnGridCell = "FourColumnGridCell"
+        case storyListCell = "StoryListCell"
+        case imageStoryListCardCell = "ImageStoryListCardCell"
+        case carousalContainerCell = "CarousalContainerCell"
+        case fullImageSliderCell = "FullImageSliderCell"
+        case linerGalleryCarousalContainer = "LinerGalleryCarousalContainer"
+        case imageStoryListCell = "ImageStoryListCell"
+        case imageTextDescriptionCell = "ImageTextDescriptionCell"
+        case storyListCardCell = "StoryListCardCell"
     }
     
     lazy var collectionView:UICollectionView = {
@@ -79,16 +79,16 @@ final class HomeController: UIViewController {
         
         collectionView.register(CollectionTitleCell.self, forCellWithReuseIdentifier: CellType.CollectionTitleCell.rawValue)
         
-        collectionView.register(ImageTextCell.self, forCellWithReuseIdentifier: CellType.ImageTextCell.rawValue)
-        collectionView.register(FourColumnGridCell.self, forCellWithReuseIdentifier: CellType.FourColumnGridCell.rawValue)
-        collectionView.register(StoryListCell.self, forCellWithReuseIdentifier: CellType.StoryListCell.rawValue)
-        collectionView.register(ImageStoryListCardCell.self, forCellWithReuseIdentifier: CellType.ImageStoryListCardCell.rawValue)
-        collectionView.register(CarousalContainerCell.self, forCellWithReuseIdentifier: CellType.CarousalContainerCell.rawValue)
-        collectionView.register(FullImageSliderCell.self, forCellWithReuseIdentifier: CellType.FullImageSliderCell.rawValue)
-        collectionView.register(LinerGalleryCarousalContainer.self, forCellWithReuseIdentifier: CellType.LinerGalleryCarousalContainer.rawValue)
-        collectionView.register(ImageStoryListCell.self, forCellWithReuseIdentifier: CellType.ImageStoryListCell.rawValue)
-        collectionView.register(ImageTextDescriptionCell.self, forCellWithReuseIdentifier: CellType.ImageTextDescriptionCell.rawValue)
-        collectionView.register(StoryListCardCell.self, forCellWithReuseIdentifier: CellType.StoryListCardCell.rawValue)
+        collectionView.register(ImageTextCell.self, forCellWithReuseIdentifier: CellType.imageTextCell.rawValue)
+        collectionView.register(FourColumnGridCell.self, forCellWithReuseIdentifier: CellType.fourColumnGridCell.rawValue)
+        collectionView.register(StoryListCell.self, forCellWithReuseIdentifier: CellType.storyListCell.rawValue)
+        collectionView.register(ImageStoryListCardCell.self, forCellWithReuseIdentifier: CellType.imageStoryListCardCell.rawValue)
+        collectionView.register(CarousalContainerCell.self, forCellWithReuseIdentifier: CellType.carousalContainerCell.rawValue)
+        collectionView.register(FullImageSliderCell.self, forCellWithReuseIdentifier: CellType.fullImageSliderCell.rawValue)
+        collectionView.register(LinerGalleryCarousalContainer.self, forCellWithReuseIdentifier: CellType.linerGalleryCarousalContainer.rawValue)
+        collectionView.register(ImageStoryListCell.self, forCellWithReuseIdentifier: CellType.imageStoryListCell.rawValue)
+        collectionView.register(ImageTextDescriptionCell.self, forCellWithReuseIdentifier: CellType.imageTextDescriptionCell.rawValue)
+        collectionView.register(StoryListCardCell.self, forCellWithReuseIdentifier: CellType.storyListCardCell.rawValue)
         
         
         
@@ -108,96 +108,38 @@ extension HomeController: UICollectionViewDataSource,UICollectionViewDelegate,UI
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell: BaseCollectionCell?
+        let cell: BaseCollectionCell
         let layout = self.sectionLayoutArray[indexPath.section][indexPath.row]
+        
+        //Based on What data is passed to Config function
+        //TODO: change different types of data to type Any
         
         switch layout.homeCellType {
             
-        case .CollectionTitleCell:
+        case .collectionTitleCell:
 
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellType.CollectionTitleCell.rawValue, for: indexPath) as? BaseCollectionCell
-            cell?.configure(data: layout.data,associatedMetaData:layout.associatedMetaData)
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellType.CollectionTitleCell.rawValue, for: indexPath) as! BaseCollectionCell
+            cell.configure(data: layout.data,associatedMetaData:layout.associatedMetaData)
 
+        case .carousalContainerCell,.linerGalleryCarousalContainer:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as! BaseCollectionCell
             
-        case .ImageTextCell:
-            let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? ImageTextCell
+            cell.configure(data: layout.carouselModel,associatedMetaData:layout.associatedMetaData)
             
-            imageTextCell?.configure(data: layout.storyViewModel,associatedMetaData:layout.associatedMetaData)
+        case .fourColumnGridCell,.imageTextDescriptionCell:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as! BaseCollectionCell
             
-            cell = imageTextCell
-            
-        case .FourColumnGridCell:
-            let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? FourColumnGridCell// as? ImageTextCell
-            
-            imageTextCell?.configure(data: layout.story,associatedMetaData:layout.associatedMetaData)
-            
-            cell = imageTextCell
-            
-        case .StoryListCell:
-            let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? StoryListCell// as? ImageTextCell
-            
-            imageTextCell?.configure(data: layout.storyViewModel,associatedMetaData:layout.associatedMetaData)
-            
-            cell = imageTextCell
-            
-        case .ImageStoryListCardCell:
-            let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? ImageStoryListCardCell// as? ImageTextCell
-            
-            imageTextCell?.configure(data: layout.storyViewModel,associatedMetaData:layout.associatedMetaData)
-            
-            cell = imageTextCell
-            
-        case .CarousalContainerCell:
-            let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? CarousalContainerCell
-            
-            imageTextCell?.configure(data: layout.carouselModel,associatedMetaData:layout.associatedMetaData)
-            
-            cell = imageTextCell
-            
-        case .FullImageSliderCell:
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.FullImageSliderCell.rawValue, for: indexPath) as? FullImageSliderCell
-            
-            cell?.configure(data: layout.storyViewModel,associatedMetaData:layout.associatedMetaData)
-            
-            return cell!
-            
-        case .LinerGalleryCarousalContainer:
-            let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? LinerGalleryCarousalContainer
-            
-            imageTextCell?.configure(data: layout.carouselModel,associatedMetaData:layout.associatedMetaData)
-            
-            cell = imageTextCell
-            
-        case .ImageStoryListCell:
-            
-            let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? ImageStoryListCell
-            
-            imageTextCell?.configure(data: layout.storyViewModel,associatedMetaData:layout.associatedMetaData)
-            cell = imageTextCell
-            
-        case .ImageTextDescriptionCell:
-            let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? ImageTextDescriptionCell
-            
-            imageTextCell?.configure(data: layout.story,associatedMetaData:layout.associatedMetaData)
-            cell = imageTextCell
-            
-        case .StoryListCardCell:
-            let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? StoryListCardCell
-            
-            imageTextCell?.configure(data: layout.storyViewModel,associatedMetaData:layout.associatedMetaData)
-            cell = imageTextCell
+            cell.configure(data: layout.story,associatedMetaData:layout.associatedMetaData)
             
         default:
             
-            let imageTextCell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as? ImageTextCell// as? ImageTextCell
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as! BaseCollectionCell
             
-            imageTextCell?.configure(data: layout.storyViewModel,associatedMetaData:layout.associatedMetaData)
+            cell.configure(data: layout.storyViewModel,associatedMetaData:layout.associatedMetaData)
             
-            cell = imageTextCell
         }
         
-        return cell!
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -208,19 +150,14 @@ extension HomeController: UICollectionViewDataSource,UICollectionViewDelegate,UI
         
         switch layout.homeCellType{
             
-        case .CollectionTitleCell:
+        case .collectionTitleCell:
             return CGSize(width: width, height: 50)
             
-            
-        case .FourColumnGridCell:
+        case .fourColumnGridCell:
             return CGSize(width: width, height: 300)
             
-        case .CarousalContainerCell:
+        case .carousalContainerCell,.linerGalleryCarousalContainer:
             let size = CGSize(width: targetSize.width, height: (layout.carouselModel?.estimatedInnerCellHeight ?? 0) + CGFloat(20))
-            return size
-            
-        case .LinerGalleryCarousalContainer:
-            let size = CGSize(width: targetSize.width+30, height: (layout.carouselModel?.estimatedInnerCellHeight ?? 0) + CGFloat(20))
             return size
             
         default:

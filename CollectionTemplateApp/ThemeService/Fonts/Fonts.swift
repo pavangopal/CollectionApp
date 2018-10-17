@@ -46,6 +46,7 @@ public protocol Fonts{
     var errorMessageFont: UIFont{get}
     
     var sponsoredTextFont: UIFont{get}
+    var tagFont:UIFont {get}
     
 }
 
@@ -403,6 +404,12 @@ extension Fonts{
     var homeSectionFont:UIFont{
         get {
             return self.getCorrectedFont(fontName: FontFamilyName.LatoRegular.rawValue, size: 14.0)
+        }
+    }
+    
+    var tagFont:UIFont{
+        get {
+            return self.getCorrectedFont(fontName: FontFamilyName.MerriweatherRegular.rawValue, size: 12.0)
         }
     }
 }

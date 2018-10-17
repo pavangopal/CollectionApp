@@ -83,11 +83,6 @@ class StoryDetailController: BaseController {
                 //store-StoryForViewCounterView
                 self.getViewCounterView(layoutObject:unwrappedLayout)
                 
-                if (self.story?.sections.count ?? -1) > 0{
-                    self.margin = MarginD(templet: self.story?.story_template ?? .Default)
-                }else{
-                    self.margin = MarginD(templet: self.story?.story_template ?? .Default)
-                }
                 
                 adjustCollectionViewContentOffset(storyLayoutWrapper: unwrappedLayout)
                 
@@ -97,8 +92,6 @@ class StoryDetailController: BaseController {
                     self.createViews()
                 }
                 
-                
-                collectionView.backgroundColor = (self.margin.storyTemplet == .Video || self.margin.storyTemplet == .Explainer) ?  UIColor(hexString:"#333333") : UIColor(hexString:"F4F4F4")
                 
                 self.updateSegmenetViews()
                 
@@ -173,7 +166,6 @@ class StoryDetailController: BaseController {
     var dataSource : StoryDetailDataSourceAndDelegate?
     
     var viewCounterViewDataSource :[ViewConterViewType:StoryDetailDataSourceAndDelegate] = [:]
-    var margin:MarginD = MarginD(templet: .Default)
     var storyDetailLayout : [[StoryDetailLayout]] = []
     
     convenience init(slug:String) {
@@ -257,7 +249,7 @@ class StoryDetailController: BaseController {
         segmentContainerViewHeightAnchor?.priority = UILayoutPriority.defaultHigh
         segmentContainerViewHeightAnchor?.isActive = true
         
-        segmentControl.anchor(nil, left: segmentContainerView.leftAnchor, bottom: nil , right: segmentContainerView.rightAnchor, topConstant: self.margin.Top, leftConstant: self.margin.Left, bottomConstant: 0, rightConstant: self.margin.Right, widthConstant: 0, heightConstant: 30)
+        segmentControl.anchor(nil, left: segmentContainerView.leftAnchor, bottom: nil , right: segmentContainerView.rightAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 30)
         segmentControl.anchorCenterYToSuperview()
         
         collectionView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
@@ -273,7 +265,6 @@ class StoryDetailController: BaseController {
         
         if let _ = storyLayoutWrapper.supplementaryView {
             collectionView.contentInsetAdjustmentBehavior = .never
-            
             self.setClearNavigationBar()
         }else{
             collectionView.contentInsetAdjustmentBehavior = .automatic
@@ -373,26 +364,24 @@ class StoryDetailController: BaseController {
         self.collectionView.collectionViewLayout.invalidateLayout()
         self.collectionView.reloadData()
     }
-    
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setSolidNavigationBar()
     }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-//        setClearNavigationBar()
         setSolidNavigationBar()
     }
     
 }
 
-extension StoryDetailController:APIManagerDelegate{
+extension StoryDetailController: APIManagerDelegate {
     
     func didFailWithError(error: String) {
         print(error)
     }
-    
     
     func engagmentLoaded() {
         if self.collectionView.numberOfSections > 0{

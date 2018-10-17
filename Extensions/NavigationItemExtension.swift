@@ -115,7 +115,6 @@ extension UIViewController:SideMenuControllerDelegate,UIPopoverPresentationContr
         self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = nil
         self.navigationController?.navigationBar.backgroundColor = nil
-        self.navigationController?.navigationBar.barTintColor = nil
         
         self.navigationController?.navigationBar.tintColor = .white
         self.navigationController?.navigationBar.isTranslucent = true
@@ -130,7 +129,7 @@ extension UIViewController:SideMenuControllerDelegate,UIPopoverPresentationContr
         self.navigationItem.setRightBarButtonItems([rightMenuButtonItem,rightSearchBarButtonItem], animated: true)
         self.navigationController?.navigationBar.barTintColor = ThemeService.shared.theme.primarySectionColor
         self.navigationController?.navigationBar.tintColor = .white
-        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.isTranslucent = true
         
        
     }

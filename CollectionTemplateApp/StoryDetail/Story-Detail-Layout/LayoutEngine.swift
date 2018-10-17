@@ -134,8 +134,8 @@ struct LayoutEngine {
     
     private mutating func makeLayoutForLiveBlog(story:Story){
         
-        let topconstantCellArray:[storyDetailLayoutType] = (story.story_template?.staticCells[.Top])!
-        let bottomStaticCellArray:[storyDetailLayoutType] = (story.story_template?.staticCells[.Bottom])!
+        let topconstantCellArray:[storyDetailLayoutType] = (story.story_template?.getTopStatiCells(story: story))!
+        let bottomStaticCellArray:[storyDetailLayoutType] = (story.story_template?.getBottomStatiCells(story: story))!
         
         //Initial Top static cells
         var layoutArray:[StoryDetailLayout] = []
@@ -222,8 +222,8 @@ struct LayoutEngine {
     
     private mutating func makeLayoutForDefaultTemplet(story:Story){
         
-        let topconstantCellArray:[storyDetailLayoutType] = (story.story_template?.staticCells[.Top])!
-        let bottomStaticCellArray:[storyDetailLayoutType] = (story.story_template?.staticCells[.Bottom])!
+        let topconstantCellArray:[storyDetailLayoutType] = (story.story_template?.getTopStatiCells(story: story))!
+        let bottomStaticCellArray:[storyDetailLayoutType] = (story.story_template?.getBottomStatiCells(story: story))!
         
         var layoutArray:[StoryDetailLayout] = []
         
@@ -265,7 +265,8 @@ struct LayoutEngine {
     private mutating func makeLayoutForExplainerSection(story:Story){
         
         let topconstantCellArray:[storyDetailLayoutType] = [.ExplainerHeaderImageCell,.StoryHeadlineCell]//,.AuthorElementCell,.SocialShareCell]
-        let bottomStaticCellArray:[storyDetailLayoutType] = (story.story_template?.staticCells[.Bottom])!
+        
+        let bottomStaticCellArray:[storyDetailLayoutType] = (story.story_template?.getBottomStatiCells(story: story))!
         
         var layoutArray:[StoryDetailLayout] = []
         
@@ -319,8 +320,8 @@ struct LayoutEngine {
     
     private mutating func makeLayoutsForVideoTemplet(story:Story){
         
-        let topconstantCellArray:[storyDetailLayoutType] = (story.story_template?.staticCells[.Top])!
-        let bottomStaticCellArray:[storyDetailLayoutType] = (story.story_template?.staticCells[.Bottom])!
+        let topconstantCellArray:[storyDetailLayoutType] = (story.story_template?.getTopStatiCells(story: story))!
+        let bottomStaticCellArray:[storyDetailLayoutType] = (story.story_template?.getBottomStatiCells(story: story))!
         
         
         //Initial Top static cells
@@ -574,29 +575,35 @@ struct LayoutEngine {
 
 extension StoryTemplet{
     
-    fileprivate var staticCells:[StaticCellPosition:[storyDetailLayoutType]]{
+    func getTopStatiCells(story:Story) -> [storyDetailLayoutType] {
         
         switch self {
             
         case .LiveBlog:
             
-            return [StaticCellPosition.Top:StaticCells.topStoryDetailsCells,StaticCellPosition.Bottom:StaticCells.bottomStoryDetailsCells]
+            return StaticCells.topStoryDetailsCells
             
         case .Review:
-            return [StaticCellPosition.Top:[.StoryHeadlineCell,.RatingCell],StaticCellPosition.Bottom:StaticCells.bottomStoryDetailsCells]
+            return [.StoryHeadlineCell,.RatingCell]
+            
         case .Video:
             
-            return [StaticCellPosition.Top:[.StoryHeadlineCell],StaticCellPosition.Bottom:StaticCells.bottomStoryDetailsCells]
+            return [.StoryHeadlineCell]
             
         case .Default:
             
-            return [StaticCellPosition.Top:StaticCells.topStoryDetailsCells,StaticCellPosition.Bottom:StaticCells.bottomStoryDetailsCells]
+            return StaticCells.topStoryDetailsCells
             
         default:
-            return [StaticCellPosition.Top:StaticCells.topStoryDetailsCells,StaticCellPosition.Bottom:StaticCells.bottomStoryDetailsCells]
+            return StaticCells.topStoryDetailsCells
             
         }
     }
+    
+    func getBottomStatiCells(story:Story) -> [storyDetailLayoutType] {
+        return StaticCells.getBottomStaticCells(story: story)
+    }
+    
 }
 
 enum StaticCellPosition{
@@ -604,10 +611,22 @@ enum StaticCellPosition{
     case Bottom
 }
 
-public struct StaticCells{
+public struct StaticCells {
     
-    static var topStoryDetailsCells:[storyDetailLayoutType] = [.StoryHeadlineCell]//,.AuthorElementCell]//,.SocialShareCell
-    static var bottomStoryDetailsCells:[storyDetailLayoutType] = [.CommentCell]
+    static var topStoryDetailsCells:[storyDetailLayoutType] = [.StoryHeadlineCell]
+    static var bottomStoryDetailsCells:[storyDetailLayoutType] = [.StoryDetailsTagElementCell,.CommentCell]
+    
+    static func getBottomStaticCells(story:Story) -> [storyDetailLayoutType] {
+        if story.tags.count == 0{
+         return [.CommentCell]
+        }else{
+            return [.StoryDetailsTagElementCell,.CommentCell]
+        }
+    }
     
 }
+
+
+
+
 

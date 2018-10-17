@@ -10,35 +10,65 @@ import Foundation
 
 enum HomeCellType:String{
     
-    case CollectionTitleCell = "CollectionTitleCell"
-    case DefaultCell = "defaultStoryCell"
-    case EmptyCell = "EmptyCell"
-    case DefaultCollectionCell = "DefaultCollectionCell"
-    case ImageTextCell = "ImageTextCell"
-    case FourColumnGridCell = "FourColumnGridCell"
-    case FullImageSliderCell = "FullImageSliderCell"
-    case StoryListCell = "StoryListCell"
-    case ImageStoryListCardCell = "ImageStoryListCardCell"
-    case CarousalContainerCell = "CarousalContainerCell"
-    case SimpleSliderCell = "SimpleSliderCell"
-    case LinearGallerySliderCell = "LinearGallerySliderCell"
-    case LinerGalleryCarousalContainer = "LinerGalleryCarousalContainer"
-    case ImageStoryListCell = "ImageStoryListCell"
-    case ImageTextDescriptionCell = "ImageTextDescriptionCell"
-    case StoryListCardCell = "StoryListCardCell"
+    case collectionTitleCell = "CollectionTitleCell"
+    case imageTextCell = "ImageTextCell"
+    case fourColumnGridCell = "FourColumnGridCell"
+    case fullImageSliderCell = "FullImageSliderCell"
+    case storyListCell = "StoryListCell"
+    case imageStoryListCardCell = "ImageStoryListCardCell"
+    case carousalContainerCell = "CarousalContainerCell"
+    case simpleSliderCell = "SimpleSliderCell"
+    case linearGallerySliderCell = "LinearGallerySliderCell"
+    case linerGalleryCarousalContainer = "LinerGalleryCarousalContainer"
+    case imageStoryListCell = "ImageStoryListCell"
+    case imageTextDescriptionCell = "ImageTextDescriptionCell"
+    case storyListCardCell = "StoryListCardCell"
     
 }
 
-
-
-extension HomeCellType{
+extension HomeCellType {
+    var cell:BaseCollectionCell.Type {
+        
+        switch self {
+        case .collectionTitleCell:
+            return CollectionTitleCell.self
+        case .imageTextCell:
+            return ImageTextCell.self
+        case .fourColumnGridCell:
+            return FourColumnGridCell.self
+            
+        case .fullImageSliderCell:
+            return FullImageSliderCell.self
+        case .storyListCell:
+            return StoryListCell.self
+        case .imageStoryListCardCell:
+            return ImageStoryListCardCell.self
+        case .carousalContainerCell:
+            return CarousalContainerCell.self
+        case .simpleSliderCell:
+            return SimpleSliderCell.self
+        case .linearGallerySliderCell:
+            return LinearGallerySliderCell.self
+        case .linerGalleryCarousalContainer:
+            return LinerGalleryCarousalContainer.self
+        case .imageStoryListCell:
+            return ImageStoryListCell.self
+        case .imageTextDescriptionCell:
+            return ImageTextDescriptionCell.self
+        case .storyListCardCell:
+            return StoryListCardCell.self
+            
+        }
+        
+    }
+    
     var innerCellHeight:CGFloat{
         switch self {
-        case .SimpleSliderCell,.FullImageSliderCell:
+        case .simpleSliderCell,.fullImageSliderCell:
             return 450
-        case .LinearGallerySliderCell:
+        case .linearGallerySliderCell:
             return 300
-        case .ImageTextCell:
+        case .imageTextCell:
             return 400
         default:
             return 250
@@ -48,13 +78,13 @@ extension HomeCellType{
     var imageWidth:CGFloat{
         switch self {
         
-        case .ImageStoryListCardCell:
+        case .imageStoryListCardCell:
             return 175
             
-        case .ImageStoryListCell:
+        case .imageStoryListCell:
             return 95
             
-        case .StoryListCell,.StoryListCardCell:
+        case .storyListCell,.storyListCardCell:
             return 0
         default:
             return CollectionLayoutEngine.targetWidth
@@ -63,9 +93,9 @@ extension HomeCellType{
     
     var aspectRatio:CGFloat{
         switch self {
-        case .ImageStoryListCell:
+        case .imageStoryListCell:
             return 1
-        case .FullImageSliderCell,.SimpleSliderCell:
+        case .fullImageSliderCell,.simpleSliderCell:
             return 2/3
         default:
             return 9/16
@@ -114,9 +144,9 @@ extension HomeCellType{
     
     var imageTextAlignment:ImageTextAlignment{
         switch self {
-        case .ImageStoryListCell,.ImageStoryListCardCell:
+        case .imageStoryListCell,.imageStoryListCardCell:
             return .Horizontal
-        case .FullImageSliderCell,.SimpleSliderCell:
+        case .fullImageSliderCell,.simpleSliderCell:
             return .Cover
         default:
             return .Vertical
@@ -125,7 +155,7 @@ extension HomeCellType{
     
     var sectionColor:UIColor{
         switch self {
-        case .FullImageSliderCell,.ImageTextCell,.SimpleSliderCell:
+        case .fullImageSliderCell,.imageTextCell,.simpleSliderCell:
             return .white
         default:
             return ThemeService.shared.theme.primaryTextColor
@@ -134,7 +164,7 @@ extension HomeCellType{
     
     var headlineColor:UIColor{
         switch self {
-        case .FullImageSliderCell,.SimpleSliderCell:
+        case .fullImageSliderCell,.simpleSliderCell:
             return .white
         default:
             return ThemeService.shared.theme.primaryTextColor
@@ -143,7 +173,7 @@ extension HomeCellType{
  
     var authorColor:UIColor{
         switch self {
-        case .FullImageSliderCell,.SimpleSliderCell:
+        case .fullImageSliderCell,.simpleSliderCell:
             return .white
         default:
             return ThemeService.shared.theme.primaryTextColor
@@ -152,7 +182,7 @@ extension HomeCellType{
     
     var timestampColor:UIColor{
         switch self {
-        case .FullImageSliderCell,.SimpleSliderCell:
+        case .fullImageSliderCell,.simpleSliderCell:
             return .white
         default:
             return ThemeService.shared.theme.primaryTextColor

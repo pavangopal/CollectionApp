@@ -42,8 +42,8 @@ extension CollectionViewModel: CollectionApiManagerDelegate{
     
     func didRecieveData(collectionModel: CollectionModel) {
         DispatchQueue.global(qos: .default).async {
-            let sectionLayoutEngine = CollectionLayoutEngine()
-            let layoutArray = sectionLayoutEngine.makeLayout(collection: collectionModel)
+            
+            let layoutArray = CollectionLayoutEngine.shared.makeLayout(collection: collectionModel)
             DispatchQueue.main.async {
                 self.delegate?.didRecieveData(sectionLayoutArray: layoutArray)
             }

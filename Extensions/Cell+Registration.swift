@@ -26,6 +26,7 @@ extension ReusableView {
 extension UITableView {
     
     func register<CellClass: UITableViewCell>(cellClass: CellClass.Type) {
+    
         register(cellClass, forCellReuseIdentifier: cellClass.reuseIdentifier)
     }
     

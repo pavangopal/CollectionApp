@@ -34,6 +34,9 @@ pod "WatchdogInspector"
 pod 'DTCoreText'
 pod 'TwitterKit'
 pod 'YouTubePlayer'
+#pod 'youtube-ios-player-helper'   , '~> 0.1.4'
+
+
 
 
 #taken from quint

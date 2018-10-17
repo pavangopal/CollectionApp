@@ -145,11 +145,11 @@ class AutherHeaderCell: BaseCollectionCell {
                 }
                 
                 let urlString = "https://twitter.com/\(lastPathComp)"
-                let labelString = autherTwitterHandlerlabel.text ?? ""
-                let twitterHandlerNsString = labelString as NSString
+                let labelString = autherTwitterHandlerlabel.text as? String ?? ""
+                let twitterHandlerNsString = labelString as? NSString
                 
-                if let url = URL(string:urlString){
-                    let range = twitterHandlerNsString.range(of: labelString)
+                if let url = URL(string:urlString),let range = twitterHandlerNsString?.range(of: labelString){
+                    
                     autherTwitterHandlerlabel.addLink(to: url, with: range)
                 }
             }

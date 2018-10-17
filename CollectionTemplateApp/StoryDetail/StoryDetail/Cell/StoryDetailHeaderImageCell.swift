@@ -24,15 +24,7 @@ class StoryDetailHeaderImageCell: BaseCollectionCell {
         var view = UIView()
         return view
     }()
-    
-    var imageInfoButton:UIButton = {
-        let button = UIButton()
-        
-        button.setImage(AssetImage.InfoIcon.image, for: .normal)
-        button.imageEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-        return button
-    }()
-//    let visualBlurrEffect = 
+   
     var imageCaptionTextView:TTTAttributedLabel = {
         let textView = TTTAttributedLabel(frame: .zero)
         
@@ -44,8 +36,6 @@ class StoryDetailHeaderImageCell: BaseCollectionCell {
         
         return textView
     }()
-    
-    
     
     var imageContainerView:UIView = {
         let view = UIView()
@@ -72,8 +62,8 @@ class StoryDetailHeaderImageCell: BaseCollectionCell {
         
         contentView.addSubview(heroImageCaptionContainerView)
         contentView.addSubview(blurView)
+        contentView.bringSubview(toFront: blurView)
         heroImageCaptionContainerView.addSubview(imageCaptionTextView)
-//        heroImageCaptionContainerView.addSubview(imageInfoButton)
         
         //Constraints
         imageContainerView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
@@ -91,19 +81,13 @@ class StoryDetailHeaderImageCell: BaseCollectionCell {
         //Only done here for fixed Elements else should be done in configure
         self.imageViewHeightConstraint = self.heroImageView.heightAnchor.constraint(equalToConstant: 250)
         self.imageViewHeightConstraint?.priority = UILayoutPriority.defaultLow
-//        self.imageViewHeightConstraint?.isActive = true
-//        self.imageContainerView.heightAnchor.constraint(equalTo: self.heroImageView.heightAnchor).isActive = true
-        
-//        heroImageCaptionContainerView.backgroundColor = .clear
+
         heroImageCaptionContainerView.backgroundColor = UIColor.black.withAlphaComponent(0.4)
-        self.addEvenListeners()
         imageCaptionTextView.delegate = self
         
         
         blurView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         blurView.alpha = 0
-        
-//        heroImageView.applyGradient(colors: [UIColor.darkGray,UIColor.clear], locations: nil, startPoint: CGPoint(x: 1, y: 0), endPoint: CGPoint(x: 1, y: 1), frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 64))
     }
     
     override func configure(data:Any?){
@@ -124,6 +108,7 @@ class StoryDetailHeaderImageCell: BaseCollectionCell {
                 
             }
         }
+        
         let titleAttributtes = textOption.imageElementText(color:.white).textAttributtes
         let attributionAttributes = textOption.imageElementAttribution(color:.white).textAttributtes
         
@@ -143,26 +128,6 @@ class StoryDetailHeaderImageCell: BaseCollectionCell {
 }
 
 extension StoryDetailHeaderImageCell{
-    
-    private func addEvenListeners(){
-        
-        imageInfoButton.addTarget(self, action: #selector(toggleImageCaption(sender:)), for: .touchUpInside)
-        
-        let tapGuesture = UITapGestureRecognizer(target: self, action: #selector(hideImageCaption(sender:)))
-        imageCaptionTextView.addGestureRecognizer(tapGuesture)
-    }
-    
-    @objc func hideImageCaption(sender:UITapGestureRecognizer){
-        imageCaptionTextView.isHidden = true
-        imageInfoButton.isHidden = false
-        heroImageCaptionContainerView.backgroundColor = .clear
-    }
-    
-    @objc func toggleImageCaption(sender:UIButton){
-        self.imageCaptionTextView.isHidden = false
-        self.imageInfoButton.isHidden = true
-        heroImageCaptionContainerView.backgroundColor = UIColor.black.withAlphaComponent(0.4)
-    }
     
     func updateParallaxOffet(collectionViewBounds:CGRect){
         let yOffset = collectionViewBounds.origin.y

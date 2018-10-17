@@ -87,8 +87,6 @@ class NetworkManager {
                         if let jsonData = data as? [String:AnyObject] {
                             ApiParser.collectionParser(data: jsonData, completion: { (collection, error) in
                                 
-                                
-                               
                                 let collectionItemArray = collection.items.filter({$0.type == "collection"})
                                 
                                 self.recursiveBulkCall(numberOfLevel: 2, parentCollection: collection, collectionItems: collectionItemArray, completion: { (collectionModel) in

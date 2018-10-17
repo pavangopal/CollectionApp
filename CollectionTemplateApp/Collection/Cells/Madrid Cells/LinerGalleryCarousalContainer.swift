@@ -81,11 +81,11 @@ UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        switch carouselModel?.layoutType ?? HomeCellType.ImageTextCell {
+        switch carouselModel?.layoutType ?? HomeCellType.imageTextCell {
             
-        case .LinearGallerySliderCell:
+        case .linearGallerySliderCell:
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.LinearGallerySliderCell.rawValue, for: indexPath) as? LinearGallerySliderCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.linearGallerySliderCell.rawValue, for: indexPath) as? LinearGallerySliderCell
             
             cell?.configure(data: carouselModel?.storyViewModel[indexPath.row],associatedMetaData:carouselModel?.associatedMetaData)
             
@@ -93,7 +93,7 @@ UICollectionViewDelegateFlowLayout {
             
         default:
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.ImageTextCell.rawValue, for: indexPath) as? ImageTextCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.imageTextCell.rawValue, for: indexPath) as? ImageTextCell
             
             cell?.configure(data: carouselModel?.storyViewModel[indexPath.row],associatedMetaData:carouselModel?.associatedMetaData)
             

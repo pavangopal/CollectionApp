@@ -288,7 +288,6 @@ extension AuthorController:UICollectionViewDelegate,UICollectionViewDataSource,U
         return .zero
     }
     
-    
     func getMoreData(){
         apiManager.getStoriesForAuthor(authorId: self.authorId, controller: self)
     }

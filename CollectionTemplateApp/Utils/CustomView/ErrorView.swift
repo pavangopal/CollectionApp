@@ -29,13 +29,8 @@ class ErrorView: UIView {
     
     var retryButton : UIButton = {
         let button = UIButton()
-        button.setTitle("Try again", for: .normal)
-        button.titleLabel?.font = FontService.shared.errorMessageFont
-        button.setTitleColor(ThemeService.shared.theme.primaryTextColor, for: .normal)
-        button.layer.borderColor = ThemeService.shared.theme.primaryTextColor.withAlphaComponent(0.5).cgColor
-        button.layer.borderWidth = 1
-        button.cornerRadius = 5
-        
+        button.setImage(AssetImage.retry.image, for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         return  button
     }()
     
@@ -50,16 +45,15 @@ class ErrorView: UIView {
     }
     
     func setUpView(){
-        
-        
+        clipsToBounds = true
+        backgroundColor = .white
         addSubview(errorLabel)
         addSubview(retryButton)
         
-        errorLabel.anchor(nil, left: self.leftAnchor, bottom: nil, right: self.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
-        errorLabel.anchorCenterSuperview()
-        
-        retryButton.anchor(errorLabel.bottomAnchor, left: nil, bottom: nil, right: nil, topConstant: 20, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 120, heightConstant: 30)
-        retryButton.anchorCenterXToSuperview()
+        errorLabel.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 10, leftConstant: 20, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+
+        retryButton.anchor(nil, left: errorLabel.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 48, heightConstant: 48)
+        retryButton.anchorCenterYToSuperview()
         retryButton.addTarget(self, action: #selector(retryButtonPressed), for: .touchUpInside)
     }
     
@@ -77,8 +71,6 @@ class ErrorView: UIView {
             self.errorLabel.text = Constants.HttpError.pageNotFound
             break
         }
-        
-        
         
     }
     

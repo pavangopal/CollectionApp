@@ -49,7 +49,7 @@ public enum storyDetailLayoutType : String{
     
     case BrightCoveCell = "BrightCoveCell"
     case CommentCell = "CommentCell"
-
+    case StoryDetailsTagElementCell = "StoryDetailsTagElementCell"
 }
 
 

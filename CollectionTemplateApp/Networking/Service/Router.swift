@@ -16,11 +16,19 @@ protocol NetworkRouter: class {
     func cancel()
 }
 
-class Router<EndPoint: EndPointType>: NetworkRouter {
+class Router<EndPoint: EndPointType>: NSObject, NetworkRouter, URLSessionDelegate {
     private var task: URLSessionTask?
     
     func request(_ route: EndPoint, completion: @escaping NetworkRouterCompletion) {
-        let session = URLSession.shared
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForResource = 60
+        
+        if #available(iOS 11, *) {
+            configuration.waitsForConnectivity = true
+        }
+        
+        let session = URLSession(configuration: configuration)
+        
         do {
             
             let request = try self.buildRequest(from: route)
@@ -44,9 +52,10 @@ class Router<EndPoint: EndPointType>: NetworkRouter {
     
     fileprivate func buildRequest(from route: EndPoint) throws -> URLRequest {
         
-        var request = URLRequest(url: route.baseURL.appendingPathComponent(route.path),
-                                 cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,
-                                 timeoutInterval: 10.0)
+        var request = URLRequest(url: route.baseURL.appendingPathComponent(route.path))
+//            ,
+//                                 cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,
+//                                 timeoutInterval: 10.0)
         
         request.httpMethod = route.httpMethod.rawValue
         

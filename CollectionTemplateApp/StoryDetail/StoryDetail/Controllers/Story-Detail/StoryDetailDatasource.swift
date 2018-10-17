@@ -464,6 +464,12 @@ class StoryDetailDataSourceAndDelegate:NSObject,UICollectionViewDataSource,UICol
             
             currentCell?.configure(data: storyElement)
             
+        case .StoryDetailsTagElementCell:
+            cell = collectionView.dequeueReusableCell(ofType: StoryDetailsTagElementCell.self, for: indexPath)
+            let currentCell = cell as? StoryDetailsTagElementCell
+            
+            currentCell?.configure(data: story)
+            
         }
       
         return cell!
@@ -684,6 +690,13 @@ class StoryDetailDataSourceAndDelegate:NSObject,UICollectionViewDataSource,UICol
         case .ExplainerSummaryCell:
             
             sizingCell?.configure(data: storyElement)
+            let calculatedSize = sizingCell?.calculateHeight(targetSize: targetSize)
+            self.heightCache[indexPath] = calculatedSize
+            return calculatedSize!
+            
+        case .StoryDetailsTagElementCell:
+            
+            sizingCell?.configure(data:story)
             let calculatedSize = sizingCell?.calculateHeight(targetSize: targetSize)
             self.heightCache[indexPath] = calculatedSize
             return calculatedSize!

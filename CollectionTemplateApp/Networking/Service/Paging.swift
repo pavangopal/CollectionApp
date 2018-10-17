@@ -24,6 +24,7 @@ public struct Page{
     public init(offsetPara:Int = 0, limitPara:Int = 0) {
         
         self.limit = limitPara
+        
         if offsetPara == 0{
             self.offset =  -limitPara
         }

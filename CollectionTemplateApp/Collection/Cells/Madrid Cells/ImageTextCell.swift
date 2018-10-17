@@ -33,7 +33,7 @@ class ImageTextCell: BaseCollectionCell {
         
         containerView.addSubview(imageView)
         containerView.addSubview(stackView)
-        let imageHeight = (bounds.width*HomeCellType.ImageTextCell.aspectRatio)
+        let imageHeight = (bounds.width*HomeCellType.imageTextCell.aspectRatio)
         imageView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: imageHeight)
         
         stackView.anchor(imageView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 0)

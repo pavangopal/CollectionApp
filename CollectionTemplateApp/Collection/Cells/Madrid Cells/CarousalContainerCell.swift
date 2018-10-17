@@ -102,27 +102,27 @@ extension CarousalContainerCell : UICollectionViewDelegate,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        switch carouselModel?.layoutType ?? HomeCellType.ImageTextCell {
+        switch carouselModel?.layoutType ?? HomeCellType.imageTextCell {
             
-        case .FullImageSliderCell:
+        case .fullImageSliderCell:
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.FullImageSliderCell.rawValue, for: indexPath) as? FullImageSliderCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.fullImageSliderCell.rawValue, for: indexPath) as? FullImageSliderCell
             cell?.configure(data: carouselModel?.storyViewModel[indexPath.row], associatedMetaData: carouselModel?.associatedMetaData)
             
             return cell!
         
-        case .SimpleSliderCell:
+        case .simpleSliderCell:
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.SimpleSliderCell.rawValue, for: indexPath) as? SimpleSliderCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.simpleSliderCell.rawValue, for: indexPath) as? SimpleSliderCell
             
             let tuple:(collectionName:String?,story:StoryViewModel?) = (collectionName:carouselModel?.collectionName,story:carouselModel?.storyViewModel[indexPath.row])
             cell?.configure(data: tuple,associatedMetaData:carouselModel?.associatedMetaData)
             
             return cell!
             
-        case .LinearGallerySliderCell:
+        case .linearGallerySliderCell:
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.LinearGallerySliderCell.rawValue, for: indexPath) as? LinearGallerySliderCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.linearGallerySliderCell.rawValue, for: indexPath) as? LinearGallerySliderCell
             
             cell?.configure(data: carouselModel?.storyViewModel[indexPath.row],associatedMetaData:carouselModel?.associatedMetaData)
             
@@ -130,7 +130,7 @@ extension CarousalContainerCell : UICollectionViewDelegate,
             
         default:
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.ImageTextCell.rawValue, for: indexPath) as? ImageTextCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCellType.imageTextCell.rawValue, for: indexPath) as? ImageTextCell
             
             cell?.configure(data: carouselModel?.storyViewModel[indexPath.row], associatedMetaData: carouselModel?.associatedMetaData)
             

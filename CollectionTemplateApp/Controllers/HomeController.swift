@@ -172,7 +172,6 @@ extension HomeController: UICollectionViewDataSource,UICollectionViewDelegate,UI
             return .zero
         }
         
-        
         switch layout.collectionLayoutType ?? .UNKNOWN {
             
         case .FullscreenLinearGallerySlider:

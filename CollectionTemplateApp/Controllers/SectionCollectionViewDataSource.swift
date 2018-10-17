@@ -136,7 +136,7 @@ CollectionViewDataSourceModelling {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         
         if section == sectionLayoutArray.count - 1 && (controllerDataSource?.canLoadNextPage() ?? false){
-            return CGSize(width: UIScreen.main.bounds.width-30, height: 120)
+             return CGSize(width: UIScreen.main.bounds.width-30, height: 120)
         }
         
         return .zero

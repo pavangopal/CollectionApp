@@ -9,13 +9,13 @@
 import Foundation
 import Quintype
 
-protocol TagViewModelling:class {
-    init(tagSlug:String)
+protocol ListViewModelModelling:class {
+    init(slug:String)
     func startFetch()
     func loadNext()
 }
 
-class TagViewModel : TagViewModelling {
+class TagViewModel : ListViewModelModelling {
     
     private var tagApiManager:TagApiManager?
     
@@ -23,9 +23,9 @@ class TagViewModel : TagViewModelling {
     
     var state:Dynamic<ViewState<Any>> =  Dynamic<ViewState<Any>>(ViewState.loading)
     
-    required init(tagSlug:String) {
+    required init(slug:String) {
         
-        tagApiManager = TagApiManager(slug: tagSlug, delegate: self)
+        tagApiManager = TagApiManager(slug: slug, delegate: self)
         
     }
     
@@ -43,15 +43,11 @@ class TagViewModel : TagViewModelling {
 extension TagViewModel: TagApiManagerDelegate {
     
     func didLoadData(stories: [Story]) {
-
-        if stories.count > 0 {
-            isMoreDataAvailable.value = true
-            
-            let layout = CollectionLayoutEngine.shared.makeLayout(stories: stories)
-            state.value = ViewState.loaded(data: layout)
-        }else{
-            isMoreDataAvailable.value = false
-        }
+        
+        isMoreDataAvailable.value = stories.count > 0
+        
+        let layout = CollectionLayoutEngine.shared.makeLayout(stories: stories)
+        state.value = ViewState.loaded(data: layout)
     }
     
     func didFailWithError(error: String?) {

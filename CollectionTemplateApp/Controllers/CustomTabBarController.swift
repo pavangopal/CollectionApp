@@ -26,7 +26,7 @@ class CustomTabBarController: UITabBarController {
             switch item{
                 
             case .Home:
-                let homeController = HomeController(slug: "home")
+                let homeController = SectionController(slug: "home")
                 let homeNavigationController = UINavigationController(rootViewController: homeController)
                 homeController.tabBarItem = UITabBarItem(title: item.rawValue, image: item.icon, tag: item.hashValue)
                 

@@ -22,7 +22,7 @@ final class CollectionApiManager {
     
     private var networkManager: NetworkManager
     
-    init(slug:String,limit:Int, delegate:CollectionApiManagerDelegate ) {
+    init(slug:String,limit:Int, delegate:CollectionApiManagerDelegate) {
         self.slug = slug
         self.limit = limit
         self.delegate = delegate

@@ -1,23 +1,15 @@
 //
-//  TagController.swift
+//  SectionController.swift
 //  CollectionTemplateApp
 //
-//  Created by Pavan Gopal on 10/3/18.
+//  Created by Pavan Gopal on 10/17/18.
 //  Copyright © 2018 Pavan Gopal. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import Quintype
 
-protocol ControllerDataSourcing:class {
-    
-    func loadNextPage()
-    func canLoadNextPage() -> Bool
-    
-}
-
-class TagController:BaseController {
+class SectionController:BaseController {
     //MARK: - Views
     
     lazy var collectionView:UICollectionView = {
@@ -48,10 +40,10 @@ class TagController:BaseController {
     
     //MARK: - Variables
     
-    var tagName:String
+    var slug:String
     var dataSource:CollectionViewDataSource?
     
-    var tagViewModel:TagViewModel! {
+    var tagViewModel:SectionViewModel! {
         didSet {
 
             tagViewModel.state.bind = {[unowned self] (state:ViewState<Any>) in
@@ -72,16 +64,16 @@ class TagController:BaseController {
             switch state! {
                 
             case .loaded(let layoutArray):
-                guard let layoutArray = layoutArray as? [SectionLayout] else{return}
+                guard let layoutArray = layoutArray as? [[SectionLayout]] else{return}
                 
-                dataSource?.updateNextPage(layout: [layoutArray])
+                dataSource?.updateNextPage(layout: layoutArray)
                 
             case .error(let message):
                 
                 errorView.displayErrorMessage(message: message)
                 
                 break
-            
+                
             default:
                 break
             }
@@ -89,9 +81,9 @@ class TagController:BaseController {
     }
     
     //MARK: - Functions
-    init(tagSlug:String) {
+    init(slug:String) {
         
-        self.tagName = tagSlug
+        self.slug = slug
         super.init()
     }
     
@@ -104,12 +96,12 @@ class TagController:BaseController {
         
         createViews()
         setupCollectionViewDataSource()
-        self.tagViewModel = TagViewModel(slug: self.tagName)
+        self.tagViewModel = SectionViewModel(slug: self.slug)
         self.tagViewModel.startFetch()
         
     }
     
-   private func createViews(){
+    private func createViews(){
         self.view.addSubview(collectionView)
         collectionView.fillSuperview()
         collectionView.refreshControl = refreshControl
@@ -129,7 +121,7 @@ class TagController:BaseController {
             return
         }
         self.dataSource?.resetDataSource()
-        self.tagViewModel = TagViewModel(slug: tagName)
+        self.tagViewModel = SectionViewModel(slug: slug)
         self.tagViewModel.startFetch()
     }
     
@@ -144,7 +136,7 @@ class TagController:BaseController {
     
 }
 
-extension TagController: ControllerDataSourcing {
+extension SectionController: ControllerDataSourcing {
     
     func canLoadNextPage() -> Bool {
         return tagViewModel.isMoreDataAvailable.value ?? false

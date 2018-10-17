@@ -218,6 +218,8 @@
 		1DBFFC93213D69120080AB2C /* ImageTextDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBFFC92213D69120080AB2C /* ImageTextDescriptionCell.swift */; };
 		1DD101E3216496190090BB0F /* TagController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD101E2216496190090BB0F /* TagController.swift */; };
 		1DD101E521649A950090BB0F /* TagApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD101E421649A950090BB0F /* TagApiManager.swift */; };
+		1DD9AB702177184D0079BC66 /* SectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD9AB6F2177184D0079BC66 /* SectionController.swift */; };
+		1DD9AB7221771A220079BC66 /* SectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD9AB7121771A220079BC66 /* SectionViewModel.swift */; };
 		1DE74102215CAD630072309C /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE74101215CAD630072309C /* CustomNavigationBar.swift */; };
 		1DE74104215CE2860072309C /* StickyHeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE74103215CE2860072309C /* StickyHeaderLayout.swift */; };
 		1DE9761A2164A6FF00B2105B /* TagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE976192164A6FF00B2105B /* TagViewModel.swift */; };
@@ -445,6 +447,8 @@
 		1DBFFC92213D69120080AB2C /* ImageTextDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTextDescriptionCell.swift; sourceTree = "<group>"; };
 		1DD101E2216496190090BB0F /* TagController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagController.swift; sourceTree = "<group>"; };
 		1DD101E421649A950090BB0F /* TagApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagApiManager.swift; sourceTree = "<group>"; };
+		1DD9AB6F2177184D0079BC66 /* SectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionController.swift; sourceTree = "<group>"; };
+		1DD9AB7121771A220079BC66 /* SectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionViewModel.swift; sourceTree = "<group>"; };
 		1DE74101215CAD630072309C /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		1DE74103215CE2860072309C /* StickyHeaderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyHeaderLayout.swift; sourceTree = "<group>"; };
 		1DE976192164A6FF00B2105B /* TagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewModel.swift; sourceTree = "<group>"; };
@@ -867,6 +871,8 @@
 				1D15FA3F2121B7DB004297B2 /* HomeController.swift */,
 				1D15FA3D2121B7A5004297B2 /* CustomTabBarController.swift */,
 				1DE9761D2164E47200B2105B /* SectionCollectionViewDataSource.swift */,
+				1DD9AB6F2177184D0079BC66 /* SectionController.swift */,
+				1DD9AB7121771A220079BC66 /* SectionViewModel.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1357,6 +1363,7 @@
 				1D15FA7D2121B952004297B2 /* StoryDownloader.swift in Sources */,
 				1D15FA252121B6E5004297B2 /* CollectionEndPoint.swift in Sources */,
 				1D15FA2F2121B6E5004297B2 /* HTTPMethod.swift in Sources */,
+				1DD9AB702177184D0079BC66 /* SectionController.swift in Sources */,
 				1D07FDF7215A560900FE8D48 /* GalleryCell.swift in Sources */,
 				1D406314212D7A0100228FC8 /* FullImageSliderCell.swift in Sources */,
 				1DD101E3216496190090BB0F /* TagController.swift in Sources */,
@@ -1429,6 +1436,7 @@
 				1DB6F68F215B5F4D00759671 /* NavigationItemExtension.swift in Sources */,
 				1D15FA5C2121B87B004297B2 /* UIImageViewExtension.swift in Sources */,
 				1D07FDE3215A560900FE8D48 /* AnswerElementCell.swift in Sources */,
+				1DD9AB7221771A220079BC66 /* SectionViewModel.swift in Sources */,
 				1D07FE2E215A69F400FE8D48 /* AuthorController.swift in Sources */,
 				1D07FDEE215A560900FE8D48 /* StoryTextElementCell.swift in Sources */,
 				1D15FA282121B6E5004297B2 /* NetworkError.swift in Sources */,

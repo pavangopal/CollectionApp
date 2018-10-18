@@ -15,6 +15,8 @@ protocol ControllerDataSourcing:class {
     func loadNextPage()
     func canLoadNextPage() -> Bool
     
+    func didSelectItem(sectionLayoutArray:[[SectionLayout]],indexPath:IndexPath)
+    
 }
 
 class TagController:BaseController {
@@ -152,6 +154,12 @@ extension TagController: ControllerDataSourcing {
     
     func loadNextPage() {
         tagViewModel.loadNext()
+    }
+    
+    func didSelectItem(sectionLayoutArray:[[SectionLayout]],indexPath:IndexPath) {
+        let controller = StoryDetailPager(homeLayoutArray: sectionLayoutArray[indexPath.section], currentIndex: 0, currentSlug: nil)
+        self.navigationController?.pushViewController(controller, animated: true)
+        
     }
     
 }

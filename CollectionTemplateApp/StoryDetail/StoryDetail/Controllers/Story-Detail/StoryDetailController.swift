@@ -92,7 +92,6 @@ class StoryDetailController: BaseController {
                     self.createViews()
                 }
                 
-                
                 self.updateSegmenetViews()
                 
                 self.setupCollectionViewDataSource(storyLayoutWrapper:unwrappedLayout)
@@ -226,7 +225,8 @@ class StoryDetailController: BaseController {
         
         
         if story?.story_template == StoryTemplet.Elsewhere{
-            
+            self.setSolidNavigationBar()
+            collectionView.contentInsetAdjustmentBehavior = .always
             if let externalStoryUrl = story?.storyMetadata?.reference_url{
                 if let externalUrl = URL(string: externalStoryUrl){
                     let externalUrlRequest = URLRequest(url: externalUrl)
@@ -264,11 +264,11 @@ class StoryDetailController: BaseController {
     private func adjustCollectionViewContentOffset(storyLayoutWrapper:StoryLayoutWrapper){
         
         if let _ = storyLayoutWrapper.supplementaryView {
-            collectionView.contentInsetAdjustmentBehavior = .never
             self.setClearNavigationBar()
+            collectionView.contentInsetAdjustmentBehavior = .never
         }else{
-            collectionView.contentInsetAdjustmentBehavior = .automatic
             self.setSolidNavigationBar()
+            collectionView.contentInsetAdjustmentBehavior = .always
         }
     }
     
@@ -367,12 +367,12 @@ class StoryDetailController: BaseController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setSolidNavigationBar()
+//        setSolidNavigationBar()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        setSolidNavigationBar()
+//        setSolidNavigationBar()
     }
     
 }

@@ -27,9 +27,7 @@ private protocol CollectionViewDataSourceModelling:class {
 class CollectionViewDataSource: NSObject,
                                 UICollectionViewDataSource,
                                 UICollectionViewDelegateFlowLayout,
-                                UICollectionViewDelegate,
-CollectionViewDataSourceModelling {
-    
+                                CollectionViewDataSourceModelling {
     
     typealias DataSource = ControllerDataSourcing
     
@@ -43,6 +41,8 @@ CollectionViewDataSourceModelling {
         self.collectionView = collectionView
         self.controllerDataSource = controllerDataSource
     }
+    
+    //MARK: - DataSource Methods
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return sectionLayoutArray.count
@@ -116,7 +116,33 @@ CollectionViewDataSourceModelling {
         }
     }
     
-    //MARK: - Pagination
+   
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        
+        guard  let layout = self.sectionLayoutArray[section].first else{
+            return .zero
+        }
+        
+        switch layout.collectionLayoutType ?? .UNKNOWN {
+            
+        case .FullscreenLinearGallerySlider:
+            return UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+            
+        default:
+            return UIEdgeInsets(top: 20, left: 15, bottom: 20, right: 15)
+        }
+        
+    }
+}
+//MARK: - Delegate methods
+
+extension CollectionViewDataSource : UICollectionViewDelegate{
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        self.controllerDataSource.shouldNavigate()
+        
+        self.controllerDataSource?.didSelectItem(sectionLayoutArray: sectionLayoutArray, indexPath: indexPath)
+    }
     
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
         switch elementKind {
@@ -132,11 +158,17 @@ CollectionViewDataSourceModelling {
             break
         }
     }
+}
+
+//MARK: - Supplimentary View methods
+
+extension CollectionViewDataSource{
+   
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         
         if section == sectionLayoutArray.count - 1 && (controllerDataSource?.canLoadNextPage() ?? false){
-             return CGSize(width: UIScreen.main.bounds.width-30, height: 120)
+            return CGSize(width: UIScreen.main.bounds.width-30, height: 120)
         }
         
         return .zero
@@ -163,12 +195,7 @@ CollectionViewDataSourceModelling {
             return UICollectionReusableView(frame: .zero)
         }
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
-    }
 }
-
 
 //MARK: - DataManipulation methods
 

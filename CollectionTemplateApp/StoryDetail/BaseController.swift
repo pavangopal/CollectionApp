@@ -20,6 +20,8 @@ class BaseController: UIViewController , DataLoading,ErrorViewDelegate{
         }
     }
     
+    var isSolidNavigationBar:Bool = true
+    
     init() {
         super.init(nibName: nil, bundle: nil)
         
@@ -50,7 +52,6 @@ class BaseController: UIViewController , DataLoading,ErrorViewDelegate{
         errorView.isHidden = true
         loadingView.isHidden = true
     }
-
     
     func reTryRequested() {
         //implemented in subclasses

@@ -134,9 +134,20 @@ class SectionController:BaseController {
         self.tagViewModel.loadNext()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setSolidNavigationBar()
+    }
+
 }
 
 extension SectionController: ControllerDataSourcing {
+    func didSelectItem(sectionLayoutArray: [[SectionLayout]], indexPath: IndexPath) {
+        let slugArray = sectionLayoutArray.flatMap({$0.compactMap({$0.story?.slug})})
+        let controller = StoryDetailPager(slugArray: slugArray, currentIndex: 0)
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
     
     func canLoadNextPage() -> Bool {
         return tagViewModel.isMoreDataAvailable.value ?? false

@@ -109,7 +109,6 @@ class StoryDetailPager: BaseController {
             self.view.addSubview(self.pageController.view)
             
             self.pageController.didMove(toParentViewController: self)
-//            self.edgesForExtendedLayout = []
         }
     }
 

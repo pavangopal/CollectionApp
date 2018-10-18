@@ -63,12 +63,13 @@ final class HomeController: UIViewController {
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.tabBarController?.tabBar.isHidden = true
+//        self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBarController?.tabBar.isHidden = false
+//        setupNavgationbarForHome()
+//        self.tabBarController?.tabBar.isHidden = false
         
     }
     
@@ -76,8 +77,7 @@ final class HomeController: UIViewController {
         
         self.view.addSubview(collectionView)
         collectionView.fillSuperview()
-        
-        collectionView.register(CollectionTitleCell.self, forCellWithReuseIdentifier: CellType.CollectionTitleCell.rawValue)
+         collectionView.register(CollectionTitleCell.self, forCellWithReuseIdentifier: CellType.CollectionTitleCell.rawValue)
         
         collectionView.register(ImageTextCell.self, forCellWithReuseIdentifier: CellType.imageTextCell.rawValue)
         collectionView.register(FourColumnGridCell.self, forCellWithReuseIdentifier: CellType.fourColumnGridCell.rawValue)

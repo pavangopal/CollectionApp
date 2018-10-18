@@ -86,7 +86,6 @@ extension UIViewController:SideMenuControllerDelegate,UIPopoverPresentationContr
         self.navigationItem.setRightBarButtonItems([rightMenuButtonItem,rightSearchBarButtonItem], animated: true)
         
         let image = UIImage.from(color: UIColor.black.withAlphaComponent(0.1))
-        
         self.navigationController?.navigationBar.setBackgroundImage(image, for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.backgroundColor = .clear
@@ -95,13 +94,12 @@ extension UIViewController:SideMenuControllerDelegate,UIPopoverPresentationContr
     }
     
     func setClearNavigationBar(){
-        let image = UIImage.from(color: UIColor.black.withAlphaComponent(0.1))
+//        let image = UIImage.from(color: UIColor.black.withAlphaComponent(0.1))
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.backgroundColor = .clear
         self.navigationController?.navigationBar.barTintColor = .clear
-        
         self.navigationController?.navigationBar.tintColor = .white
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
@@ -110,14 +108,13 @@ extension UIViewController:SideMenuControllerDelegate,UIPopoverPresentationContr
     func setSolidNavigationBar(){
 
         self.navigationController?.navigationBar.barTintColor = ThemeService.shared.theme.primarySectionColor
-        self.navigationController?.navigationBar.tintColor = .white
         
         self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = nil
         self.navigationController?.navigationBar.backgroundColor = nil
         
         self.navigationController?.navigationBar.tintColor = .white
-        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.view.backgroundColor = nil
         
         
@@ -127,11 +124,7 @@ extension UIViewController:SideMenuControllerDelegate,UIPopoverPresentationContr
         rightSearchBarButtonItem.accessibilityLabel = "home"
         
         self.navigationItem.setRightBarButtonItems([rightMenuButtonItem,rightSearchBarButtonItem], animated: true)
-        self.navigationController?.navigationBar.barTintColor = ThemeService.shared.theme.primarySectionColor
-        self.navigationController?.navigationBar.tintColor = .white
-        self.navigationController?.navigationBar.isTranslucent = true
-        
-       
+        setSolidNavigationBar()
     }
     
     @objc func goToHomeTab(sender:UIBarButtonItem){

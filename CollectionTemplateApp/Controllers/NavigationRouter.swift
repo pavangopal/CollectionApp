@@ -23,8 +23,6 @@ protocol ModelType {
     init(route:RouteType)
     
     func openModule(parameters:ModuleParameters?)
-    
-    
 }
 
 

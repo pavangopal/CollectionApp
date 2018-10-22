@@ -111,6 +111,11 @@ class TagController:BaseController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setSolidNavigationBar()
+    }
+    
    private func createViews(){
         self.view.addSubview(collectionView)
         collectionView.fillSuperview()

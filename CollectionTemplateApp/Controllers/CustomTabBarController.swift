@@ -18,7 +18,7 @@ class CustomTabBarController: UITabBarController {
         setUpTabbar()
         
     }
-
+    
     func setUpTabbar() {
         let tabbarItems = [TabbarItems.Home,TabbarItems.Settings]
         
@@ -28,6 +28,7 @@ class CustomTabBarController: UITabBarController {
             case .Home:
                 let homeController = SectionController(slug: "home")
                 let homeNavigationController = UINavigationController(rootViewController: homeController)
+                homeNavigationController.navigationBar.isHidden = true
                 homeController.tabBarItem = UITabBarItem(title: item.rawValue, image: item.icon, tag: item.hashValue)
                 
                 navigationControllerContainer.append(homeNavigationController)

@@ -215,6 +215,7 @@
 		1DB9256A214059E3005943CC /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB9255F214059E3005943CC /* Lato-Light.ttf */; };
 		1DB9256B214059E3005943CC /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB92560214059E3005943CC /* Lato-Regular.ttf */; };
 		1DB9256D2140623B005943CC /* StoryListCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB9256C2140623B005943CC /* StoryListCardCell.swift */; };
+		1DBC3E642179F5A3001665AA /* DetailPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBC3E632179F5A3001665AA /* DetailPageController.swift */; };
 		1DBFFC93213D69120080AB2C /* ImageTextDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBFFC92213D69120080AB2C /* ImageTextDescriptionCell.swift */; };
 		1DD101E3216496190090BB0F /* TagController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD101E2216496190090BB0F /* TagController.swift */; };
 		1DD101E521649A950090BB0F /* TagApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD101E421649A950090BB0F /* TagApiManager.swift */; };
@@ -445,6 +446,7 @@
 		1DB9255F214059E3005943CC /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
 		1DB92560214059E3005943CC /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
 		1DB9256C2140623B005943CC /* StoryListCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListCardCell.swift; sourceTree = "<group>"; };
+		1DBC3E632179F5A3001665AA /* DetailPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPageController.swift; sourceTree = "<group>"; };
 		1DBFFC92213D69120080AB2C /* ImageTextDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTextDescriptionCell.swift; sourceTree = "<group>"; };
 		1DD101E2216496190090BB0F /* TagController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagController.swift; sourceTree = "<group>"; };
 		1DD101E421649A950090BB0F /* TagApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagApiManager.swift; sourceTree = "<group>"; };
@@ -876,6 +878,7 @@
 				1DD9AB6F2177184D0079BC66 /* SectionController.swift */,
 				1DD9AB7121771A220079BC66 /* SectionViewModel.swift */,
 				1DD9AB75217759240079BC66 /* NavigationRouter.swift */,
+				1DBC3E632179F5A3001665AA /* DetailPageController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1404,6 +1407,7 @@
 				1D15FA2A2121B6E5004297B2 /* URLParameterEncoder.swift in Sources */,
 				1D07FDC8215A560900FE8D48 /* WhatsAppClient.swift in Sources */,
 				1D07FDD4215A560900FE8D48 /* TableStoryElement.swift in Sources */,
+				1DBC3E642179F5A3001665AA /* DetailPageController.swift in Sources */,
 				1D07FDD0215A560900FE8D48 /* JSEmbedCell.swift in Sources */,
 				1D851350215AA91500582F24 /* SettingsController.swift in Sources */,
 				1D07FDCD215A560900FE8D48 /* FullScreenImageCell.swift in Sources */,

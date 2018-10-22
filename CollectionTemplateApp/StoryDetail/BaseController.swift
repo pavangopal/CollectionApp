@@ -22,6 +22,11 @@ class BaseController: UIViewController , DataLoading,ErrorViewDelegate{
     
     var isSolidNavigationBar:Bool = true
     
+//    var navigationBar:CustomNavigationBar = {
+//        let navigationBar = CustomNavigationBar()
+//        return navigationBar
+//    }()
+    
     init() {
         super.init(nibName: nil, bundle: nil)
         
@@ -33,8 +38,22 @@ class BaseController: UIViewController , DataLoading,ErrorViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        createNavigationBar()
     }
+    
+//    func createNavigationBar(){
+//        view.addSubview(navigationBar)
+//        
+//        navigationBar.translatesAutoresizingMaskIntoConstraints = false
+//        navigationBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+//        navigationBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+//        navigationBar.delegate = self
+//        if #available(iOS 11, *) {
+//            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+//        } else {
+//            navigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+//        }
+//    }
     
     func addStateHandlingView(`in` view:UIView){
         
@@ -57,6 +76,7 @@ class BaseController: UIViewController , DataLoading,ErrorViewDelegate{
         //implemented in subclasses
     }
 }
+
 
 
 protocol DataLoading{

@@ -43,10 +43,10 @@ class SectionController:BaseController {
     var slug:String
     var dataSource:CollectionViewDataSource?
     
-    var tagViewModel:SectionViewModel! {
+    var sectionViewModel:SectionViewModel! {
         didSet {
 
-            tagViewModel.state.bind = {[unowned self] (state:ViewState<Any>) in
+            sectionViewModel.state.bind = {[unowned self] (state:ViewState<Any>) in
                 self.state = state
             }
         }
@@ -96,8 +96,8 @@ class SectionController:BaseController {
         
         createViews()
         setupCollectionViewDataSource()
-        self.tagViewModel = SectionViewModel(slug: self.slug)
-        self.tagViewModel.startFetch()
+        self.sectionViewModel = SectionViewModel(slug: self.slug)
+        self.sectionViewModel.startFetch()
         
     }
     
@@ -106,6 +106,8 @@ class SectionController:BaseController {
         collectionView.fillSuperview()
         collectionView.refreshControl = refreshControl
         addStateHandlingView(in: self.view)
+//        createNavigationBar()
+        
     }
     
     private func setupCollectionViewDataSource(){
@@ -121,8 +123,8 @@ class SectionController:BaseController {
             return
         }
         self.dataSource?.resetDataSource()
-        self.tagViewModel = SectionViewModel(slug: slug)
-        self.tagViewModel.startFetch()
+        self.sectionViewModel = SectionViewModel(slug: slug)
+        self.sectionViewModel.startFetch()
     }
     
     override func reTryRequested() {
@@ -131,12 +133,12 @@ class SectionController:BaseController {
             return
         }
         
-        self.tagViewModel.loadNext()
+        self.sectionViewModel.loadNext()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setSolidNavigationBar()
+//        setSolidNavigationBar()
     }
 
 }
@@ -144,17 +146,18 @@ class SectionController:BaseController {
 extension SectionController: ControllerDataSourcing {
     func didSelectItem(sectionLayoutArray: [[SectionLayout]], indexPath: IndexPath) {
         let slugArray = sectionLayoutArray.flatMap({$0.compactMap({$0.story?.slug})})
-        let controller = StoryDetailPager(slugArray: slugArray, currentIndex: 0)
+        let controller = StoryDetailPager(slugArray: slugArray, currentIndex: 3)
+        
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
     
     func canLoadNextPage() -> Bool {
-        return tagViewModel.isMoreDataAvailable.value ?? false
+        return sectionViewModel.isMoreDataAvailable.value ?? false
     }
     
     func loadNextPage() {
-        tagViewModel.loadNext()
+        sectionViewModel.loadNext()
     }
     
 }

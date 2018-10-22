@@ -1,21 +1,15 @@
 //
-//  StoryDetailPager.swift
-//  TheQuint-Staging
+//  DetailPageController.swift
+//  CollectionTemplateApp
 //
-//  Created by Pavan Gopal on 1/5/18.
+//  Created by Pavan Gopal on 10/19/18.
 //  Copyright © 2018 Pavan Gopal. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import Quintype
 
-protocol NavigationDelegate:class {
-    func setClear()
-    func setSolid()
-}
-
-class StoryDetailPager: BaseController {
-    
+class DetailPageController : UIPageViewController{
     let screenBounds  = UIScreen.main.bounds
     
     var slugArray:[String] = []
@@ -28,29 +22,10 @@ class StoryDetailPager: BaseController {
             self.prepareViewControllers()
         }
     }
-    
     var navigationBar:CustomNavigationBar = {
         let navigationBar = CustomNavigationBar()
-        navigationBar.setNavigationItems()
-        navigationBar.setClearColorNavigationBar()
         return navigationBar
     }()
-    
-    var pageController: UIPageViewController = {
-        let pager = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        
-        return pager
-        
-    }()
-    
-    override var prefersStatusBarHidden: Bool {
-
-        return UIApplication.shared.statusBarOrientation.isLandscape
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
     
     convenience init(slugArray:[String],currentIndex:Int) {
         self.init()
@@ -67,18 +42,13 @@ class StoryDetailPager: BaseController {
         
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.prepareStorySlugArray()
         self.view.backgroundColor = .white
         
-        NotificationCenter.default.addObserver(self, selector: #selector(videoDidRotate), name: .UIDeviceOrientationDidChange, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(videoDidRotate), name: .UIDeviceOrientationDidChange, object: nil)
         
-    }
-    
-   @objc func videoDidRotate() {
-        self.setNeedsStatusBarAppearanceUpdate()
     }
     
     func prepareStorySlugArray() {
@@ -99,49 +69,54 @@ class StoryDetailPager: BaseController {
             self.prepareViewControllers()
         }
     }
-    
     func findCurrentIndex(currentSlug:String){
         self.currentPage = slugArray.index(of: currentSlug)
     }
     
-    func prepareViewControllers(){
+    func prepareViewControllers() {
         if let currentPageIndex = currentPage{
             let startingViewController = self.loadViewControllerAtIndex(index: currentPageIndex)
+            setViewControllers(viewControllers, direction: .forward, animated: false, completion: nil)
+            isDoubleSided = false
+            dataSource = self
+            delegate = self
             
-            let viewControllers = [startingViewController]
-            pageController.isDoubleSided = false
-            pageController.dataSource = self
-            pageController.delegate = self
-            pageController.setViewControllers(viewControllers, direction:.forward, animated:false, completion:nil)
-            
-            
-            self.pageController.willMove(toParentViewController: self)
-            self.addChildViewController(self.pageController)
-            
-            self.view.addSubview(self.pageController.view)
-            
-            self.pageController.didMove(toParentViewController: self)
-//            createNavigationBar()
+            createNavigationBar()
+            //            navigationBar.setClearColorNavigationBar()
+            navigationBar.setSolidColorNavigationBar()
             
         }
     }
     
     func createNavigationBar(){
+        let item = UINavigationItem()
+        
+        //Create an imageview to display image
+        let starWarsImage = AssetImage.retry.image
+        let headerImageView = UIImageView(image: starWarsImage)
+        headerImageView.contentMode = .scaleAspectFit
+        
+        //Set imageview to newly created navigation item
+        item.titleView = headerImageView
+        
         view.addSubview(navigationBar)
         
         navigationBar.translatesAutoresizingMaskIntoConstraints = false
         navigationBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         navigationBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        navigationBar.heightAnchor.constraint(equalToConstant: 60).isActive = true
         navigationBar.delegate = self
         if #available(iOS 11, *) {
             navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         } else {
             navigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         }
+        
+        navigationBar.items = [item]
     }
 }
 
-extension StoryDetailPager:UIPageViewControllerDataSource,UIPageViewControllerDelegate{
+extension DetailPageController:UIPageViewControllerDataSource,UIPageViewControllerDelegate{
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
@@ -166,7 +141,6 @@ extension StoryDetailPager:UIPageViewControllerDataSource,UIPageViewControllerDe
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
         let vc = viewController as? StoryDetailController
-        
         var index = vc?.pageIndex
         
         if (index == 0 || index == NSNotFound){
@@ -184,26 +158,14 @@ extension StoryDetailPager:UIPageViewControllerDataSource,UIPageViewControllerDe
         let slug = self.slugArray[index]
         
         let detailVC = StoryDetailController(slug:slug)
-        detailVC.navigationDelegate = self
         detailVC.pageIndex = index
         
         return detailVC
     }
 }
 
-extension StoryDetailPager :  UINavigationBarDelegate {
+extension DetailPageController :  UINavigationBarDelegate {
     func position(for bar: UIBarPositioning) -> UIBarPosition {
         return UIBarPosition.topAttached
-    }
-}
-
-extension StoryDetailPager : NavigationDelegate {
-    
-    func setClear() {
-//        self.navigationBar.setClearColorNavigationBar()
-    }
-    
-    func setSolid() {
-//        self.navigationBar.setSolidColorNavigationBar()
     }
 }

@@ -44,6 +44,7 @@ class AuthorStackView:UIStackView{
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isUserInteractionEnabled = true
         translatesAutoresizingMaskIntoConstraints = false
         createAuthorStackView()
         

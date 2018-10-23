@@ -11,8 +11,6 @@ import Quintype
 
 
 class AuthorController: BaseController,AuthorApiMangerDelegate {
-   
-    
     
     var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -37,14 +35,18 @@ class AuthorController: BaseController,AuthorApiMangerDelegate {
         return refreshControl
     }()
     
+    lazy var navigationBar:CustomNavigationBar = {
+        let navigationBar = CustomNavigationBar(delegate: self)
+        navigationBar.setSolidColorNavigationBar()
+        navigationBar.setBackNavigationBarButton()
+        return navigationBar
+    }()
     
     var authorId:Int!
     
     var author:Author?{
         didSet{
             print("Author detail fetched")
-//            self.collectionView.reloadData()
-//            self.collectionView.reloadSections(IndexSet.init(integer: 0))
             self.collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
         }
     }
@@ -133,11 +135,12 @@ class AuthorController: BaseController,AuthorApiMangerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        createNavigationBar()
         self.addStateHandlingView(in: self.view)
         
         self.view.addSubview(collectionView)
         collectionView.addSubview(refreshControl)
-        collectionView.fillSuperview()
+        collectionView.anchor(navigationBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -290,5 +293,37 @@ extension AuthorController:UICollectionViewDelegate,UICollectionViewDataSource,U
     
     func getMoreData(){
         apiManager.getStoriesForAuthor(authorId: self.authorId, controller: self)
+    }
+}
+
+extension AuthorController{
+    
+    func createNavigationBar(){
+        view.addSubview(navigationBar)
+        
+        navigationBar.translatesAutoresizingMaskIntoConstraints = false
+        navigationBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        navigationBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        navigationBar.delegate = self
+        if #available(iOS 11, *) {
+            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        } else {
+            navigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        }
+    }
+}
+
+extension AuthorController: UINavigationBarDelegate{
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return UIBarPosition.topAttached
+    }
+}
+
+extension AuthorController: NavigationItemDelegate {
+    func searchBarButtonPressed(){
+        
+    }
+    func hamburgerBarButtonPressed(){
+        
     }
 }

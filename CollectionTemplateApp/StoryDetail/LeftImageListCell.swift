@@ -198,7 +198,7 @@ class LeftImageListCell: BaseCollectionCell {
         gifImageView.image?.withRenderingMode(.alwaysTemplate)
         
         
-        gifImageView.kf.setImage(with: Bundle.main.url(forResource: "liveblog", withExtension: "gif")!)
+//        gifImageView.kf.setImage(with: Bundle.main.url(forResource: "liveblog", withExtension: "gif")!)
         
         let imageAttrachmentString =  NSAttributedString(attachment: textAttachment)
         let finalAttributtedStringWithImage = NSMutableAttributedString(attributedString:imageAttrachmentString)

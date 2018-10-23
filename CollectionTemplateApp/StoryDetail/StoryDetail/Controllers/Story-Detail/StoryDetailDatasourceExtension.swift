@@ -325,7 +325,7 @@ extension StoryDetailDataSourceAndDelegate:UIViewControllerTransitioningDelegate
 }
 
 
-extension StoryDetailDataSourceAndDelegate:AuthorElementCellDelegate{
+extension StoryDetailDataSourceAndDelegate:AuthorElementCellDelegate , StoryHeadlineCellDelegate{
     
     func authorPressedAt(index:Int){
         
@@ -339,6 +339,15 @@ extension StoryDetailDataSourceAndDelegate:AuthorElementCellDelegate{
             controller.navigationController?.pushViewController(explainerPreviewController, animated: true)
         }
         
+    }
+    
+    func authorImagePressed(){
+        if (self.story?.authors.count ?? 0) > 0{
+            if let author = self.story?.authors.first,let authorId = author.id?.intValue{
+                let explainerPreviewController = AuthorController(authorId: authorId)
+                controller.navigationController?.pushViewController(explainerPreviewController, animated: true)
+            }
+        }
     }
   
 }

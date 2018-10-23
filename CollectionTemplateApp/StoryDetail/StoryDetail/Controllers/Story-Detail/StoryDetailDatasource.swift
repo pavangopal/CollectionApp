@@ -203,7 +203,7 @@ class StoryDetailDataSourceAndDelegate:NSObject,UICollectionViewDataSource,UICol
             cell = collectionView.dequeueReusableCell(ofType: StoryHeadlineCell.self, for: indexPath)
             
             let currentCell = cell as? StoryHeadlineCell
-            
+            currentCell?.storyHeadlineDelegate = self
             currentCell?.configure(data: self.story)
             
             

@@ -10,7 +10,14 @@ import Foundation
 import UIKit
 import Quintype
 
+protocol StoryHeadlineCellDelegate:class {
+    func authorImagePressed()
+}
+
 class StoryHeadlineCell: BaseCollectionCell {
+    
+    weak var storyHeadlineDelegate:StoryHeadlineCellDelegate?
+    
     lazy var sectionStackView = SectionStackView(frame: .zero)
     lazy var headlineSubHealineStackView = HeadlineSubHealineStackView(frame: .zero)
     lazy var authorStackView = AuthorStackView(frame: .zero)
@@ -24,11 +31,11 @@ class StoryHeadlineCell: BaseCollectionCell {
     
     override func setUpViews() {
         contentView.backgroundColor = .white
+        
         contentView.addSubview(containerView)
         containerView.addSubview(sectionStackView)
         containerView.addSubview(headlineSubHealineStackView)
         containerView.addSubview(authorStackView)
-//        containerView.addSubview(lineView)
         
         containerView.fillSuperview()
         
@@ -37,8 +44,6 @@ class StoryHeadlineCell: BaseCollectionCell {
         headlineSubHealineStackView.anchor(sectionStackView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 0)
         
         authorStackView.anchor(headlineSubHealineStackView.bottomAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 10, rightConstant: 10, widthConstant: 0, heightConstant: 0)
-
-//        lineView.anchor(nil, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 1)
     }
     
     override func configure(data: Any?) {
@@ -53,8 +58,20 @@ class StoryHeadlineCell: BaseCollectionCell {
         
         sectionStackView.sectionNameLabel.attributedText = NSAttributedString(string: story.sections.first?.display_name ?? "", attributes: [NSAttributedStringKey.font : FontService.shared.homeSectionFont,NSAttributedStringKey.foregroundColor:ThemeService.shared.theme.primaryTextColor])
         
-        authorStackView.authorNameLabel.text = story.author_name
+        authorStackView.authorNameLabel.text = story.authors.first?.name
+        
+        if let urlString = story.authors.first?.avatar_url{
+         authorStackView.authorImageView.loadImageFromUrl(url: URL(string: urlString))
+        }
+        
         authorStackView.publishTimeLabel.text = story.published_at?.convertTimeStampToDate
+        let tapGuesture = UITapGestureRecognizer(target: self, action: #selector(self.authorImagePressed))
+        
+        authorStackView.addGestureRecognizer(tapGuesture)
+    }
+    
+    @objc func authorImagePressed(){
+        storyHeadlineDelegate?.authorImagePressed()
     }
     
 }

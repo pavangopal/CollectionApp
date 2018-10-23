@@ -121,6 +121,7 @@ class HomeController: BaseButtonBarPagerTabStripViewController<MenuCell>,
         menuArray?.forEach({ (menu) in
             
             let pagerController = SectionController(slug: menu.section_slug ?? "")
+            pagerController.additionalSafeAreaInsets.bottom = 64
             viewControllerCollection.append(pagerController)
             return
             

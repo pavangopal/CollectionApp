@@ -22,8 +22,9 @@ class DetailPageController : UIPageViewController{
             self.prepareViewControllers()
         }
     }
-    var navigationBar:CustomNavigationBar = {
-        let navigationBar = CustomNavigationBar()
+    
+   lazy var navigationBar:CustomNavigationBar = {
+        let navigationBar = CustomNavigationBar(delegate: self)
         return navigationBar
     }()
     
@@ -167,5 +168,14 @@ extension DetailPageController:UIPageViewControllerDataSource,UIPageViewControll
 extension DetailPageController :  UINavigationBarDelegate {
     func position(for bar: UIBarPositioning) -> UIBarPosition {
         return UIBarPosition.topAttached
+    }
+}
+
+extension DetailPageController : NavigationItemDelegate{
+    @objc func searchBarButtonPressed(){
+        
+    }
+    @objc func hamburgerBarButtonPressed(){
+        
     }
 }

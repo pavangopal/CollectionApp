@@ -98,6 +98,7 @@ extension StoryDetailDataSourceAndDelegate{
                 }
         }
     }
+    func didSelectCarousalStoryAtIndex(index: Int,storyArray:[StoryViewModel]){}
     
     func shouldNavigateTo(controller:UIViewController){
         self.controller.present(controller, animated: true, completion: nil)

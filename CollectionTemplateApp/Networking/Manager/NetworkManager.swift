@@ -50,8 +50,8 @@ class NetworkManager {
     
     func startFetch(slug:String,limit:Int,offset:Int) {
         
-        if  page.status == Page.PagingStatus.Paging ||
-            page.status == Page.PagingStatus.LastPage
+        if  page.status == Page.PagingStatus.Paging //||
+//            page.status == Page.PagingStatus.LastPage
         {return}
         
         print("Page Number :: \((page.offset/page.limit)*1)")

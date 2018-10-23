@@ -159,12 +159,12 @@ class SearchController: BaseController {
         collectionView.register(cellClass: SearchCountCell.self)
         let searchCell = SearchCell.init(frame: CGRect.zero)
         sizingCells[searchLayoutType.searchCell.rawValue] = searchCell
-        
  
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = false
         self.navigationItem.titleView = searchBar
         self.navigationController?.navigationBar.subviews.forEach({ (view) in
             if view.accessibilityIdentifier == "navigarionBottomLine"{
@@ -176,6 +176,7 @@ class SearchController: BaseController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        self.navigationController?.navigationBar.isHidden = true
         self.navigationItem.titleView = nil
         self.navigationController?.navigationBar.subviews.forEach({ (view) in
             if view.accessibilityIdentifier == "navigarionBottomLine"{

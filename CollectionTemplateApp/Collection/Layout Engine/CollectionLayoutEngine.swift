@@ -10,8 +10,8 @@ import Foundation
 import Quintype
 
 class CollectionLayoutEngine {
-    static let shared = CollectionLayoutEngine()
-    private init(){}
+//    static let shared = CollectionLayoutEngine()
+//    private init(){}
     
     static var targetWidth = UIScreen.main.bounds.width - 30
     
@@ -439,7 +439,9 @@ class CollectionLayoutEngine {
     
     private func getTitleLayout(collectionItem:CollectionItem)->SectionLayout?{
         if let innerCollection = collectionItem.collection{
-            return SectionLayout(homeCellType: HomeCellType.collectionTitleCell, data: innerCollection.name ?? "")
+            let sectionLayout = SectionLayout(homeCellType: HomeCellType.collectionTitleCell, data: innerCollection.name ?? "")
+            sectionLayout.collection = innerCollection
+            return sectionLayout
         }
         return nil
     }

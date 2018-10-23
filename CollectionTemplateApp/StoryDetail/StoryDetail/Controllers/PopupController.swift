@@ -11,6 +11,13 @@ import WebKit
 
 class PopupController: UIViewController,WKUIDelegate {
     
+    var activityIndicator:UIActivityIndicatorView = {
+       let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        return activityIndicator
+    }()
+    
     var popWebview:WKWebView?
     var progressView: UIProgressView!
     var shouldShowLogo:Bool = false
@@ -49,7 +56,7 @@ class PopupController: UIViewController,WKUIDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        themeNavigation()
+//        themeNavigation()
     }
     func addCancel(){
         let cancelItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelTapped))
@@ -81,6 +88,8 @@ class PopupController: UIViewController,WKUIDelegate {
         progressView = UIProgressView(progressViewStyle: .default)
         progressView.sizeToFit()
         view.addSubview(progressView)
+        view.addSubview(activityIndicator)
+        activityIndicator.anchorCenterSuperview()
         
         progressView.anchor(view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 2)
         popWebview?.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
@@ -107,7 +116,9 @@ class PopupController: UIViewController,WKUIDelegate {
     override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "estimatedProgress" {
             progressView.progress = Float((popWebview?.estimatedProgress) ?? 0)
-            
+            if progressView.progress == 1{
+             activityIndicator.stopAnimating()
+            }
         }
     }
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {

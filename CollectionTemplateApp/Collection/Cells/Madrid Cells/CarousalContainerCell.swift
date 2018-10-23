@@ -9,6 +9,7 @@
 import UIKit
 import Quintype
 
+
 class CarousalContainerCell: BaseCollectionCell {
     
     lazy var collectionView:UICollectionView = {
@@ -141,6 +142,10 @@ extension CarousalContainerCell : UICollectionViewDelegate,
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         self.pageControl.currentPage = indexPath.row
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.delegate?.didSelectCarousalStoryAtIndex(index: indexPath.row, storyArray: self.carouselModel?.storyViewModel ?? [])
     }
 }
 

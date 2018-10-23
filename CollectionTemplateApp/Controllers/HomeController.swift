@@ -1,226 +1,173 @@
 //
 //  HomeController.swift
-//  MediaOne
+//  TheQuint-Staging
 //
-//  Created by Pavan Gopal on 7/27/18.
+//  Created by Pavan Gopal on 2/20/18.
 //  Copyright © 2018 Pavan Gopal. All rights reserved.
 //
-
 import UIKit
+import XLPagerTabStrip
 import Quintype
 
-final class HomeController: UIViewController {
-    var isLoading = true
+class HomeController: BaseButtonBarPagerTabStripViewController<MenuCell>,
+                        UINavigationBarDelegate,
+                        NavigationItemDelegate {
     
-    enum CellType: String {
-        case Header = "headerCollectionCell"
-        case Default = "defaultStoryCell"
-        case CollectionTitleCell = "collectionTitleCell"
-        case imageTextCell = "ImageTextCell"
-        case fourColumnGridCell = "FourColumnGridCell"
-        case storyListCell = "StoryListCell"
-        case imageStoryListCardCell = "ImageStoryListCardCell"
-        case carousalContainerCell = "CarousalContainerCell"
-        case fullImageSliderCell = "FullImageSliderCell"
-        case linerGalleryCarousalContainer = "LinerGalleryCarousalContainer"
-        case imageStoryListCell = "ImageStoryListCell"
-        case imageTextDescriptionCell = "ImageTextDescriptionCell"
-        case storyListCardCell = "StoryListCardCell"
-    }
+    var menuArray:[Menu]?
+    var viewControllerCollection:[UIViewController] = []
     
-    lazy var collectionView:UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.backgroundColor = UIColor(hexString: "#F5F5F5")
-        return collectionView
+    var sponsoredStoryArray:[Story] = []
+    
+    //Trending-Stories
+    var trendingStoryArray:[Story] = []
+    
+    lazy var navigationBar:CustomNavigationBar = {
+        let navigationBar = CustomNavigationBar(delegate: self)
+        return navigationBar
     }()
     
-    var collectionViewModel:CollectionViewModel?
-    
-    var sectionLayoutArray:[[SectionLayout]] = []
-    
-    
-    init(slug:String){
-        super.init(nibName: nil, bundle: nil)
-        collectionViewModel = CollectionViewModel(slug: "home", delegate: self)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    convenience init(menuArray:[Menu]?){
+        self.init()
+        buttonBarItemSpec = ButtonBarItemSpec.cellClass( width: {(indicatorInfo) -> CGFloat in
+            let title = indicatorInfo.title ?? ""
+            let titleWidth = title.width(font: FontService.shared.getCorrectedFont(fontName: FontFamilyName.OswaldRegular.rawValue, size: 26))
+            
+            if titleWidth < 20{
+                return 80
+            }
+            return  titleWidth + 16
+        })
+        
+        self.menuArray = menuArray
     }
     
     override func viewDidLoad() {
+        if (menuArray?.count)! < 1 {
+            settings.style.buttonBarHeight = 0.2
+        }else{
+            settings.style.buttonBarHeight = 55
+        }
+        
+        self.tabarAnimation()
+        
         super.viewDidLoad()
-        self.view.backgroundColor = .white
-        setUpViews()
-        collectionViewModel?.startFetch()
-        setupNavgationbarForHome()
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-//        self.tabBarController?.tabBar.isHidden = true
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        setupNavgationbarForHome()
-//        self.tabBarController?.tabBar.isHidden = false
         
-    }
-    
-    func setUpViews(){ 
-        
-        self.view.addSubview(collectionView)
-        collectionView.fillSuperview()
-         collectionView.register(CollectionTitleCell.self, forCellWithReuseIdentifier: CellType.CollectionTitleCell.rawValue)
-        
-        collectionView.register(ImageTextCell.self, forCellWithReuseIdentifier: CellType.imageTextCell.rawValue)
-        collectionView.register(FourColumnGridCell.self, forCellWithReuseIdentifier: CellType.fourColumnGridCell.rawValue)
-        collectionView.register(StoryListCell.self, forCellWithReuseIdentifier: CellType.storyListCell.rawValue)
-        collectionView.register(ImageStoryListCardCell.self, forCellWithReuseIdentifier: CellType.imageStoryListCardCell.rawValue)
-        collectionView.register(CarousalContainerCell.self, forCellWithReuseIdentifier: CellType.carousalContainerCell.rawValue)
-        collectionView.register(FullImageSliderCell.self, forCellWithReuseIdentifier: CellType.fullImageSliderCell.rawValue)
-        collectionView.register(LinerGalleryCarousalContainer.self, forCellWithReuseIdentifier: CellType.linerGalleryCarousalContainer.rawValue)
-        collectionView.register(ImageStoryListCell.self, forCellWithReuseIdentifier: CellType.imageStoryListCell.rawValue)
-        collectionView.register(ImageTextDescriptionCell.self, forCellWithReuseIdentifier: CellType.imageTextDescriptionCell.rawValue)
-        collectionView.register(StoryListCardCell.self, forCellWithReuseIdentifier: CellType.storyListCardCell.rawValue)
-        
-        
-        
-    }
-    
-}
+        createNavigationBar()
+        navigationBar.setSolidColorNavigationBar()
 
-
-extension HomeController: UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return sectionLayoutArray.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sectionLayoutArray[section].count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: BaseCollectionCell
-        let layout = self.sectionLayoutArray[indexPath.section][indexPath.row]
+        buttonBarView.frame.origin.y = 64
+        containerView.frame.origin.y = 64
         
-        //Based on What data is passed to Config function
-        //TODO: change different types of data to type Any
+    }
+    override open func configure(cell: MenuCell, for indicatorInfo: IndicatorInfo) {
         
-        switch layout.homeCellType {
-            
-        case .collectionTitleCell:
-
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellType.CollectionTitleCell.rawValue, for: indexPath) as! BaseCollectionCell
-            cell.configure(data: layout.data,associatedMetaData:layout.associatedMetaData)
-
-        case .carousalContainerCell,.linerGalleryCarousalContainer:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as! BaseCollectionCell
-            
-            cell.configure(data: layout.carouselModel,associatedMetaData:layout.associatedMetaData)
-            
-        case .fourColumnGridCell,.imageTextDescriptionCell:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as! BaseCollectionCell
-            
-            cell.configure(data: layout.story,associatedMetaData:layout.associatedMetaData)
-            
-        default:
-            
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as! BaseCollectionCell
-            
-            cell.configure(data: layout.storyViewModel,associatedMetaData:layout.associatedMetaData)
-            
+        cell.menuTitleLabel.text = indicatorInfo.title ?? ""
+        
+        if indicatorInfo.image != nil{
+            cell.imageViewIcon.image = indicatorInfo.image
+            cell.imageViewIcon.highlightedImage = indicatorInfo.highlightedImage
+            cell.menuTitleLabel.text = nil
+        }else{
+            cell.imageViewIcon.image = nil
+            cell.imageViewIcon.highlightedImage = nil
         }
-        
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let layout = self.sectionLayoutArray[indexPath.section][indexPath.row]
-        let width = UIScreen.main.bounds.width - 30
-        let targetSize = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
-    
-        
-        switch layout.homeCellType{
-            
-        case .collectionTitleCell:
-            return CGSize(width: width, height: 50)
-            
-        case .fourColumnGridCell:
-            return CGSize(width: width, height: 300)
-            
-        case .carousalContainerCell,.linerGalleryCarousalContainer:
-            let size = CGSize(width: targetSize.width, height: (layout.carouselModel?.estimatedInnerCellHeight ?? 0) + CGFloat(20))
-            return size
-            
-        default:
-            return layout.storyViewModel?.preferredSize ?? .zero
-        }
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        
-        guard  let layout = self.sectionLayoutArray[section].first else{
-            return .zero
-        }
-        
-        switch layout.collectionLayoutType ?? .UNKNOWN {
-            
-        case .FullscreenLinearGallerySlider:
-            return UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
-            
-        default:
-            return UIEdgeInsets(top: 20, left: 15, bottom: 20, right: 15)
-        }
-        
     }
     
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        //LoadMore
-        let currentOffset = scrollView.contentOffset.y
-        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
-
-        if maximumOffset - currentOffset <= 200.0 {
-            if !isLoading{
-                isLoading = true
-                self.collectionViewModel?.loadNext()
+    func styleButtonBar() {
+        settings.style.buttonBarBackgroundColor = ThemeService.shared.theme.primarySectionColor
+        settings.style.buttonBarItemBackgroundColor = ThemeService.shared.theme.primarySectionColor
+        settings.style.selectedBarBackgroundColor = ThemeService.shared.theme.primaryQuintColor
+        settings.style.buttonBarItemFont = FontService.shared.pagerTopBarMenuFont
+        settings.style.selectedBarHeight = 4
+        settings.style.buttonBarMinimumInteritemSpacing = 15
+        settings.style.buttonBarMinimumLineSpacing = 5
+        settings.style.buttonBarItemTitleColor = .white
+        settings.style.buttonBarItemsShouldFillAvailiableWidth = true
+        settings.style.buttonBarLeftContentInset = 0
+        settings.style.buttonBarRightContentInset = 0
+        
+    }
+    
+    private func tabarAnimation(){
+        self.styleButtonBar()
+        
+        changeCurrentIndexProgressive = {(oldCell: MenuCell?, newCell: MenuCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
+            
+            guard changeCurrentIndex == true else { return }
+            
+            oldCell?.menuTitleLabel.textColor = .white
+            newCell?.menuTitleLabel.textColor = ThemeService.shared.theme.primaryQuintColor
+            oldCell?.imageViewIcon.isHighlighted = false
+            newCell?.imageViewIcon.isHighlighted = true
+            
+            
+            if animated {
+                UIView.animate(withDuration: 0.1, animations: { () -> Void in
+                    newCell?.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+                    oldCell?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+                })
+            }
+            else {
+                newCell?.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+                oldCell?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
             }
         }
+        
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let layout = self.sectionLayoutArray[indexPath.section][indexPath.row]
-        navigateToStory(story: layout.story!, indexPath: indexPath)
+    override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
+        
+        menuArray?.forEach({ (menu) in
+            
+            let pagerController = SectionController(slug: menu.section_slug ?? "")
+            viewControllerCollection.append(pagerController)
+            return
+            
+        })
+        
+        return viewControllerCollection
     }
     
-    func navigateToStory(story:Story,indexPath:IndexPath){
+    
+    override func reloadPagerTabStripView() {
         
-        let storyDetailPager = StoryDetailPager(slugArray: [story.slug ?? ""], currentIndex: 0)
+        if arc4random() % 2 == 0 {
+            pagerBehaviour = .progressive(skipIntermediateViewControllers: arc4random() % 2 == 0 , elasticIndicatorLimit: arc4random() % 2 == 0 )
+        }
+        else {
+            pagerBehaviour = .common(skipIntermediateViewControllers: arc4random() % 2 == 0)
+        }
+        super.reloadPagerTabStripView()
+    }
+    
+    func createNavigationBar(){
+        view.addSubview(navigationBar)
         
-        self.navigationController?.pushViewController(storyDetailPager, animated: true)
+        
+        navigationBar.translatesAutoresizingMaskIntoConstraints = false
+        navigationBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        navigationBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        navigationBar.delegate = self
+        
+        if #available(iOS 11, *) {
+            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        } else {
+            navigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        }
+        
+        navigationBar.setNavigationItems()
+        navigationBar.setSolidColorNavigationBar()
+    }
+    
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return UIBarPosition.topAttached
+    }
+    
+    func searchBarButtonPressed(){
+        
+    }
+    func hamburgerBarButtonPressed(){
         
     }
 }
-
-
-extension HomeController : CollectionViewModelDelegate {
-    
-    func didRecieveData(sectionLayoutArray:[[SectionLayout]]) {
-        self.sectionLayoutArray.append(contentsOf: sectionLayoutArray)
-        self.collectionView.reloadData()
-        isLoading = false
-    }
-    
-}
-
-
-

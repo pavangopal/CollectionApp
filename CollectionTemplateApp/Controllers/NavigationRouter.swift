@@ -9,10 +9,17 @@
 import Foundation
 
 enum RouteType {
+    case StoryPager
     case StoryDetailScreen
     case TagScreen
     case AuthorScreen
     case SectionScreen
+    case SearchScreen
+    
+    func open(){
+        let storyPager = StoryDetailPager(homeLayoutArray: [], currentIndex: 0, currentSlug: nil)
+        
+    }
 }
 
 public typealias ModuleParameters = [String: String]
@@ -24,8 +31,6 @@ protocol ModelType {
     
     func openModule(parameters:ModuleParameters?)
 }
-
-
 
 class NavigationRouter : ModelType {
     var route: RouteType

@@ -21,6 +21,7 @@ class SectionViewModel: ListViewModelModelling{
     }
     
     func startFetch(){
+        state.value = ViewState.loading
         apiManager?.startFetch()
         
     }
@@ -34,7 +35,8 @@ extension SectionViewModel : CollectionApiManagerDelegate {
     func didRecieveData(collectionModel: CollectionModel) {
         
         self.isMoreDataAvailable.value = collectionModel.items.count > 0
-        let layoutArray = CollectionLayoutEngine.shared.makeLayout(collection: collectionModel)
+        let layoutEngine = CollectionLayoutEngine()
+        let layoutArray = layoutEngine.makeLayout(collection: collectionModel)
         state.value = ViewState.loaded(data: layoutArray)
         
     }

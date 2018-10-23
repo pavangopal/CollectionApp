@@ -8,6 +8,7 @@
 
 import UIKit
 import Quintype
+import XLPagerTabStrip
 
 class SectionController:BaseController {
     //MARK: - Views
@@ -36,6 +37,13 @@ class SectionController:BaseController {
         
         return refreshControl
         
+    }()
+    
+    lazy var navigationBar:CustomNavigationBar = {
+        let navigationBar = CustomNavigationBar(delegate: self)
+        navigationBar.setSolidColorNavigationBar()
+        navigationBar.setBackNavigationBarButton()
+        return navigationBar
     }()
     
     //MARK: - Variables
@@ -80,6 +88,7 @@ class SectionController:BaseController {
         }
     }
     
+    
     //MARK: - Functions
     init(slug:String) {
         
@@ -93,21 +102,21 @@ class SectionController:BaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         
+        createNavigationBar()
         createViews()
+        
         setupCollectionViewDataSource()
         self.sectionViewModel = SectionViewModel(slug: self.slug)
         self.sectionViewModel.startFetch()
-        
     }
     
     private func createViews(){
         self.view.addSubview(collectionView)
-        collectionView.fillSuperview()
+        collectionView.anchor(navigationBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         collectionView.refreshControl = refreshControl
         addStateHandlingView(in: self.view)
-//        createNavigationBar()
-        
     }
     
     private func setupCollectionViewDataSource(){
@@ -136,19 +145,17 @@ class SectionController:BaseController {
         self.sectionViewModel.loadNext()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        setSolidNavigationBar()
-    }
-
+   
 }
 
 extension SectionController: ControllerDataSourcing {
     func didSelectItem(sectionLayoutArray: [[SectionLayout]], indexPath: IndexPath) {
-        let slugArray = sectionLayoutArray.flatMap({$0.compactMap({$0.story?.slug})})
-        let controller = StoryDetailPager(slugArray: slugArray, currentIndex: 3)
-        
+
+        let flatSectionArray = sectionLayoutArray.flatMap({$0})
+        let currentIndex = flatSectionArray.firstIndex(where: {$0.story?.slug == sectionLayoutArray[indexPath.section][indexPath.row].story?.slug})
+        let controller = StoryDetailPager(homeLayoutArray: flatSectionArray, currentIndex: currentIndex ?? 0, currentSlug: sectionLayoutArray[indexPath.section][indexPath.row].story?.slug ?? "")
         self.navigationController?.pushViewController(controller, animated: true)
+        
     }
     
     
@@ -162,3 +169,43 @@ extension SectionController: ControllerDataSourcing {
     
 }
 
+
+extension SectionController: IndicatorInfoProvider {
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        
+        return IndicatorInfo(title:slug.capitalized, image:nil, highlightedImage: nil)
+    }
+}
+
+
+extension SectionController {
+    
+    func createNavigationBar(){
+        view.addSubview(navigationBar)
+        
+        navigationBar.translatesAutoresizingMaskIntoConstraints = false
+        navigationBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        navigationBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        navigationBar.delegate = self
+        if #available(iOS 11, *) {
+            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        } else {
+            navigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        }
+    }
+}
+
+extension SectionController: UINavigationBarDelegate{
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return UIBarPosition.topAttached
+    }
+}
+
+extension SectionController: NavigationItemDelegate {
+    func searchBarButtonPressed(){
+        
+    }
+    func hamburgerBarButtonPressed(){
+        
+    }
+}

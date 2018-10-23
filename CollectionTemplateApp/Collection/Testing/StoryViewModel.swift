@@ -39,6 +39,8 @@ enum ImageTextAlignment{
 
 class StoryViewModel: StoryViewModelling {
     
+    var storySlug:String?
+    
     var sectionName:NSAttributedString?
     
     var headline:NSAttributedString?
@@ -59,7 +61,7 @@ class StoryViewModel: StoryViewModelling {
     required init(story:Story,
                   assocatedMetadata:AssociatedMetadata,
                   cellType:HomeCellType) {
-        
+        self.storySlug = story.slug
         generateStoryViewProperties(associatedMetaData: assocatedMetadata, story: story, cellType: cellType)
         preferredSize =  HomeCellSizeCalculator.calculatedHeightForImageStoryListCardCell(storyViewModel: self, targetWidth: CollectionLayoutEngine.targetWidth, cellType: cellType)
     }

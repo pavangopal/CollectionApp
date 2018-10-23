@@ -24,7 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Quintype.initWithBaseUrl(baseURL: appConfig.baseURL)
 
         loadInitialViewController()
-        UIApplication.shared.statusBarStyle = .lightContent
 
         return true
     }

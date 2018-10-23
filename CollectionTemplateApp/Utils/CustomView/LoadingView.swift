@@ -19,7 +19,7 @@ class LoadingView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
+        self.backgroundColor = UIColor(hexString: "#F4F4F4")
         self.setUpView()
     }
     

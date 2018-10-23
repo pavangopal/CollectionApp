@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import Quintype
 
 class CustomTabBarController: UITabBarController {
     
     var navigationControllerContainer:[UINavigationController] = []
+    let menuArray = Quintype.publisherConfig?.layout?.menu
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,12 +28,28 @@ class CustomTabBarController: UITabBarController {
             switch item{
                 
             case .Home:
-                let homeController = SectionController(slug: "home")
+                
+                var validSectionArray = menuArray?.filter({$0.section_slug != nil})
+                
+                let homeMenu = self.createHomeMenu()
+                
+                if (validSectionArray?.count ?? 0) > 0{
+                    validSectionArray?.insert(homeMenu, at: 0)
+                }
+                
+                let homeController = HomeController(menuArray: validSectionArray)
                 let homeNavigationController = UINavigationController(rootViewController: homeController)
                 homeNavigationController.navigationBar.isHidden = true
                 homeController.tabBarItem = UITabBarItem(title: item.rawValue, image: item.icon, tag: item.hashValue)
                 
-                navigationControllerContainer.append(homeNavigationController)
+                self.navigationControllerContainer.append(homeNavigationController)
+                
+//                let homeController = SectionController(slug: "home")
+//                let homeNavigationController = UINavigationController(rootViewController: homeController)
+//                homeNavigationController.navigationBar.isHidden = true
+//                homeController.tabBarItem = UITabBarItem(title: item.rawValue, image: item.icon, tag: item.hashValue)
+//
+//                navigationControllerContainer.append(homeNavigationController)
                 
             case .Settings:
                 let settingVC = SettingsController()
@@ -46,7 +64,17 @@ class CustomTabBarController: UITabBarController {
         viewControllers = navigationControllerContainer
         tabBar.clipsToBounds = true
     }
-
+    
+    func createHomeMenu() -> Menu {
+        
+        let homeMenu = Menu()
+        
+        homeMenu.section_slug = "home"
+        homeMenu.section_name = "Home"
+        homeMenu.title = "Home"
+        
+        return homeMenu
+    }
 }
 
 enum TabbarItems:String{

@@ -20,6 +20,7 @@ class LoadingCell: BaseCollectionCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        contentView.backgroundColor = .clear
         contentView.clipsToBounds = true
         contentView.addSubview(activityIndicatorView)
         activityIndicatorView.anchorCenterSuperview()

@@ -30,7 +30,7 @@ class TagController:BaseController {
         collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = UIColor(hexString: "#F4F4F4")
         
-        collectionView.contentInsetAdjustmentBehavior = .automatic
+        collectionView.contentInsetAdjustmentBehavior = .always
         
         return collectionView
         
@@ -45,7 +45,13 @@ class TagController:BaseController {
         refreshControl.addTarget(self, action: #selector(self.refreshData(sender:)), for: .valueChanged)
         
         return refreshControl
-        
+    }()
+    
+    lazy var navigationBar:CustomNavigationBar = {
+        let navigationBar = CustomNavigationBar(delegate: self)
+        navigationBar.setSolidColorNavigationBar()
+        navigationBar.setBackNavigationBarButton()
+        return navigationBar
     }()
     
     //MARK: - Variables
@@ -111,16 +117,15 @@ class TagController:BaseController {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setSolidNavigationBar()
-    }
     
-   private func createViews(){
+    private func createViews(){
+        createNavigationBar()
         self.view.addSubview(collectionView)
-        collectionView.fillSuperview()
+        
+        collectionView.anchor(navigationBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         collectionView.refreshControl = refreshControl
         addStateHandlingView(in: self.view)
+        
     }
     
     private func setupCollectionViewDataSource(){
@@ -169,3 +174,35 @@ extension TagController: ControllerDataSourcing {
     
 }
 
+
+extension TagController{
+    
+    func createNavigationBar(){
+        view.addSubview(navigationBar)
+        
+        navigationBar.translatesAutoresizingMaskIntoConstraints = false
+        navigationBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        navigationBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        navigationBar.delegate = self
+        if #available(iOS 11, *) {
+            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        } else {
+            navigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        }
+    }
+}
+
+extension TagController: UINavigationBarDelegate{
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return UIBarPosition.topAttached
+    }
+}
+
+extension TagController:NavigationItemDelegate {
+    func searchBarButtonPressed(){
+        
+    }
+    func hamburgerBarButtonPressed(){
+        
+    }
+}

@@ -74,18 +74,15 @@ class CollectionViewDataSource: NSObject,
             
         case .carousalContainerCell,.linerGalleryCarousalContainer:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as! BaseCollectionCell
-            
+            cell.delegate = self
             cell.configure(data: layout.carouselModel,associatedMetaData:layout.associatedMetaData)
             
         case .fourColumnGridCell,.imageTextDescriptionCell:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as! BaseCollectionCell
-            
             cell.configure(data: layout.story,associatedMetaData:layout.associatedMetaData)
             
         default:
-            
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: layout.homeCellType.rawValue, for: indexPath) as! BaseCollectionCell
-            
             cell.configure(data: layout.storyViewModel,associatedMetaData:layout.associatedMetaData)
             
         }
@@ -137,11 +134,15 @@ class CollectionViewDataSource: NSObject,
 }
 //MARK: - Delegate methods
 
-extension CollectionViewDataSource : UICollectionViewDelegate{
+extension CollectionViewDataSource : UICollectionViewDelegate, BaseCollectionCellDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        self.controllerDataSource.shouldNavigate()
+        if let collection = sectionLayoutArray[indexPath.section][indexPath.row].collection,let controller = controllerDataSource as? UIViewController{
+            let sectionController = SectionController(slug: collection.slug ?? "")
+            controller.navigationController?.pushViewController(sectionController, animated: true)
+        }else{
+            self.controllerDataSource?.didSelectItem(sectionLayoutArray: sectionLayoutArray, indexPath: indexPath)
+        }
         
-        self.controllerDataSource?.didSelectItem(sectionLayoutArray: sectionLayoutArray, indexPath: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
@@ -149,7 +150,7 @@ extension CollectionViewDataSource : UICollectionViewDelegate{
             
         case UICollectionElementKindSectionFooter:
             
-            if indexPath.section == sectionLayoutArray.count - 1 && (controllerDataSource?.canLoadNextPage() ?? false){
+            if indexPath.section == sectionLayoutArray.count - 1 && (controllerDataSource?.canLoadNextPage() ?? false) {
                 controllerDataSource?.loadNextPage()
             }
             
@@ -158,6 +159,17 @@ extension CollectionViewDataSource : UICollectionViewDelegate{
             break
         }
     }
+    
+    func didSelectCarousalStoryAtIndex(index: Int, storyArray: [StoryViewModel]) {
+        if let sectionController = controllerDataSource as? UIViewController {
+            let controller = StoryDetailPager(slugArray: storyArray.map({$0.storySlug ?? ""}), currentIndex: index)
+            sectionController.navigationController?.pushViewController(controller, animated: true)
+        }
+//       self.controllerDataSource?.didSelectItem(sectionLayoutArray: sectionLayoutArray, indexPath: indexPath)
+    }
+    
+    func didCalculateSize(indexPath:IndexPath,size:CGSize,elementType:storyDetailLayoutType){}
+    func shouldNavigateTo(controller:UIViewController){}
 }
 
 //MARK: - Supplimentary View methods

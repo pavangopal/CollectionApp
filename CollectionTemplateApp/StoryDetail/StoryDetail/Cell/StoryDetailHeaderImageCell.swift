@@ -75,7 +75,7 @@ class StoryDetailHeaderImageCell: BaseCollectionCell {
         heroImageCaptionContainerViewBottomConstraint = heroImageCaptionContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
         heroImageCaptionContainerViewBottomConstraint?.isActive = true
         
-        imageCaptionTextView.anchor(heroImageCaptionContainerView.topAnchor, left: heroImageCaptionContainerView.leftAnchor, bottom: heroImageCaptionContainerView.bottomAnchor, right: heroImageCaptionContainerView.rightAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 5, rightConstant: 10, widthConstant: 0, heightConstant: 0)
+        imageCaptionTextView.anchor(heroImageCaptionContainerView.topAnchor, left: heroImageCaptionContainerView.leftAnchor, bottom: heroImageCaptionContainerView.bottomAnchor, right: heroImageCaptionContainerView.rightAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 0)
 
         
         //Only done here for fixed Elements else should be done in configure

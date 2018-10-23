@@ -26,6 +26,7 @@ extension UIViewController {
             addChildViewController(viewController)
             view.addSubview(viewController.view)
             viewController.view.fillSuperview()
+//            viewController.view.anchor(self.view.safeAreaLayoutGuide.topAnchor, left: self.view.safeAreaLayoutGuide.leftAnchor, bottom: self.view.safeAreaLayoutGuide.bottomAnchor, right: self.view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
             viewController.didMove(toParentViewController: self)
         }
     }

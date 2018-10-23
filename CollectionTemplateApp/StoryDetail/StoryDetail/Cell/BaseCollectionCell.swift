@@ -56,7 +56,9 @@ protocol BaseCollectionCellDelegate:class {
     
     func didCalculateSize(indexPath:IndexPath,size:CGSize,elementType:storyDetailLayoutType)
     func shouldNavigateTo(controller:UIViewController)
+    func didSelectCarousalStoryAtIndex(index: Int,storyArray:[StoryViewModel])
 }
+
 
 class BaseCollectionCell: UICollectionViewCell {
     var homeCellDefaultPadding:CGFloat = 10

@@ -45,8 +45,8 @@ extension TagViewModel: TagApiManagerDelegate {
     func didLoadData(stories: [Story]) {
         
         isMoreDataAvailable.value = stories.count > 0
-        
-        let layout = CollectionLayoutEngine.shared.makeLayout(stories: stories)
+        let layoutEngine = CollectionLayoutEngine()
+        let layout = layoutEngine.makeLayout(stories: stories)
         state.value = ViewState.loaded(data: layout)
     }
     

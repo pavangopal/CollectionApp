@@ -14,7 +14,6 @@ class StoryDetailController: BaseController {
     
     var segmentContainerViewHeightAnchor : NSLayoutConstraint?
     var pageIndex:Int?
-    weak var navigationDelegate:NavigationDelegate?
     
     var segmentContainerView:UIView = {
         let view  = UIView()
@@ -57,8 +56,8 @@ class StoryDetailController: BaseController {
         
     }()
     
-    var navigationBar:CustomNavigationBar = {
-        let navigationBar = CustomNavigationBar()
+   lazy var navigationBar:CustomNavigationBar = {
+        let navigationBar = CustomNavigationBar(delegate: self)
         return navigationBar
     }()
     
@@ -84,9 +83,6 @@ class StoryDetailController: BaseController {
                 
                 //store-StoryForViewCounterView
                 self.getViewCounterView(layoutObject:unwrappedLayout)
-                
-                
-//                adjustCollectionViewContentOffset(storyLayoutWrapper: unwrappedLayout)
                 
                 if self.refreshControl.isRefreshing{
                     self.refreshControl.endRefreshing()
@@ -181,6 +177,7 @@ class StoryDetailController: BaseController {
         
 //        self.view.backgroundColor = .white
         self.addStateHandlingView(in: self.view)
+        
         self.createNavigationBar()
         navigationBar.setSolidColorNavigationBar()
     }
@@ -227,23 +224,22 @@ class StoryDetailController: BaseController {
     func createViews(){
         
         
-//        self.view.backgroundColor = .white
-        
         if story?.story_template == StoryTemplet.Elsewhere{
-            collectionView.contentInsetAdjustmentBehavior = .always
+            
             if let externalStoryUrl = story?.storyMetadata?.reference_url{
                 if let externalUrl = URL(string: externalStoryUrl){
                     let externalUrlRequest = URLRequest(url: externalUrl)
-                    let externalStoryController = PopupController(customWebview: externalWebView(url:externalUrlRequest ))
+                    let webView = externalWebView(url:externalUrlRequest)
+                    webView.scrollView.contentInset = UIEdgeInsets(top: 44, left: 0, bottom: 0, right: 0)
+                    let externalStoryController = PopupController(customWebview: webView)
+                    
                     self.addViewController(anyController: externalStoryController)
+                    self.view.bringSubview(toFront: navigationBar)
                     return
                     
                 }
             }
         }
-        
-//        self.view.backgroundColor = .red
-        
         
         view.addSubview(collectionView)
         view.addSubview(segmentContainerView)
@@ -275,22 +271,6 @@ class StoryDetailController: BaseController {
         
         
         
-    }
-    
-    private func adjustCollectionViewContentOffset(storyLayoutWrapper:StoryLayoutWrapper){
-        
-        if let _ = storyLayoutWrapper.supplementaryView {
-
-//            navigationBar.setClearColorNavigationBar()
-//            additionalSafeAreaInsets.top = 0
-            navigationBar.isHidden = true
-            collectionView.contentInsetAdjustmentBehavior = .never
-        }else{
-//            navigationBar.isHidden = false
-//            navigationBar.setSolidColorNavigationBar()
-//            additionalSafeAreaInsets.top = 44
-            collectionView.contentInsetAdjustmentBehavior = .never
-        }
     }
     
     func setupCollectionViewDataSource(storyLayoutWrapper:StoryLayoutWrapper){
@@ -448,8 +428,6 @@ extension StoryDetailController{
         } else {
             navigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         }
-        
-        navigationBar.setNavigationItems()
     }
 }
 
@@ -459,3 +437,11 @@ extension StoryDetailController: UINavigationBarDelegate{
     }
 }
 
+extension StoryDetailController:NavigationItemDelegate {
+    func searchBarButtonPressed(){
+        
+    }
+    func hamburgerBarButtonPressed(){
+        
+    }
+}

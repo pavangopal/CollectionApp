@@ -9,11 +9,6 @@
 import UIKit
 import Quintype
 
-protocol NavigationDelegate:class {
-    func setClear()
-    func setSolid()
-}
-
 class StoryDetailPager: BaseController {
     
     let screenBounds  = UIScreen.main.bounds
@@ -29,10 +24,9 @@ class StoryDetailPager: BaseController {
         }
     }
     
-    var navigationBar:CustomNavigationBar = {
-        let navigationBar = CustomNavigationBar()
-        navigationBar.setNavigationItems()
-        navigationBar.setClearColorNavigationBar()
+   lazy var navigationBar:CustomNavigationBar = {
+        let navigationBar = CustomNavigationBar(delegate: self)
+    
         return navigationBar
     }()
     
@@ -75,6 +69,9 @@ class StoryDetailPager: BaseController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(videoDidRotate), name: .UIDeviceOrientationDidChange, object: nil)
         
+        self.createNavigationBar()
+        navigationBar.setBackNavigationBarButton()
+        navigationBar.setClearColorNavigationBar()
     }
     
    @objc func videoDidRotate() {
@@ -121,8 +118,6 @@ class StoryDetailPager: BaseController {
             self.view.addSubview(self.pageController.view)
             
             self.pageController.didMove(toParentViewController: self)
-//            createNavigationBar()
-            
         }
     }
     
@@ -184,7 +179,6 @@ extension StoryDetailPager:UIPageViewControllerDataSource,UIPageViewControllerDe
         let slug = self.slugArray[index]
         
         let detailVC = StoryDetailController(slug:slug)
-        detailVC.navigationDelegate = self
         detailVC.pageIndex = index
         
         return detailVC
@@ -197,13 +191,12 @@ extension StoryDetailPager :  UINavigationBarDelegate {
     }
 }
 
-extension StoryDetailPager : NavigationDelegate {
-    
-    func setClear() {
-//        self.navigationBar.setClearColorNavigationBar()
+
+extension StoryDetailPager : NavigationItemDelegate{
+    @objc func searchBarButtonPressed(){
+        
     }
-    
-    func setSolid() {
-//        self.navigationBar.setSolidColorNavigationBar()
+    @objc func hamburgerBarButtonPressed(){
+        
     }
 }

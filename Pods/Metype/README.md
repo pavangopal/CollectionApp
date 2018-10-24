@@ -1,2 +1,0 @@
-# metype-ios
-metype-ios

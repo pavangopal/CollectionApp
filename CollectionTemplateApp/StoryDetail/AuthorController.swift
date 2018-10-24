@@ -18,11 +18,11 @@ class AuthorController: BaseController,AuthorApiMangerDelegate {
         
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
-        let view = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         
-        view.alwaysBounceVertical = true
-        view.backgroundColor = .white//UIColor(hexString: "#F4F4F4")
-        return view
+        collectionView.alwaysBounceVertical = true
+        collectionView.backgroundColor = .white//UIColor(hexString: "#F4F4F4")
+        return collectionView
         
     }()
     

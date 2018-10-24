@@ -6,8 +6,8 @@ PODS:
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
   - CHCSVParser (2.1.0)
-  - Crashlytics (3.10.2):
-    - Fabric (~> 1.7.7)
+  - Crashlytics (3.10.7):
+    - Fabric (~> 1.7.11)
   - DTCoreText (1.6.21):
     - DTCoreText/Core (= 1.6.21)
     - DTFoundation/Core (~> 1.7.5)
@@ -25,7 +25,7 @@ PODS:
     - DTFoundation/Core
   - DTFoundation/UIKit (1.7.13):
     - DTFoundation/Core
-  - Fabric (1.7.7)
+  - Fabric (1.7.11)
   - FacebookCore (0.3.3):
     - Bolts (~> 1.9)
     - FBSDKCoreKit (~> 4.36)
@@ -68,42 +68,42 @@ PODS:
   - GoogleToolboxForMac/Defines (2.1.4)
   - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
     - GoogleToolboxForMac/Defines (= 2.1.4)
-  - JWPlayer-SDK (2.9.0)
-  - Kingfisher (4.8.0)
+  - JWPlayer-SDK (3.1.1)
+  - Kingfisher (4.9.0)
   - KingfisherWebP (0.4.1):
     - Kingfisher (~> 4.0)
     - libwebp (>= 0.5.0)
-  - libwebp (0.6.1):
-    - libwebp/core (= 0.6.1)
-    - libwebp/dec (= 0.6.1)
-    - libwebp/demux (= 0.6.1)
-    - libwebp/dsp (= 0.6.1)
-    - libwebp/enc (= 0.6.1)
-    - libwebp/mux (= 0.6.1)
-    - libwebp/utils (= 0.6.1)
-    - libwebp/webp (= 0.6.1)
-  - libwebp/core (0.6.1):
+  - libwebp (1.0.0):
+    - libwebp/core (= 1.0.0)
+    - libwebp/dec (= 1.0.0)
+    - libwebp/demux (= 1.0.0)
+    - libwebp/dsp (= 1.0.0)
+    - libwebp/enc (= 1.0.0)
+    - libwebp/mux (= 1.0.0)
+    - libwebp/utils (= 1.0.0)
+    - libwebp/webp (= 1.0.0)
+  - libwebp/core (1.0.0):
     - libwebp/webp
-  - libwebp/dec (0.6.1):
+  - libwebp/dec (1.0.0):
     - libwebp/core
-  - libwebp/demux (0.6.1):
+  - libwebp/demux (1.0.0):
     - libwebp/core
-  - libwebp/dsp (0.6.1):
+  - libwebp/dsp (1.0.0):
     - libwebp/core
-  - libwebp/enc (0.6.1):
+  - libwebp/enc (1.0.0):
     - libwebp/core
-  - libwebp/mux (0.6.1):
+  - libwebp/mux (1.0.0):
     - libwebp/core
-  - libwebp/utils (0.6.1):
+  - libwebp/utils (1.0.0):
     - libwebp/core
-  - libwebp/webp (0.6.1)
+  - libwebp/webp (1.0.0)
   - Metype (0.1.0)
-  - OneSignal (2.8.5)
-  - Protobuf (3.6.0)
+  - OneSignal (2.8.8)
+  - Protobuf (3.6.1)
   - Quintype (1.0.10):
     - Unbox (= 2.4.0)
-  - TwitterCore (3.1.0)
-  - TwitterKit (3.3.0):
+  - TwitterCore (3.2.0)
+  - TwitterKit (3.4.0):
     - TwitterCore (>= 3.1.0)
   - Unbox (2.4.0)
   - WatchdogInspector (1.3.0)
@@ -127,7 +127,7 @@ DEPENDENCIES:
   - KingfisherWebP
   - Metype (from `https://github.com/quintype/metype-ios.git`, tag `1.0.2`)
   - OneSignal
-  - Quintype (from `https://github.com/quintype/quintype-ios-sdk`, tag `3.0.5`)
+  - Quintype (from `https://github.com/quintype/quintype-ios-sdk`, tag `3.0.6`)
   - TwitterKit
   - WatchdogInspector
   - XLPagerTabStrip (~> 8.0)
@@ -174,7 +174,7 @@ EXTERNAL SOURCES:
     :tag: 1.0.2
   Quintype:
     :git: https://github.com/quintype/quintype-ios-sdk
-    :tag: 3.0.5
+    :tag: 3.0.6
 
 CHECKOUT OPTIONS:
   Metype:
@@ -182,15 +182,15 @@ CHECKOUT OPTIONS:
     :tag: 1.0.2
   Quintype:
     :git: https://github.com/quintype/quintype-ios-sdk
-    :tag: 3.0.5
+    :tag: 3.0.6
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   CHCSVParser: 3bcc7bdb72111a31222e95d57eacceefe4e537e8
-  Crashlytics: 0360624eea1c978a743feddb2fb1ef8b37fb7a0d
+  Crashlytics: ccaac42660eb9351b9960c0d66106b0bcf99f4fa
   DTCoreText: e5d688cffc9f6a61eddd1a4f94e2046851230de3
   DTFoundation: f03be9fd786f11e505bb8fc44e2a3732bf0917df
-  Fabric: bda89e242bce1b7b8ab264248cf3407774ce0095
+  Fabric: f233c9492b3bbc1f04e3882986740f7988a58edb
   FacebookCore: 9ecbe48cfd37c91a93add7f8cec2b4a2c50a1eec
   FacebookShare: 14e88f2dcc3a03376304d2a1e10254296076ce88
   FBAudienceNetwork: 34b5ff6fa69ac7306aff6c25e8c3891adc88d446
@@ -205,21 +205,21 @@ SPEC CHECKSUMS:
   Google-Mobile-Ads-SDK: 71c6d3e8d8f52673fa5a83fc0d027623b11fde16
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
-  JWPlayer-SDK: 012bfec60f937e68e070fe6c09fe652e9c4c0a91
-  Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
+  JWPlayer-SDK: 3357bb001145032db8f7975972bc217c7752129f
+  Kingfisher: 64539b51826b778206daa6ed815d12653caa69dd
   KingfisherWebP: 3cf59fe4c258efc2084fda65eaae950487048259
-  libwebp: 0f01098c6c17175391af621b2f14150f3ca16e16
+  libwebp: d7e0c95fe97245c97e08101eba10702ebb0f6101
   Metype: 4e367f56570b376bada325923326e587a14ea9b0
-  OneSignal: 42dae269c7eca517aee34963820e1eb922390031
-  Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
+  OneSignal: 7d2571e9fce1d961b882e1bd9f1f242802e9c8b1
+  Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   Quintype: c19f2062e5d0696ebc8b78d87c787363232e975a
-  TwitterCore: 644d59e75abccb26cf0a9050d2c4dea0e5412241
-  TwitterKit: a2e60ddcedbf54091eac6f27685ca7a87681e1d7
+  TwitterCore: 8cbc9ad34d91c63a0035ea05bfbfc0d7ca72a28c
+  TwitterKit: bc7bd086b9b724a1d888745a054e1d0b1ecc4f3f
   Unbox: c8b2ab69d3337597b4a3f47a0538807dc12db670
   WatchdogInspector: 439a73b047028a6048a59e56b70fcf11045a6e13
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
   YouTubePlayer: 028451f6772f372d4759866db99824c676ac1473
 
-PODFILE CHECKSUM: 96bf3bf473f06ecd92c4262f06ca2adeec6eb8fe
+PODFILE CHECKSUM: 41d16eb2d0f80f8ec3a392b5d637dc602d3f087e
 
 COCOAPODS: 1.5.3

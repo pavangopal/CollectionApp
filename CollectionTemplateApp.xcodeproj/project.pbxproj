@@ -735,13 +735,13 @@
 		1D15F9E02121B38B004297B2 /* CollectionTemplateApp */ = {
 			isa = PBXGroup;
 			children = (
+				1D15FA842122008A004297B2 /* System Files */,
 				1D07FD6F215A55BC00FE8D48 /* StoryDetail */,
 				1DDECC3A21255C100041F5BF /* Theme And Fonts */,
 				1D15F9E12121B38B004297B2 /* AppDelegate.swift */,
 				1D15FA8321220066004297B2 /* Controllers */,
 				1D6B8DA02122A7D70091D4DB /* Networking */,
 				1D15F9F82121B6E5004297B2 /* Collection */,
-				1D15FA842122008A004297B2 /* System Files */,
 				1D15FA662121B952004297B2 /* Utils */,
 			);
 			path = CollectionTemplateApp;

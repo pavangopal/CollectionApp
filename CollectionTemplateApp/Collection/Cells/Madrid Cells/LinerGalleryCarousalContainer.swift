@@ -102,7 +102,9 @@ UICollectionViewDelegateFlowLayout {
         }
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.delegate?.didSelectCarousalStoryAtIndex(index: indexPath.row, storyArray: self.carouselModel?.storyViewModel ?? [])
+    }
 }
 
 extension LinerGalleryCarousalContainer {

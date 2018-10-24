@@ -24,7 +24,7 @@ class StoryDetailHeaderImageCell: BaseCollectionCell {
         var view = UIView()
         return view
     }()
-   
+    
     var imageCaptionTextView:TTTAttributedLabel = {
         let textView = TTTAttributedLabel(frame: .zero)
         
@@ -75,13 +75,13 @@ class StoryDetailHeaderImageCell: BaseCollectionCell {
         heroImageCaptionContainerViewBottomConstraint = heroImageCaptionContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
         heroImageCaptionContainerViewBottomConstraint?.isActive = true
         
-        imageCaptionTextView.anchor(heroImageCaptionContainerView.topAnchor, left: heroImageCaptionContainerView.leftAnchor, bottom: heroImageCaptionContainerView.bottomAnchor, right: heroImageCaptionContainerView.rightAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 0)
-
+        imageCaptionTextView.anchor(heroImageCaptionContainerView.topAnchor, left: heroImageCaptionContainerView.leftAnchor, bottom: heroImageCaptionContainerView.bottomAnchor, right: heroImageCaptionContainerView.rightAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 5, rightConstant: 10, widthConstant: 0, heightConstant: 0)
+        
         
         //Only done here for fixed Elements else should be done in configure
         self.imageViewHeightConstraint = self.heroImageView.heightAnchor.constraint(equalToConstant: 250)
         self.imageViewHeightConstraint?.priority = UILayoutPriority.defaultLow
-
+        
         heroImageCaptionContainerView.backgroundColor = UIColor.black.withAlphaComponent(0.4)
         imageCaptionTextView.delegate = self
         
@@ -117,7 +117,13 @@ class StoryDetailHeaderImageCell: BaseCollectionCell {
         
         let finalAttributtedString = Helper.combineAttributedStrings(str1: titleAttributtedString, str2: attributtionString, seperator: "<br>",alignment: .left)
         
-        imageCaptionTextView.setText(finalAttributtedString)
+        if finalAttributtedString.length > 0{
+            imageCaptionTextView.setText(finalAttributtedString)
+            heroImageCaptionContainerView.isHidden = false
+        }else{
+            heroImageCaptionContainerView.isHidden = true
+        }
+        
         
     }
     

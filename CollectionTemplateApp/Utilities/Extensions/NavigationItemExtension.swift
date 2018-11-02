@@ -10,7 +10,7 @@ import Quintype
 import UIKit
 import WebKit
 
-extension UIViewController:SideMenuControllerDelegate,UIPopoverPresentationControllerDelegate{
+extension UIViewController : UIPopoverPresentationControllerDelegate {
     
     var rightSearchBarButtonItem:UIBarButtonItem {
         get {
@@ -47,37 +47,7 @@ extension UIViewController:SideMenuControllerDelegate,UIPopoverPresentationContr
         }
     }
     
-    
-    
-    
     @objc func sideMenuButtonPressed(sender:UIBarButtonItem) {
-        
-        if let menuArray = Quintype.publisherConfig?.layout?.menu{
-            
-            let sectionArray = menuArray.filter({$0.section_slug != nil})
-            let linkAray = menuArray.filter({$0.item_type?.lowercased() == "link" && $0.url != "/about-us#download" && $0.url != "https://hindi.thequint.com"})
-            var validSectionArray = sectionArray + linkAray
-            
-            let homeMenu = Menu()
-            
-            homeMenu.section_slug = "home"
-            homeMenu.section_name = "Home"
-            homeMenu.title = "Home"
-            
-            if (validSectionArray.count) > 0{
-                validSectionArray.insert(homeMenu, at: 0)
-            }
-            
-            let sideMenuController = SideMenuController(menuArray: validSectionArray)
-            sideMenuController.delegate = self
-            sideMenuController.modalPresentationStyle = .overFullScreen
-            
-            sideMenuController.dismissCompletionHandler = { () -> Void in
-                self.dismiss(animated: false, completion: nil)
-            }
-            
-            present(sideMenuController, animated: false, completion: nil)
-        }
     }
     
     
@@ -94,7 +64,7 @@ extension UIViewController:SideMenuControllerDelegate,UIPopoverPresentationContr
     }
     
     func setClearNavigationBar(){
-//        let image = UIImage.from(color: UIColor.black.withAlphaComponent(0.1))
+        //        let image = UIImage.from(color: UIColor.black.withAlphaComponent(0.1))
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -106,7 +76,7 @@ extension UIViewController:SideMenuControllerDelegate,UIPopoverPresentationContr
     }
     
     func setSolidNavigationBar(){
-
+        
         self.navigationController?.navigationBar.barTintColor = ThemeService.shared.theme.primarySectionColor
         
         self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
@@ -145,20 +115,20 @@ extension UIViewController:SideMenuControllerDelegate,UIPopoverPresentationContr
     @objc func itemSelectedAtIndex(slug:String,index:Int) {
         Quintype.analytics.trackPageViewSectionVisit(section: slug)
         
-//        if let currentController = self.navigationController?.viewControllers.last{
-//            
-//            if currentController.isKind(of: HomeController.self){
-//                if let homeController = currentController as? HomeController{
-//                    homeController.moveTo(viewController: homeController.viewControllerCollection[index], animated: true)
-//                }
-//            }else{
-//                
-//                let storyDetailController = HomeController(slug: slug)
-//                self.navigationController?.pushViewController(storyDetailController, animated: true)
-//                
-//            }
-//            
-//        }
+        //        if let currentController = self.navigationController?.viewControllers.last{
+        //
+        //            if currentController.isKind(of: HomeController.self){
+        //                if let homeController = currentController as? HomeController{
+        //                    homeController.moveTo(viewController: homeController.viewControllerCollection[index], animated: true)
+        //                }
+        //            }else{
+        //
+        //                let storyDetailController = HomeController(slug: slug)
+        //                self.navigationController?.pushViewController(storyDetailController, animated: true)
+        //
+        //            }
+        //
+        //        }
     }
     func getWebview(url:String) -> WKWebView{
         
@@ -206,5 +176,18 @@ extension UIImage {
         UIGraphicsEndImageContext()
         
         return img!
+    }
+}
+
+public extension Sequence {
+    func group<U: Hashable>(by key: (Iterator.Element) -> U) -> [U:[Iterator.Element]] {
+        var categories: [U: [Iterator.Element]] = [:]
+        for element in self {
+            let key = key(element)
+            if case nil = categories[key]?.append(element) {
+                categories[key] = [element]
+            }
+        }
+        return categories
     }
 }

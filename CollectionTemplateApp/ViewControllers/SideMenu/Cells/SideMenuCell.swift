@@ -13,10 +13,10 @@ class SideMenuCell: UITableViewCell {
 
     var menuTitleLabel: InsetLabel = {
        let label = InsetLabel()
-        label.insets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-        label.textAlignment = .center
-        label.textColor = .white
-        label.font = FontService.shared.getCorrectedFont(fontName: FontFamilyName.OswaldRegular.rawValue, size: 28)
+        label.insets = UIEdgeInsets(top: 8, left: 32, bottom: 8, right: 8)
+        label.textAlignment = .left
+        label.textColor = ThemeService.shared.theme.primaryTextColor
+        label.font = FontService.shared.getCorrectedFont(fontName: FontFamilyName.OswaldRegular.rawValue, size: 15)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         return label
@@ -35,10 +35,11 @@ class SideMenuCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-        self.contentView.backgroundColor = ThemeService.shared.theme.primarySectionColor
-        self.contentView.addSubview(imageViewIcon)
-        self.contentView.addSubview(menuTitleLabel)
+        
+        separatorInset = UIEdgeInsets(top: 0, left: 28, bottom: 0, right: 0)
+        contentView.backgroundColor = .white
+        contentView.addSubview(imageViewIcon)
+        contentView.addSubview(menuTitleLabel)
         
         menuTitleLabel.fillSuperview()
         
@@ -62,31 +63,8 @@ class SideMenuCell: UITableViewCell {
 
         self.selectedBackgroundView = backGroundView
         
+        self.menuTitleLabel.text = menu.title?.uppercased()
         
-        switch (menu.section_slug ?? menu.item_type ?? "" ) {
-            
-        case "neon":
-            
-            self.imageViewIcon.isHidden = false
-            self.menuTitleLabel.isHidden = true
-            
-            imageViewIcon.image = AssetImage.neon.image
-
-        case "fit":
-            
-            self.imageViewIcon.isHidden = false
-            self.menuTitleLabel.isHidden = true
-            
-            imageViewIcon.image = AssetImage.FitWhite.image
-            
-        default:
-            
-            self.imageViewIcon.isHidden = true
-            self.menuTitleLabel.isHidden = false
-            
-            self.menuTitleLabel.text = menu.title?.uppercased()
-            
-        }
     }
     
 

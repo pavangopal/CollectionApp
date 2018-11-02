@@ -167,7 +167,10 @@ extension TagController: ControllerDataSourcing {
     }
     
     func didSelectItem(sectionLayoutArray:[[SectionLayout]],indexPath:IndexPath) {
-        let controller = StoryDetailPager(homeLayoutArray: sectionLayoutArray[indexPath.section], currentIndex: 0, currentSlug: nil)
+        
+        let flatSectionArray = sectionLayoutArray.flatMap({$0})
+        let currentIndex = flatSectionArray.firstIndex(where: {$0.story?.slug == sectionLayoutArray[indexPath.section][indexPath.row].story?.slug})
+        let controller = StoryDetailPager(homeLayoutArray: flatSectionArray, currentIndex: currentIndex ?? 0, currentSlug: sectionLayoutArray[indexPath.section][indexPath.row].story?.slug ?? "")
         self.navigationController?.pushViewController(controller, animated: true)
         
     }

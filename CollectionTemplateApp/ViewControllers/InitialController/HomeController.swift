@@ -15,6 +15,7 @@ class HomeController: BaseButtonBarPagerTabStripViewController<MenuCell>,
     
     var menuArray:[Menu]?
     var viewControllerCollection:[UIViewController] = []
+    var selectedIndex:Int = 0
     
     var sponsoredStoryArray:[Story] = []
     
@@ -28,6 +29,7 @@ class HomeController: BaseButtonBarPagerTabStripViewController<MenuCell>,
     
     convenience init(menuArray:[Menu]?){
         self.init()
+        
         buttonBarItemSpec = ButtonBarItemSpec.cellClass( width: {(indicatorInfo) -> CGFloat in
             let title = indicatorInfo.title ?? ""
             let titleWidth = title.width(font: FontService.shared.getCorrectedFont(fontName: FontFamilyName.OswaldRegular.rawValue, size: 26))
@@ -57,8 +59,15 @@ class HomeController: BaseButtonBarPagerTabStripViewController<MenuCell>,
 
         buttonBarView.frame.origin.y = 64
         containerView.frame.origin.y = 64
-        
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if selectedIndex < self.viewControllerCollection.count{
+            moveToViewController(at: selectedIndex, animated: false)
+        }
+    }
+ 
     override open func configure(cell: MenuCell, for indicatorInfo: IndicatorInfo) {
         
         cell.menuTitleLabel.text = indicatorInfo.title ?? ""
@@ -120,7 +129,7 @@ class HomeController: BaseButtonBarPagerTabStripViewController<MenuCell>,
         
         menuArray?.forEach({ (menu) in
             
-            let pagerController = SectionController(slug: menu.section_slug ?? "")
+            let pagerController = SectionController(menu: menu)
             pagerController.additionalSafeAreaInsets.bottom = 64
             viewControllerCollection.append(pagerController)
             return
@@ -157,7 +166,7 @@ class HomeController: BaseButtonBarPagerTabStripViewController<MenuCell>,
             navigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         }
         
-        navigationBar.setNavigationItems()
+//        navigationBar.setNavigationItems()
         navigationBar.setSolidColorNavigationBar()
     }
     

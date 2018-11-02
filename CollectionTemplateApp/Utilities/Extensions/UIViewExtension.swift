@@ -142,6 +142,14 @@ extension UIView {
         self.layer.addSublayer(gradient)
     }
     
+    func rotate(_ toValue: CGFloat, duration: CFTimeInterval = 0.2) {
+        let animation = CABasicAnimation(keyPath: "transform.rotation")
+        animation.toValue = toValue
+        animation.duration = duration
+        animation.isRemovedOnCompletion = false
+        animation.fillMode = kCAFillModeForwards
+        self.layer.add(animation, forKey: nil)
+    }
 }
 
 protocol Bluring {
@@ -156,7 +164,6 @@ extension Bluring where Self: UIView {
         let blurView = UIVisualEffectView(effect: blurEffect)
         
         blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        //        self.insertSubview(blurView, at: 0)
         self.addSubview(blurView)
     }
     
@@ -168,6 +175,8 @@ extension Bluring where Self: UIView {
         blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         return blurView
     }
+    
+    
 }
 
 // Conformance

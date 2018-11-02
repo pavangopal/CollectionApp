@@ -14,6 +14,8 @@ class CustomTabBarController: UITabBarController {
     var navigationControllerContainer:[UINavigationController] = []
     let menuArray = Quintype.publisherConfig?.layout?.menu
 
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,7 +24,8 @@ class CustomTabBarController: UITabBarController {
     }
     
     func setUpTabbar() {
-        let tabbarItems = [TabbarItems.Home,TabbarItems.Settings]
+       
+        let tabbarItems = [TabbarItems.Home,TabbarItems.Settings,.menu]
         
         tabbarItems.forEach { (item) in
             switch item{
@@ -37,11 +40,11 @@ class CustomTabBarController: UITabBarController {
                     validSectionArray?.insert(homeMenu, at: 0)
                 }
                 
-                let homeController = HomeController(menuArray: validSectionArray)
+                let homeController = HomeController(menuArray: [homeMenu])
                 let homeNavigationController = UINavigationController(rootViewController: homeController)
                 homeNavigationController.navigationBar.isHidden = true
                 homeController.tabBarItem = UITabBarItem(title: item.rawValue, image: item.icon, tag: item.hashValue)
-                
+                homeController.navigationBar.setNavigationItems()
                 self.navigationControllerContainer.append(homeNavigationController)
                 
 //                let homeController = SectionController(slug: "home")
@@ -54,10 +57,19 @@ class CustomTabBarController: UITabBarController {
             case .Settings:
                 let settingVC = SettingsController()
                 let settingNVC = UINavigationController(rootViewController: settingVC)
+                
                 settingNVC.title = item.rawValue
                 settingVC.tabBarItem = UITabBarItem(title: item.rawValue, image: item.icon, tag: item.hashValue)
                 navigationControllerContainer.append(settingNVC)
                 
+            case .menu:
+                
+                let sideMenuVC = MenuController(menu: menuArray ?? [])
+                let sideMenuNVC = UINavigationController(rootViewController: sideMenuVC)
+                
+                sideMenuNVC.title = item.rawValue
+                sideMenuVC.tabBarItem = UITabBarItem(title: item.rawValue, image: item.icon, tag: item.hashValue)
+                navigationControllerContainer.append(sideMenuNVC)
             }
         }
         
@@ -81,6 +93,7 @@ enum TabbarItems:String{
     
     case Home = "Home"
     case Settings = "Settings"
+    case menu = "menu"
     
     var icon:UIImage{
         switch self{
@@ -88,6 +101,9 @@ enum TabbarItems:String{
             return AssetImage.homeIcon.image
         case .Settings:
             return AssetImage.settingIcon.image
+        case .menu:
+            return AssetImage.settingIcon.image
+        
         }
     }
 }

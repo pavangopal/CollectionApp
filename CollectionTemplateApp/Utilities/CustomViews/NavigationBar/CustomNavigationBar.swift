@@ -36,7 +36,7 @@ class CustomNavigationBar: UINavigationBar , CustomNavigationBarDelegate {
         return searchButton
     }()
     
-   lazy var rightMenuButtonItem:UIBarButtonItem = {
+   lazy var leftMenuButtonItem:UIBarButtonItem = {
             let menuButton = UIBarButtonItem(image: AssetImage.Hamberger.image, style: .done, target: self, action: #selector(self.hamburgerBarButtonPressed))
             menuButton.tintColor = .white
             return menuButton
@@ -59,8 +59,8 @@ class CustomNavigationBar: UINavigationBar , CustomNavigationBarDelegate {
     func setNavigationItems(){
         let navigationItem = UINavigationItem(title: "")
     
-        navigationItem.setRightBarButtonItems([rightMenuButtonItem,rightSearchBarButtonItem], animated: true)
-        
+        navigationItem.setRightBarButtonItems([rightSearchBarButtonItem], animated: true)
+        navigationItem.setLeftBarButton(leftMenuButtonItem, animated: true)
         items = [navigationItem]
         
     }
@@ -93,6 +93,14 @@ class CustomNavigationBar: UINavigationBar , CustomNavigationBarDelegate {
         items = [navigationItem]
     }
     
+    func setBackHambergerMenu(){
+        let navigationItem = UINavigationItem(title: "")
+        
+        navigationItem.setLeftBarButtonItems([backButtonItem,leftMenuButtonItem], animated: true)
+        
+        items = [navigationItem]
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -112,31 +120,23 @@ extension CustomNavigationBar{
             return
         }
         
-        if let menuArray = Quintype.publisherConfig?.layout?.menu{
-            
-            let sectionArray = menuArray.filter({$0.section_slug != nil})
-            let linkAray = menuArray.filter({$0.item_type?.lowercased() == "link" && $0.url != "/about-us#download" && $0.url != "https://hindi.thequint.com"})
-            var validSectionArray = sectionArray + linkAray
-            
-            let homeMenu = Menu()
-            
-            homeMenu.section_slug = "home"
-            homeMenu.section_name = "Home"
-            homeMenu.title = "Home"
-            
-            if (validSectionArray.count) > 0{
-                validSectionArray.insert(homeMenu, at: 0)
-            }
-            
-            let sideMenuController = SideMenuController(menuArray: validSectionArray)
+        if let menuArray = Quintype.publisherConfig?.layout?.menu {
+           
+            let validSectionArray = menuArray.filter({$0.url != "/about-us#download" && $0.url != "https://hindi.thequint.com"})
+           
+            let sideMenuController = MenuController(menu: validSectionArray)
             sideMenuController.delegate = self
-            sideMenuController.modalPresentationStyle = .overFullScreen
-            
             sideMenuController.dismissCompletionHandler = { () -> Void in
                 controller.dismiss(animated: false, completion: nil)
             }
-        
-            controller.present(sideMenuController, animated: false, completion: nil)
+            
+            let navigationController = UINavigationController(rootViewController: sideMenuController)
+            navigationController.navigationBar.isHidden = true
+            
+            navigationController.modalPresentationStyle = .overCurrentContext
+            navigationController.view.backgroundColor = UIColor.clear
+            
+            controller.present(navigationController, animated: false, completion: nil)
             
         }
         
@@ -150,28 +150,36 @@ extension CustomNavigationBar{
     }
 }
 
-extension CustomNavigationBar : SideMenuControllerDelegate{
+extension CustomNavigationBar : MenuControllerDelegate{
     
-    @objc func itemSelectedAtIndex(slug:String,index:Int) {
-        Quintype.analytics.trackPageViewSectionVisit(section: slug)
-        guard let controller = self.navigationDelegate as? UIViewController else{
+    func itemSelectedAtIndex(menuArray:[Menu],index:Int){
+        
+        guard let controller = self.navigationDelegate as? UIViewController,index<menuArray.count else{
             return
         }
-        if let currentController = controller.navigationController?.viewControllers.last{
+        
+        Quintype.analytics.trackPageViewSectionVisit(section: menuArray[index].section_slug ?? "")
+        
+        if let lastController = controller.navigationController?.viewControllers.last {
 
-            if currentController.isKind(of: HomeController.self){
-                if let homeController = currentController as? HomeController{
-                    homeController.moveTo(viewController: homeController.viewControllerCollection[index], animated: true)
+            if lastController.isKind(of: HomeController.self){
+                if let homeController = lastController as? HomeController{
+                    homeController.moveToViewController(at: index, animated: true)
                 }
             }else{
 
-                let storyDetailController = SectionController(slug: slug)
+                let storyDetailController = SectionController(slug: menuArray[index].section_slug ?? "")
                 controller.navigationController?.pushViewController(storyDetailController, animated: true)
-
+                
+//                let homeController = HomeController(menuArray: menuArray)
+//                homeController.selectedIndex = index
+//                let homeNavigationController = lastController.navigationController?.presentingViewController as? UINavigationController
+//                homeNavigationController?.pushViewController(homeController, animated: true)
             }
 
         }
     }
+    
     func getWebview(url:String) -> WKWebView{
         
         let webview = WKWebView()

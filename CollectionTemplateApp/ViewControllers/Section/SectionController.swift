@@ -50,6 +50,7 @@ class SectionController:BaseController {
     
     var slug:String
     var dataSource:CollectionViewDataSource?
+    var tabTitle: String?
     
     var sectionViewModel:SectionViewModel! {
         didSet {
@@ -88,10 +89,17 @@ class SectionController:BaseController {
         }
     }
     
+    convenience init(menu:Menu){
+        self.init(slug: menu.section_slug ?? "")
+        
+        self.tabTitle = menu.title?.capitalized ?? "Latest"
+        
+    }
+    
     
     //MARK: - Functions
     init(slug:String) {
-        
+
         self.slug = slug
         super.init()
     }
@@ -173,7 +181,7 @@ extension SectionController: ControllerDataSourcing {
 extension SectionController: IndicatorInfoProvider {
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         
-        return IndicatorInfo(title:slug.capitalized, image:nil, highlightedImage: nil)
+        return IndicatorInfo(title:tabTitle, image:nil, highlightedImage: nil)
     }
 }
 

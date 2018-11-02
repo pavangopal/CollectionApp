@@ -24,7 +24,6 @@ class InitialController: UIViewController {
         
     }
     
-    
     @objc private func initializer(){
         
         getPublisher()
@@ -35,7 +34,7 @@ class InitialController: UIViewController {
         Quintype.api.getPublisherConfig(cache: cacheOption.loadOldCacheAndReplaceWithNew, Success: { (data) in
             let appDelegate  = UIApplication.shared.delegate as? AppDelegate
             let window = appDelegate?.window
-            window?.rootViewController = CustomTabBarController()
+            window?.rootViewController = AppContainer()
             
         }) { (error) in
             print(error)

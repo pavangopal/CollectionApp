@@ -46,7 +46,7 @@ struct Environment{
     
     struct Development {
         
-        static var baseURL = "https://ace-web.qtstage.io"
+        static var baseURL = "https://ace-web.qtstage.io"//"https://madrid.quintype.io"
         static var imageBaseURL = "https://" + (Quintype.publisherConfig?.cdn_image)! + "/"
         static var appStoreLink = "https://itunes.apple.com/in/app/thequint/id1066244587?mt=8"
 

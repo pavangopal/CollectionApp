@@ -49,5 +49,11 @@ class MenuCell: BaseCollectionCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        menuTitleLabel.textColor = .white
+        imageViewIcon.isHighlighted = false
+    }
 }
 

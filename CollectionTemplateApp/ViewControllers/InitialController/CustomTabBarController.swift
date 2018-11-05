@@ -13,22 +13,19 @@ class CustomTabBarController: UITabBarController {
     
     var navigationControllerContainer:[UINavigationController] = []
     let menuArray = Quintype.publisherConfig?.layout?.menu
-
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setUpTabbar()
         
     }
     
     func setUpTabbar() {
        
-        let tabbarItems = [TabbarItems.Home,TabbarItems.Settings,.menu]
+        let tabbarItems = [TabbarItems.Home,TabbarItems.Settings]//,.menu]
         
         tabbarItems.forEach { (item) in
-            switch item{
+            switch item {
                 
             case .Home:
                 

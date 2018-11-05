@@ -203,12 +203,11 @@ extension MenuController:UITableViewDataSource,UITableViewDelegate{
         
         self.dismissWithAnimation()
         
-//        self.delegate?.itemSelectedAtIndex(menuArray: menuArray, index: selectedIndex)
-        
         let homeController = HomeController(menuArray: menuArray)
-        homeController.navigationBar.setBackHambergerMenu()
+//        homeController.navigationBar.setBackHambergerMenu()
         homeController.selectedIndex = selectedIndex
-        let homeNavigationController = self.navigationController?.presentingViewController as? UINavigationController
+        homeController.shouldShowBackButton = true
+        let homeNavigationController = presentingViewController as? UINavigationController//self.navigationController?.presentingViewController as? UINavigationController
         homeNavigationController?.pushViewController(homeController, animated: true)
         
     }

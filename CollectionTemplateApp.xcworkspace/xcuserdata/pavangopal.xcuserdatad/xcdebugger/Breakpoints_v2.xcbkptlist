@@ -9,29 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CollectionTemplateApp/Utilities/CustomViews/NavigationBar/CustomNavigationBar.swift"
-            timestampString = "562856741.736616"
+            filePath = "CollectionTemplateApp/ViewControllers/Cells/StoryDetailCells/Static Cells/StoryDetailsTagElementCell.swift"
+            timestampString = "563116005.121297"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
-            landmarkName = "itemSelectedAtIndex(menuArray:index:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CollectionTemplateApp/Utilities/CustomViews/NavigationBar/CustomNavigationBar.swift"
-            timestampString = "562856741.737"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
-            landmarkName = "itemSelectedAtIndex(menuArray:index:)"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
+            landmarkName = "tagButtonAction(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

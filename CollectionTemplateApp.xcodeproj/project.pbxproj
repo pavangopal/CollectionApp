@@ -1076,9 +1076,9 @@
 			isa = PBXGroup;
 			children = (
 				1D955CB32181F429002FD480 /* InitialController.swift */,
-				1D955CB12181F429002FD480 /* HomeController.swift */,
-				1D955CB22181F429002FD480 /* CustomTabBarController.swift */,
 				1D54B8602189BFF9009D0804 /* AppContainer.swift */,
+				1D955CB22181F429002FD480 /* CustomTabBarController.swift */,
+				1D955CB12181F429002FD480 /* HomeController.swift */,
 			);
 			path = InitialController;
 			sourceTree = "<group>";

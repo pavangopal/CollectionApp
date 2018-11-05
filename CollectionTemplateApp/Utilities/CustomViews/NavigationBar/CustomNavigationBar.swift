@@ -28,8 +28,8 @@ class CustomNavigationBar: UINavigationBar , CustomNavigationBarDelegate {
     typealias Delegate = NavigationItemDelegate
     
     fileprivate weak var navigationDelegate:Delegate?
+     var menuController:MenuController?
 
-    
     lazy var rightSearchBarButtonItem:UIBarButtonItem  = {
         let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(self.searchBarButtonPressed))
         searchButton.tintColor = .white
@@ -105,6 +105,7 @@ class CustomNavigationBar: UINavigationBar , CustomNavigationBarDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
 extension CustomNavigationBar{
     
    @objc func searchBarButtonPressed() {
@@ -115,31 +116,36 @@ extension CustomNavigationBar{
         }
     }
     
-   @objc func hamburgerBarButtonPressed(){
-        guard let controller = self.navigationDelegate as? UIViewController else{
+    @objc func hamburgerBarButtonPressed(){
+        guard let controller = self.navigationDelegate as? UIViewController,let menuController = loadMenuController() else{
             return
         }
         
-        if let menuArray = Quintype.publisherConfig?.layout?.menu {
-           
-            let validSectionArray = menuArray.filter({$0.url != "/about-us#download" && $0.url != "https://hindi.thequint.com"})
-           
-            let sideMenuController = MenuController(menu: validSectionArray)
-            sideMenuController.delegate = self
-            sideMenuController.dismissCompletionHandler = { () -> Void in
-                controller.dismiss(animated: false, completion: nil)
-            }
-            
-            let navigationController = UINavigationController(rootViewController: sideMenuController)
-            navigationController.navigationBar.isHidden = true
-            
-            navigationController.modalPresentationStyle = .overCurrentContext
-            navigationController.view.backgroundColor = UIColor.clear
-            
-            controller.present(navigationController, animated: false, completion: nil)
-            
+        menuController.delegate = self
+        menuController.dismissCompletionHandler = { () -> Void in
+            controller.dismiss(animated: false, completion: nil)
         }
         
+        let navigationController = UINavigationController(rootViewController: menuController)
+        navigationController.navigationBar.isHidden = true
+        
+        navigationController.modalPresentationStyle = .overCurrentContext
+        navigationController.view.backgroundColor = UIColor.clear
+        
+        controller.present(navigationController, animated: false, completion: nil)
+        
+        
+    }
+    
+    func loadMenuController() -> MenuController? {
+        if let menuController = self.menuController{
+            return menuController
+        }else if let menuArray = Quintype.publisherConfig?.layout?.menu {
+            let validSectionArray = menuArray.filter({$0.url != "/about-us#download" && $0.url != "https://hindi.thequint.com"})
+            self.menuController = MenuController(menu: validSectionArray)
+            return self.menuController
+        }
+        return nil
     }
     
    @objc private func backButtonPressed(){

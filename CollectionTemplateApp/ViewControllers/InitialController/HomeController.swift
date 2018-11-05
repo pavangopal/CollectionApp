@@ -18,6 +18,8 @@ class HomeController: BaseButtonBarPagerTabStripViewController<MenuCell>,
     var selectedIndex:Int = 0
     
     var sponsoredStoryArray:[Story] = []
+    var didMove = false
+    var shouldShowBackButton = false
     
     //Trending-Stories
     var trendingStoryArray:[Story] = []
@@ -60,10 +62,11 @@ class HomeController: BaseButtonBarPagerTabStripViewController<MenuCell>,
         buttonBarView.frame.origin.y = 64
         containerView.frame.origin.y = 64
     }
-    
+  
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if selectedIndex < self.viewControllerCollection.count{
+        if selectedIndex < self.viewControllerCollection.count && !didMove{
+            didMove = !didMove
             moveToViewController(at: selectedIndex, animated: false)
         }
     }
@@ -103,10 +106,11 @@ class HomeController: BaseButtonBarPagerTabStripViewController<MenuCell>,
         
         changeCurrentIndexProgressive = {(oldCell: MenuCell?, newCell: MenuCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             
-            guard changeCurrentIndex == true else { return }
+//            guard changeCurrentIndex == true else { return }
             
-            oldCell?.menuTitleLabel.textColor = .white
-            newCell?.menuTitleLabel.textColor = ThemeService.shared.theme.primaryQuintColor
+//            oldCell?.menuTitleLabel.textColor = .white
+//            newCell?.menuTitleLabel.textColor = ThemeService.shared.theme.primaryQuintColor
+            
             oldCell?.imageViewIcon.isHighlighted = false
             newCell?.imageViewIcon.isHighlighted = true
             
@@ -166,8 +170,13 @@ class HomeController: BaseButtonBarPagerTabStripViewController<MenuCell>,
             navigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         }
         
-//        navigationBar.setNavigationItems()
+        
         navigationBar.setSolidColorNavigationBar()
+        if shouldShowBackButton{
+          navigationBar.setBackHambergerMenu()
+        }else{
+         navigationBar.setNavigationItems()
+        }
     }
     
     func position(for bar: UIBarPositioning) -> UIBarPosition {
@@ -177,6 +186,7 @@ class HomeController: BaseButtonBarPagerTabStripViewController<MenuCell>,
     func searchBarButtonPressed(){
         
     }
+    
     func hamburgerBarButtonPressed(){
         
     }

@@ -87,6 +87,8 @@ extension UIViewController : UIPopoverPresentationControllerDelegate {
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.view.backgroundColor = nil
         
+        let textAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = textAttributes
         
     }
     

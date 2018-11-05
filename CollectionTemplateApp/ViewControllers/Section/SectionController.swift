@@ -110,6 +110,7 @@ class SectionController:BaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("self.slug: \(self.slug)")
         view.backgroundColor = .white
         
         createNavigationBar()
@@ -162,6 +163,7 @@ extension SectionController: ControllerDataSourcing {
         let flatSectionArray = sectionLayoutArray.flatMap({$0})
         let currentIndex = flatSectionArray.firstIndex(where: {$0.story?.slug == sectionLayoutArray[indexPath.section][indexPath.row].story?.slug})
         let controller = StoryDetailPager(homeLayoutArray: flatSectionArray, currentIndex: currentIndex ?? 0, currentSlug: sectionLayoutArray[indexPath.section][indexPath.row].story?.slug ?? "")
+        
         self.navigationController?.pushViewController(controller, animated: true)
         
     }

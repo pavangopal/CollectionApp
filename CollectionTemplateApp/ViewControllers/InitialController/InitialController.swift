@@ -14,14 +14,7 @@ class InitialController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
         self.initializer()
-        
     }
     
     @objc private func initializer(){
@@ -37,7 +30,7 @@ class InitialController: UIViewController {
             window?.rootViewController = AppContainer()
             
         }) { (error) in
-            print(error)
+            print(error ?? "")
         }
     }
     

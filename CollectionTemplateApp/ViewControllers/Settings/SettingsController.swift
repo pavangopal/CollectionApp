@@ -49,12 +49,17 @@ class SettingsController: UIViewController,SKStoreProductViewControllerDelegate 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavgationbar()
+        
+        setSolidNavigationBar()
+        
+
         view.addSubview(tableView)
         view.addSubview(acivityIndicator)
         tableView.fillSuperview()
         acivityIndicator.anchorCenterSuperview()
         
+        title = "Settings"
+
         tableView.register(cellClass: SettingCell.self)
     }
     

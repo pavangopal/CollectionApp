@@ -138,19 +138,25 @@ class StoryDetailsTagElementCell: BaseCollectionCell {
     
     
     @objc func tagButtonAction(sender:UIButton){
-        
-        if let tabBarController = self.window?.rootViewController as? CustomTabBarController {
-            
-            if let navigationController = tabBarController.selectedViewController as? UINavigationController{
-
-                if let tag = tags[sender.tag].name{
-                    let tagPageController = TagController(tagSlug: tag)
-                    tracker(tag: tag)
-                    navigationController.pushViewController(tagPageController, animated: true)
-                }
-            }
-            
+        if let tag = tags[sender.tag].name{
+            let tagPageController = TagController(tagSlug: tag)
+            tracker(tag: tag)
+            self.delegate?.shouldNavigateTo(controller: tagPageController)
+//            navigationController.pushViewController(tagPageController, animated: true)
         }
+        
+//        if let tabBarController = self.window?.rootViewController as? CustomTabBarController {
+//
+//            if let navigationController = tabBarController.selectedViewController as? UINavigationController{
+//
+//                if let tag = tags[sender.tag].name{
+//                    let tagPageController = TagController(tagSlug: tag)
+//                    tracker(tag: tag)
+//                    navigationController.pushViewController(tagPageController, animated: true)
+//                }
+//            }
+//
+//        }
         
     }
     

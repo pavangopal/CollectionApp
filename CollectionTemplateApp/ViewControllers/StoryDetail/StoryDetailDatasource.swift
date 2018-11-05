@@ -467,7 +467,7 @@ class StoryDetailDataSourceAndDelegate:NSObject,UICollectionViewDataSource,UICol
         case .StoryDetailsTagElementCell:
             cell = collectionView.dequeueReusableCell(ofType: StoryDetailsTagElementCell.self, for: indexPath)
             let currentCell = cell as? StoryDetailsTagElementCell
-            
+            currentCell?.delegate = self
             currentCell?.configure(data: story)
             
         }

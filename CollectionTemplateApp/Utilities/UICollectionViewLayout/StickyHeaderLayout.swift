@@ -44,7 +44,6 @@ class StickyHeadersCollectionViewFlowLayout: UICollectionViewFlowLayout {
         
         guard let collectionView = collectionView else { return layoutAttributes }
         
-        // Helpers
         let contentOffsetY = collectionView.contentOffset.y
 
         var newRect = CGRect.zero

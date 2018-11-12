@@ -55,11 +55,7 @@ class StoryDetailController: BaseController {
         return refreshControl
         
     }()
-    
-   lazy var navigationBar:CustomNavigationBar = {
-        let navigationBar = CustomNavigationBar(delegate: self)
-        return navigationBar
-    }()
+
     
     override var state: ViewState<Any>?{
         didSet{
@@ -165,6 +161,7 @@ class StoryDetailController: BaseController {
     
     var viewCounterViewDataSource :[ViewConterViewType:StoryDetailDataSourceAndDelegate] = [:]
     var storyDetailLayout : [[StoryDetailLayout]] = []
+    weak var delegate:StoryDetailControllerDelgate?
     
     convenience init(slug:String) {
         self.init()
@@ -177,9 +174,6 @@ class StoryDetailController: BaseController {
         
 //        self.view.backgroundColor = .white
         self.addStateHandlingView(in: self.view)
-        
-        self.createNavigationBar()
-        navigationBar.setSolidColorNavigationBar()
     }
     
     
@@ -227,14 +221,13 @@ class StoryDetailController: BaseController {
         if story?.story_template == StoryTemplet.Elsewhere{
             
             if let externalStoryUrl = story?.storyMetadata?.reference_url{
+                self.delegate?.setSolidNC()
                 if let externalUrl = URL(string: externalStoryUrl){
                     let externalUrlRequest = URLRequest(url: externalUrl)
                     let webView = externalWebView(url:externalUrlRequest)
-                    webView.scrollView.contentInset = UIEdgeInsets(top: 44, left: 0, bottom: 0, right: 0)
                     let externalStoryController = PopupController(customWebview: webView)
                     
                     self.addViewController(anyController: externalStoryController)
-                    self.view.bringSubview(toFront: navigationBar)
                     return
                     
                 }
@@ -246,13 +239,13 @@ class StoryDetailController: BaseController {
         segmentContainerView.addSubview(segmentControl)
         
         if let _ = self.layoutWrapper?.supplementaryView{
-            navigationBar.isHidden = true
+            self.delegate?.setClearNC()
          segmentContainerView.anchor(view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
             collectionView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         }else{
-            navigationBar.isHidden = false
-            segmentContainerView.anchor(navigationBar.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-            collectionView.anchor(navigationBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+            self.delegate?.setSolidNC()
+            segmentContainerView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+            collectionView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         }
         
         segmentContainerViewHeightAnchor =  segmentContainerView.heightAnchor.constraint(equalToConstant: 0)
@@ -262,15 +255,10 @@ class StoryDetailController: BaseController {
         segmentControl.anchor(nil, left: segmentContainerView.leftAnchor, bottom: nil , right: segmentContainerView.rightAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 30)
         segmentControl.anchorCenterYToSuperview()
         
-//        collectionView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        
         segmentControl.addTarget(self, action: #selector(self.segmentChanged(sender:)), for: .valueChanged)
         segmentContainerView.isUserInteractionEnabled = true
         
         self.setupRefreshControl()
-        
-        
-        
     }
     
     func setupCollectionViewDataSource(storyLayoutWrapper:StoryLayoutWrapper){
@@ -366,17 +354,6 @@ class StoryDetailController: BaseController {
         self.collectionView.reloadData()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        setSolidNavigationBar()
-        
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-//        setSolidNavigationBar()
-    }
-    
 }
 
 extension StoryDetailController: APIManagerDelegate {
@@ -411,37 +388,5 @@ extension StoryDetailController: APIManagerDelegate {
     func resetData(){
         self.dataSource = nil
         self.story = nil
-    }
-}
-extension StoryDetailController{
-    
-    func createNavigationBar(){
-        view.addSubview(navigationBar)
-        
-        
-        navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        navigationBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        navigationBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        navigationBar.delegate = self
-        if #available(iOS 11, *) {
-            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        } else {
-            navigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        }
-    }
-}
-
-extension StoryDetailController: UINavigationBarDelegate{
-    func position(for bar: UIBarPositioning) -> UIBarPosition {
-        return UIBarPosition.topAttached
-    }
-}
-
-extension StoryDetailController:NavigationItemDelegate {
-    func searchBarButtonPressed(){
-        
-    }
-    func hamburgerBarButtonPressed(){
-        
     }
 }

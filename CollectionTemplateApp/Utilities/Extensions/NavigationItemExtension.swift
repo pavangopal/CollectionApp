@@ -10,7 +10,7 @@ import Quintype
 import UIKit
 import WebKit
 
-extension UIViewController : UIPopoverPresentationControllerDelegate {
+extension UIViewController : UIPopoverPresentationControllerDelegate,MenuControllerDelegate {
     
     var rightSearchBarButtonItem:UIBarButtonItem {
         get {
@@ -20,7 +20,7 @@ extension UIViewController : UIPopoverPresentationControllerDelegate {
         }
     }
     
-    var rightMenuButtonItem:UIBarButtonItem {
+    var leftMenuButtonItem:UIBarButtonItem {
         get {
             
             let menuButton = UIBarButtonItem(image: AssetImage.Hamberger.image, style: .done, target: self, action: #selector(self.sideMenuButtonPressed(sender:)))
@@ -48,55 +48,96 @@ extension UIViewController : UIPopoverPresentationControllerDelegate {
     }
     
     @objc func sideMenuButtonPressed(sender:UIBarButtonItem) {
+        guard let menuController = loadMenuController() else{
+            return
+        }
+        
+        menuController.delegate = self
+        menuController.dismissCompletionHandler = { () -> Void in
+            self.dismiss(animated: false, completion: nil)
+        }
+        
+        let navigationController = UINavigationController(rootViewController: menuController)
+        navigationController.navigationBar.isHidden = true
+        
+        navigationController.modalPresentationStyle = .overCurrentContext
+        navigationController.view.backgroundColor = UIColor.clear
+        
+        present(navigationController, animated: false, completion: nil)
+        
+    }
+    
+    func loadMenuController() -> MenuController? {
+        if let menuArray = Quintype.publisherConfig?.layout?.menu {
+            let validSectionArray = menuArray.filter({$0.url != "/about-us#download" && $0.url != "https://hindi.thequint.com"})
+            return MenuController(menu: validSectionArray)
+        }
+        return nil
     }
     
     
     @objc func setupNavgationbar(){
         rightSearchBarButtonItem.accessibilityLabel = "section"
-        self.navigationItem.setRightBarButtonItems([rightMenuButtonItem,rightSearchBarButtonItem], animated: true)
+        self.navigationItem.setRightBarButtonItems([leftMenuButtonItem,rightSearchBarButtonItem], animated: true)
+        let brandImage = AssetImage.BrandLogo.image.withRenderingMode(.alwaysTemplate)
+        let logoItem = UIBarButtonItem(image: brandImage, style: .done, target: nil, action: #selector(self.goToHomeTab(sender:)))
+        logoItem.tintColor = ThemeService.shared.theme.primaryQuintColor
         
-        let image = UIImage.from(color: UIColor.black.withAlphaComponent(0.1))
-        self.navigationController?.navigationBar.setBackgroundImage(image, for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.backgroundColor = .clear
-        self.navigationController?.navigationBar.barTintColor = .clear
-        self.navigationController?.navigationBar.isTranslucent = true
+        if let controllerCount =  self.navigationController?.viewControllers.count{
+            if controllerCount <= 1{
+                self.navigationItem.leftBarButtonItem = logoItem
+            }
+        }
     }
     
     func setClearNavigationBar(){
-        //        let image = UIImage.from(color: UIColor.black.withAlphaComponent(0.1))
+        let image = UIImage.from(color: UIColor.black.withAlphaComponent(0.1))
         
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.setBackgroundImage(image, for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.backgroundColor = .clear
         self.navigationController?.navigationBar.barTintColor = .clear
-        self.navigationController?.navigationBar.tintColor = .white
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
     }
     
     func setSolidNavigationBar(){
         
-        self.navigationController?.navigationBar.barTintColor = ThemeService.shared.theme.primarySectionColor
-        
-        self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = nil
-        self.navigationController?.navigationBar.backgroundColor = nil
-        
-        self.navigationController?.navigationBar.tintColor = .white
-        self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.view.backgroundColor = nil
-        
         let textAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
         self.navigationController?.navigationBar.titleTextAttributes = textAttributes
         
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = nil
+        self.navigationController?.navigationBar.backgroundColor = ThemeService.shared.theme.primarySectionColor
+        self.navigationController?.navigationBar.barTintColor = ThemeService.shared.theme.primarySectionColor
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.view.backgroundColor = ThemeService.shared.theme.primarySectionColor
+        
     }
     
-    @objc func setupNavgationbarForHome(){
-        rightSearchBarButtonItem.accessibilityLabel = "home"
+    @objc func setupNavgationbarForHome() {
+        self.navigationItem.setRightBarButtonItems([rightSearchBarButtonItem], animated: true)
         
-        self.navigationItem.setRightBarButtonItems([rightMenuButtonItem,rightSearchBarButtonItem], animated: true)
-        setSolidNavigationBar()
+        self.navigationItem.setLeftBarButtonItems([leftMenuButtonItem], animated: true)
+        
+        let brandImage = AssetImage.BrandLogo.image.withRenderingMode(.alwaysTemplate)
+        let logoItem = UIBarButtonItem(image: brandImage, style: .done, target: nil, action: nil)
+        logoItem.tintColor = ThemeService.shared.theme.primaryQuintColor
+        
+        if let controllerCount =  self.navigationController?.viewControllers.count{
+            if controllerCount <= 1{
+                self.navigationItem.leftBarButtonItems?.append(logoItem)
+            }
+        }
+    }
+    
+    func addbackButton() {
+        
+        self.navigationItem.leftBarButtonItems?.insert(UIBarButtonItem(title: "back", style: .done, target: self, action: #selector(self.popController)), at: 0)
+    }
+    
+    @objc func popController(){
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func goToHomeTab(sender:UIBarButtonItem){
@@ -113,25 +154,29 @@ extension UIViewController : UIPopoverPresentationControllerDelegate {
         
     }
     
-    
-    @objc func itemSelectedAtIndex(slug:String,index:Int) {
-        Quintype.analytics.trackPageViewSectionVisit(section: slug)
+    func itemSelectedAtIndex(menuArray:[Menu],index:Int){
         
-        //        if let currentController = self.navigationController?.viewControllers.last{
-        //
-        //            if currentController.isKind(of: HomeController.self){
-        //                if let homeController = currentController as? HomeController{
-        //                    homeController.moveTo(viewController: homeController.viewControllerCollection[index], animated: true)
-        //                }
-        //            }else{
-        //
-        //                let storyDetailController = HomeController(slug: slug)
-        //                self.navigationController?.pushViewController(storyDetailController, animated: true)
-        //
-        //            }
-        //
-        //        }
+        if index >= menuArray.count{
+            return
+        }
+        
+        Quintype.analytics.trackPageViewSectionVisit(section: menuArray[index].section_slug ?? "")
+        
+        if let lastController = self.navigationController?.viewControllers.last {
+            
+            if lastController.isKind(of: HomeController.self){
+                if let homeController = lastController as? HomeController{
+                    homeController.moveToViewController(at: index, animated: true)
+                }
+            }else{
+                
+                let storyDetailController = SectionController(slug: menuArray[index].section_slug ?? "")
+                self.navigationController?.pushViewController(storyDetailController, animated: true)
+            }
+            
+        }
     }
+    
     func getWebview(url:String) -> WKWebView{
         
         let webview = WKWebView()
@@ -139,22 +184,20 @@ extension UIViewController : UIPopoverPresentationControllerDelegate {
         return webview
         
     }
+    
     @objc func linkSelected(menu: Menu) {
+        
         if let slug = menu.title{
             Quintype.analytics.trackPageViewSectionVisit(section: slug)
             if let url = menu.url{
                 if let _ = URL(string:url)?.host{
-                    if url == "https://www.thequint.com/your-story"{
-                        self.tabBarController?.selectedIndex = 3
-                    }
+                    
                     let webViewController = PopupController(customWebview: getWebview(url: url))
                     self.navigationController?.pushViewController(webViewController, animated: false)
                 }else{
                     let webViewController = PopupController(customWebview: getWebview(url: appConfig.baseURL + url))
                     self.navigationController?.pushViewController(webViewController, animated: false)
                 }
-                
-                
             }
             
         }

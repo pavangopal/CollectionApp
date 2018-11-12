@@ -9,9 +9,7 @@ import UIKit
 import XLPagerTabStrip
 import Quintype
 
-class HomeController: BaseButtonBarPagerTabStripViewController<MenuCell>,
-                        UINavigationBarDelegate,
-                        NavigationItemDelegate {
+class HomeController: BaseButtonBarPagerTabStripViewController<MenuCell> {
     
     var menuArray:[Menu]?
     var viewControllerCollection:[UIViewController] = []
@@ -23,12 +21,8 @@ class HomeController: BaseButtonBarPagerTabStripViewController<MenuCell>,
     
     //Trending-Stories
     var trendingStoryArray:[Story] = []
-    
-    lazy var navigationBar:CustomNavigationBar = {
-        let navigationBar = CustomNavigationBar(delegate: self)
-        return navigationBar
-    }()
-    
+    let navigationBarHeight = UIApplication.shared.statusBarFrame.size.height + 44
+
     convenience init(menuArray:[Menu]?){
         self.init()
         
@@ -55,12 +49,13 @@ class HomeController: BaseButtonBarPagerTabStripViewController<MenuCell>,
         self.tabarAnimation()
         
         super.viewDidLoad()
+        self.setupNavgationbarForHome()
         
-        createNavigationBar()
-        navigationBar.setSolidColorNavigationBar()
-
-        buttonBarView.frame.origin.y = 64
-        containerView.frame.origin.y = 64
+        if navigationController?.viewControllers.count ?? 0 > 1{
+         self.addbackButton()
+        }
+        
+        self.edgesForExtendedLayout = []
     }
   
     override func viewDidAppear(_ animated: Bool) {
@@ -70,7 +65,7 @@ class HomeController: BaseButtonBarPagerTabStripViewController<MenuCell>,
             moveToViewController(at: selectedIndex, animated: false)
         }
     }
- 
+
     override open func configure(cell: MenuCell, for indicatorInfo: IndicatorInfo) {
         
         cell.menuTitleLabel.text = indicatorInfo.title ?? ""
@@ -134,7 +129,9 @@ class HomeController: BaseButtonBarPagerTabStripViewController<MenuCell>,
         menuArray?.forEach({ (menu) in
             
             let pagerController = SectionController(menu: menu)
-            pagerController.additionalSafeAreaInsets.bottom = 64
+//            let tabbarHeight = self.tabBarController?.tabBar.bounds.height
+//            print("tabbarHeight:\(tabbarHeight)")
+//            pagerController.additionalSafeAreaInsets.bottom = tabbarHeight ?? (navigationBarHeight + 20)
             viewControllerCollection.append(pagerController)
             return
             
@@ -155,39 +152,4 @@ class HomeController: BaseButtonBarPagerTabStripViewController<MenuCell>,
         super.reloadPagerTabStripView()
     }
     
-    func createNavigationBar(){
-        view.addSubview(navigationBar)
-        
-        
-        navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        navigationBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        navigationBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        navigationBar.delegate = self
-        
-        if #available(iOS 11, *) {
-            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        } else {
-            navigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        }
-        
-        
-        navigationBar.setSolidColorNavigationBar()
-        if shouldShowBackButton{
-          navigationBar.setBackHambergerMenu()
-        }else{
-         navigationBar.setNavigationItems()
-        }
-    }
-    
-    func position(for bar: UIBarPositioning) -> UIBarPosition {
-        return UIBarPosition.topAttached
-    }
-    
-    func searchBarButtonPressed(){
-        
-    }
-    
-    func hamburgerBarButtonPressed(){
-        
-    }
 }

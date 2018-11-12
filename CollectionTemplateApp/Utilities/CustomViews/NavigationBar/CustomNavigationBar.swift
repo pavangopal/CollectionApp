@@ -176,11 +176,6 @@ extension CustomNavigationBar : MenuControllerDelegate{
 
                 let storyDetailController = SectionController(slug: menuArray[index].section_slug ?? "")
                 controller.navigationController?.pushViewController(storyDetailController, animated: true)
-                
-//                let homeController = HomeController(menuArray: menuArray)
-//                homeController.selectedIndex = index
-//                let homeNavigationController = lastController.navigationController?.presentingViewController as? UINavigationController
-//                homeNavigationController?.pushViewController(homeController, animated: true)
             }
 
         }

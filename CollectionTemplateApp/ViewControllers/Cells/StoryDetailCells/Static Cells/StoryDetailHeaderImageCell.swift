@@ -136,10 +136,13 @@ class StoryDetailHeaderImageCell: BaseCollectionCell {
 extension StoryDetailHeaderImageCell{
     
     func updateParallaxOffet(collectionViewBounds:CGRect){
-        let yOffset = collectionViewBounds.origin.y
         
-        if yOffset > 0 && yOffset < 64 {
-            heroImageCaptionContainerViewBottomConstraint?.constant = ((collectionViewBounds.origin.y * 0.9))
+        let statusBarHeight = UIApplication.shared.statusBarFrame.size.height
+        let navigationBarHeight = statusBarHeight + 44
+        let yOffset = collectionViewBounds.origin.y + navigationBarHeight
+        
+        if yOffset > 0 && yOffset < navigationBarHeight {
+            heroImageCaptionContainerViewBottomConstraint?.constant = ((yOffset * 0.9))
             
         }else if yOffset <= 0 {
             heroImageCaptionContainerViewBottomConstraint?.constant = 0

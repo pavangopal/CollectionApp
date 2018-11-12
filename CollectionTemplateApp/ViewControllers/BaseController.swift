@@ -22,7 +22,6 @@ class BaseController: UIViewController , DataLoading,ErrorViewDelegate{
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,8 +38,12 @@ class BaseController: UIViewController , DataLoading,ErrorViewDelegate{
         self.view.addSubview(loadingView)
         self.view.addSubview(errorView)
 //        loadingView.fillSuperview()
-        loadingView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 64, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        let statusBarHeight = UIApplication.shared.statusBarFrame.size.height
+        let navigationBarHeight = statusBarHeight + 44
+        
+        loadingView.anchor(view.topAnchor, left: view.leftAnchor, bottom: self.view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: navigationBarHeight, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         errorView.anchor(nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
 //        errorView.fillSuperview()
         hideViewsInitially()
         errorView.delegate = self

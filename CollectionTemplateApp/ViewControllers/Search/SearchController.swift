@@ -63,14 +63,7 @@ class SearchController: BaseController {
         
         return refreshControl
     }()
-    
-    lazy var navigationBar:CustomNavigationBar = {
-        let navigationBar = CustomNavigationBar(delegate: self)
-        navigationBar.setSolidColorNavigationBar()
-        navigationBar.setBackNavigationBarButton()
-        return navigationBar
-    }()
-    
+
     override var state: ViewState<Any>?{
         didSet{
             update()
@@ -149,12 +142,11 @@ class SearchController: BaseController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        createNavigationBar()
         self.addStateHandlingView(in: self.view)
         self.view.backgroundColor = .white
 
         view.addSubview(collectionView)
-        collectionView.anchor(navigationBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        collectionView.anchor(self.view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -171,9 +163,7 @@ class SearchController: BaseController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        navigationBar.items?.first?.titleView = searchBar
-        
+        self.navigationController?.navigationBar.items?.first?.titleView = searchBar
     }
     
     
@@ -281,36 +271,3 @@ extension SearchController{
         
     }
 }
-
-extension SearchController{
-    
-    func createNavigationBar(){
-        view.addSubview(navigationBar)
-        
-        navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        navigationBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        navigationBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        navigationBar.delegate = self
-        if #available(iOS 11, *) {
-            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        } else {
-            navigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        }
-    }
-}
-
-extension SearchController: UINavigationBarDelegate{
-    func position(for bar: UIBarPositioning) -> UIBarPosition {
-        return UIBarPosition.topAttached
-    }
-}
-
-extension SearchController:NavigationItemDelegate {
-    func searchBarButtonPressed(){
-        
-    }
-    func hamburgerBarButtonPressed(){
-        
-    }
-}
-

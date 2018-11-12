@@ -22,7 +22,7 @@ class AppContainer: UIViewController {
     func prepareTabbarController(){
         tabbarController = CustomTabBarController()
         let navigationController = UINavigationController(rootViewController: tabbarController)
-        navigationController.navigationBar.isHidden = true
+//        navigationController.navigationBar.isHidden = true
         addViewController(anyController: navigationController)
     }
 }

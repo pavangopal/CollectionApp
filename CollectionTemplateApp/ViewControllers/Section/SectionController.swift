@@ -10,7 +10,7 @@ import UIKit
 import Quintype
 import XLPagerTabStrip
 
-class SectionController:BaseController {
+class SectionController : BaseController {
     //MARK: - Views
     
     lazy var collectionView:UICollectionView = {
@@ -21,7 +21,7 @@ class SectionController:BaseController {
         collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = UIColor(hexString: "#F4F4F4")
         
-        collectionView.contentInsetAdjustmentBehavior = .automatic
+        collectionView.contentInsetAdjustmentBehavior = .never
         
         return collectionView
         
@@ -38,13 +38,7 @@ class SectionController:BaseController {
         return refreshControl
         
     }()
-    
-    lazy var navigationBar:CustomNavigationBar = {
-        let navigationBar = CustomNavigationBar(delegate: self)
-        navigationBar.setSolidColorNavigationBar()
-        navigationBar.setBackNavigationBarButton()
-        return navigationBar
-    }()
+
     
     //MARK: - Variables
     
@@ -111,21 +105,25 @@ class SectionController:BaseController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("self.slug: \(self.slug)")
-        view.backgroundColor = .white
         
-        createNavigationBar()
+        self.setupNavgationbar()
+//        createNavigationBar()
         createViews()
         
         setupCollectionViewDataSource()
         self.sectionViewModel = SectionViewModel(slug: self.slug)
         self.sectionViewModel.startFetch()
+        
     }
     
     private func createViews(){
-        self.view.addSubview(collectionView)
-        collectionView.anchor(navigationBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        collectionView.refreshControl = refreshControl
+        view.addSubview(collectionView)
+        collectionView.fillSuperview()
+//        collectionView.anchor(self.view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+//        collectionView.refreshControl = refreshControl
+        collectionView.addSubview(refreshControl)
         addStateHandlingView(in: self.view)
+        view.backgroundColor = .white
     }
     
     private func setupCollectionViewDataSource(){
@@ -187,35 +185,3 @@ extension SectionController: IndicatorInfoProvider {
     }
 }
 
-
-extension SectionController {
-    
-    func createNavigationBar(){
-        view.addSubview(navigationBar)
-        
-        navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        navigationBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        navigationBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        navigationBar.delegate = self
-        if #available(iOS 11, *) {
-            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        } else {
-            navigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        }
-    }
-}
-
-extension SectionController: UINavigationBarDelegate{
-    func position(for bar: UIBarPositioning) -> UIBarPosition {
-        return UIBarPosition.topAttached
-    }
-}
-
-extension SectionController: NavigationItemDelegate {
-    func searchBarButtonPressed(){
-        
-    }
-    func hamburgerBarButtonPressed(){
-        
-    }
-}

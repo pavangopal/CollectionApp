@@ -17,12 +17,12 @@ class CustomTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTabbar()
-        
+//        self.tabBar.isTranslucent = false
     }
     
     func setUpTabbar() {
        
-        let tabbarItems = [TabbarItems.Home,TabbarItems.Settings]//,.menu]
+        let tabbarItems:[TabbarItems] = [.Home,.Settings]//,.menu]
         
         tabbarItems.forEach { (item) in
             switch item {
@@ -39,17 +39,8 @@ class CustomTabBarController: UITabBarController {
                 
                 let homeController = HomeController(menuArray: [homeMenu])
                 let homeNavigationController = UINavigationController(rootViewController: homeController)
-                homeNavigationController.navigationBar.isHidden = true
                 homeController.tabBarItem = UITabBarItem(title: item.rawValue, image: item.icon, tag: item.hashValue)
-                homeController.navigationBar.setNavigationItems()
                 self.navigationControllerContainer.append(homeNavigationController)
-                
-//                let homeController = SectionController(slug: "home")
-//                let homeNavigationController = UINavigationController(rootViewController: homeController)
-//                homeNavigationController.navigationBar.isHidden = true
-//                homeController.tabBarItem = UITabBarItem(title: item.rawValue, image: item.icon, tag: item.hashValue)
-//
-//                navigationControllerContainer.append(homeNavigationController)
                 
             case .Settings:
                 let settingVC = SettingsController()
@@ -59,7 +50,7 @@ class CustomTabBarController: UITabBarController {
                 settingVC.tabBarItem = UITabBarItem(title: item.rawValue, image: item.icon, tag: item.hashValue)
                 navigationControllerContainer.append(settingNVC)
                 
-            case .menu:
+            case .Menu:
                 
                 let sideMenuVC = MenuController(menu: menuArray ?? [])
                 let sideMenuNVC = UINavigationController(rootViewController: sideMenuVC)
@@ -67,11 +58,33 @@ class CustomTabBarController: UITabBarController {
                 sideMenuNVC.title = item.rawValue
                 sideMenuVC.tabBarItem = UITabBarItem(title: item.rawValue, image: item.icon, tag: item.hashValue)
                 navigationControllerContainer.append(sideMenuNVC)
+                
+            case .Search:
+                let searchController = SearchController()
+                let searchNC = UINavigationController(rootViewController: searchController)
+                searchNC.title = item.rawValue
+                searchNC.tabBarItem = UITabBarItem(title: item.rawValue, image: item.icon, tag: item.hashValue)
+                navigationControllerContainer.append(searchNC)
+                
+            case .More:
+                
+                break
             }
         }
         
         viewControllers = navigationControllerContainer
+        
+        self.navigationControllerContainer.forEach { (navigation) in
+            navigation.navigationBar.isTranslucent = false
+            navigation.navigationBar.barTintColor = ThemeService.shared.theme.primarySectionColor
+            navigation.navigationBar.tintColor = .white
+        }
+        
         tabBar.clipsToBounds = true
+        tabBar.barTintColor = ThemeService.shared.theme.primarySectionColor
+        tabBar.tintColor = ThemeService.shared.theme.tintColor
+//        tabBar.isTranslucent = false
+        tabBar.unselectedItemTintColor = .white
     }
     
     func createHomeMenu() -> Menu {
@@ -90,7 +103,9 @@ enum TabbarItems:String{
     
     case Home = "Home"
     case Settings = "Settings"
-    case menu = "menu"
+    case Menu = "Menu"
+    case Search = "search"
+    case More = "more"
     
     var icon:UIImage{
         switch self{
@@ -98,9 +113,12 @@ enum TabbarItems:String{
             return AssetImage.homeIcon.image
         case .Settings:
             return AssetImage.settingIcon.image
-        case .menu:
+        case .Menu:
             return AssetImage.settingIcon.image
-        
+        case .Search:
+            return AssetImage.Search.image
+        case .More:
+            return AssetImage.homeIcon.image
         }
     }
 }

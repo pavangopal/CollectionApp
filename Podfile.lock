@@ -127,7 +127,7 @@ DEPENDENCIES:
   - KingfisherWebP
   - Metype (from `https://github.com/quintype/metype-ios.git`, tag `1.0.2`)
   - OneSignal
-  - Quintype (from `https://github.com/quintype/quintype-ios-sdk`, tag `3.0.6`)
+  - Quintype (from `https://github.com/quintype/quintype-ios-sdk`, tag `3.0.7`)
   - TwitterKit
   - WatchdogInspector
   - XLPagerTabStrip (~> 8.0)
@@ -174,7 +174,7 @@ EXTERNAL SOURCES:
     :tag: 1.0.2
   Quintype:
     :git: https://github.com/quintype/quintype-ios-sdk
-    :tag: 3.0.6
+    :tag: 3.0.7
 
 CHECKOUT OPTIONS:
   Metype:
@@ -182,7 +182,7 @@ CHECKOUT OPTIONS:
     :tag: 1.0.2
   Quintype:
     :git: https://github.com/quintype/quintype-ios-sdk
-    :tag: 3.0.6
+    :tag: 3.0.7
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
@@ -220,6 +220,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
   YouTubePlayer: 028451f6772f372d4759866db99824c676ac1473
 
-PODFILE CHECKSUM: 41d16eb2d0f80f8ec3a392b5d637dc602d3f087e
+PODFILE CHECKSUM: e418ffe024abbca239f43b2f721923f8e4c472e7
 
 COCOAPODS: 1.5.3

@@ -9,6 +9,11 @@
 import UIKit
 import Quintype
 
+protocol StoryDetailControllerDelgate:class{
+    func setSolidNC()
+    func setClearNC()
+}
+
 class StoryDetailPager: BaseController {
     
     let screenBounds  = UIScreen.main.bounds
@@ -24,11 +29,6 @@ class StoryDetailPager: BaseController {
         }
     }
     
-   lazy var navigationBar:CustomNavigationBar = {
-        let navigationBar = CustomNavigationBar(delegate: self)
-    
-        return navigationBar
-    }()
     
     var pageController: UIPageViewController = {
         let pager = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
@@ -36,6 +36,8 @@ class StoryDetailPager: BaseController {
         return pager
         
     }()
+    
+    
     
     override var prefersStatusBarHidden: Bool {
 
@@ -61,6 +63,38 @@ class StoryDetailPager: BaseController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print(#function)
+
+        guard self.navigationController?.topViewController === self else {
+            return
+        }
+        
+        self.setClearNavigationBar()
+        
+        self.transitionCoordinator?.animate(alongsideTransition: { (context) in
+            context.containerView.backgroundColor = ThemeService.shared.theme.primaryColor
+            
+        }, completion: { (context) in
+            
+        })
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print(#function)
+        self.navigationController?.navigationBar.isTranslucent = false
+        
+        self.transitionCoordinator?.animate(alongsideTransition: { (context) in
+            self.setSolidNavigationBar()
+            context.containerView.backgroundColor = ThemeService.shared.theme.primaryColor
+            
+        }, completion: { (context) in
+            
+        })
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,9 +103,6 @@ class StoryDetailPager: BaseController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(videoDidRotate), name: .UIDeviceOrientationDidChange, object: nil)
         
-        self.createNavigationBar()
-        navigationBar.setBackNavigationBarButton()
-        navigationBar.setClearColorNavigationBar()
     }
     
    @objc func videoDidRotate() {
@@ -120,20 +151,7 @@ class StoryDetailPager: BaseController {
             self.pageController.didMove(toParentViewController: self)
         }
     }
-    
-    func createNavigationBar(){
-        view.addSubview(navigationBar)
-        
-        navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        navigationBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        navigationBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        navigationBar.delegate = self
-        if #available(iOS 11, *) {
-            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        } else {
-            navigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        }
-    }
+ 
 }
 
 extension StoryDetailPager:UIPageViewControllerDataSource,UIPageViewControllerDelegate{
@@ -179,24 +197,21 @@ extension StoryDetailPager:UIPageViewControllerDataSource,UIPageViewControllerDe
         let slug = self.slugArray[index]
         
         let detailVC = StoryDetailController(slug:slug)
+        detailVC.delegate = self
         detailVC.pageIndex = index
         
         return detailVC
     }
 }
 
-extension StoryDetailPager :  UINavigationBarDelegate {
-    func position(for bar: UIBarPositioning) -> UIBarPosition {
-        return UIBarPosition.topAttached
+
+extension StoryDetailPager : StoryDetailControllerDelgate{
+    func setSolidNC(){
+        self.setSolidNavigationBar()
+    }
+    
+    func setClearNC(){
+        self.setClearNavigationBar()
     }
 }
 
-
-extension StoryDetailPager : NavigationItemDelegate{
-    @objc func searchBarButtonPressed(){
-        
-    }
-    @objc func hamburgerBarButtonPressed(){
-        
-    }
-}

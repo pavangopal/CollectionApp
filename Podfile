@@ -3,7 +3,7 @@
 target 'CollectionTemplateApp' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
-    quintypeSdkVersion = ‘3.0.6’
+    quintypeSdkVersion = ‘3.0.7’
     # Pods for MediaOne
     pod 'JWPlayer-SDK'
     pod 'Quintype', git: 'https://github.com/quintype/quintype-ios-sdk', :tag => quintypeSdkVersion

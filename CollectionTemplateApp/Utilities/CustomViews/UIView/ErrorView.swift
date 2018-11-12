@@ -46,11 +46,11 @@ class ErrorView: UIView {
     
     func setUpView(){
         clipsToBounds = true
-        backgroundColor = .white
+        backgroundColor = .red
         addSubview(errorLabel)
         addSubview(retryButton)
         
-        errorLabel.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 10, leftConstant: 20, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        errorLabel.anchor(topAnchor, left: leftAnchor, bottom: self.safeAreaLayoutGuide.bottomAnchor, right: nil, topConstant: 10, leftConstant: 20, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: 0)
 
         retryButton.anchor(nil, left: errorLabel.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 48, heightConstant: 48)
         retryButton.anchorCenterYToSuperview()

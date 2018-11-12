@@ -46,6 +46,7 @@ extension SectionViewModel : CollectionApiManagerDelegate {
     }
 }
 
+
 /*
  protocol SectionApiManagerDelegate:class {
  associatedtype Data

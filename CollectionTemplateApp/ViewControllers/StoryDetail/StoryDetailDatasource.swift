@@ -742,11 +742,11 @@ class StoryDetailDataSourceAndDelegate:NSObject,UICollectionViewDataSource,UICol
             if let storyElementD = storyElement{
                 self.explainerTitleCellPressed(currentStoryElement:storyElementD)
             }
+            
         case .BitGravityCell:
             if let storyElementD = storyElement{
                 self.bitGravityCellPressed(storyElement: storyElementD)
             }
-            
             
         default:
             break
